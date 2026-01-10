@@ -266,7 +266,7 @@ export default function DailyRoutine() {
                                         )}
                                         {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
                                         {item.type === "options" && (
-                                            <div style={styles.subtitle}>{item.options.join(" / ")}</div>
+                                            <div style={styles.subtitle}>{item.options?.join(" / ")}</div>
                                         )}
                                     </div>
 
