@@ -191,7 +191,7 @@ export default function DailyRoutine() {
     useEffect(() => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         localStorage.setItem(SKIPPED_KEY, JSON.stringify(skippedState));
-        localStorage.setItem(STREAK_KEY, streak);
+        localStorage.setItem(STREAK_KEY, String(streak));
     }, [state, skippedState, streak]);
 
     // Toggle task completion
