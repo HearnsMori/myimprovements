@@ -21,7 +21,7 @@ const STREAK_KEY = "daily-routine-streak";
 
 const routineData = [
     {
-        section: "🏆 MORNING ROUTINE",
+        section: "DAILY ROUTINE",
         items: [
             //Sleep
             { label: "Sleep", type: "options", options: ["3 hrs", "5 hrs", "8 hrs"] },
@@ -215,7 +215,7 @@ export default function DailyRoutine() {
 
     const styles = {
         page: { minHeight: "100vh", backgroundColor: "#000", color: "#fff", padding: 16, fontFamily: "system-ui, sans-serif" },
-        tabs: { display: "flex", gap: 8, marginBottom: 16 },
+        tabs: { display: "flex", gap: 8, marginBottom: 16, marginTop: '8px'},
         tab: (active: boolean) => ({ flex: 1, padding: 10, borderRadius: 10, backgroundColor: active ? "#16a34a" : "#27272a", border: "none", color: "#fff", fontWeight: 600 }),
         card: { backgroundColor: "#18181b", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
         subtitle: { color: "#a1a1aa", fontSize: 13 },
@@ -227,7 +227,7 @@ export default function DailyRoutine() {
     return (
         <div style={styles.page}>
             <h1>Daily Routine</h1>
-            🔥 Day Streak: {streak}
+            Day Streak: {streak}
 
             {/* Progress Bar */}
             <div style={styles.progressContainer}>
