@@ -2,6 +2,18 @@
 
 import { useEffect, useState } from "react";
 
+type RoutineItem =
+  | { label: string; type: "done" }
+  | { label: string; type: "sets"; sets: number; record?: number }
+  | { label: string; type: "time"; value: string }
+  | { label: string; type: "options"; options: string[] }
+  | { label: string; type: "count"; unit: string };
+
+type RoutineSection = {
+  section: string;
+  items: RoutineItem[];
+};
+
 const STORAGE_KEY = "daily-routine-progress";
 const SKIPPED_KEY = "daily-routine-skipped";
 const DATE_KEY = "daily-routine-date";
@@ -137,12 +149,11 @@ const routineData = [
 
 
 export default function DailyRoutine() {
-    const [state, setState] = useState({});
-    const [skippedState, setSkippedState] = useState({});
-    const [tab, setTab] = useState("todo");
-    const [streak, setStreak] = useState(0);
+    const [state, setState] = useState<Record<string, boolean>>({});
+    const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
+    const [tab, setTab] = useState<"todo" | "done" | "skipped">("todo");
+    const [streak, setStreak] = useState<number>(0);
 
-    // Load state and streak
     useEffect(() => {
         const today = new Date().toDateString();
         const savedDate = localStorage.getItem(DATE_KEY);
@@ -165,14 +176,14 @@ export default function DailyRoutine() {
             localStorage.removeItem(STORAGE_KEY);
             localStorage.removeItem(SKIPPED_KEY);
             localStorage.setItem(DATE_KEY, today);
-            localStorage.setItem(STREAK_KEY, newStreak);
+            localStorage.setItem(STREAK_KEY, String(newStreak));
             setState({});
             setSkippedState({});
         } else {
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
-            if (saved) setState(JSON.parse(saved));
-            if (skipped) setSkippedState(JSON.parse(skipped));
+            if (saved) setState(JSON.parse(saved) as Record<string, boolean>);
+            if (skipped) setSkippedState(JSON.parse(skipped) as Record<string, boolean>);
         }
     }, []);
 
@@ -184,14 +195,14 @@ export default function DailyRoutine() {
     }, [state, skippedState, streak]);
 
     // Toggle task completion
-    const toggle = (key) => {
+    const toggle = (key: string) => {
         // Remove from skipped if marking as done/undo
         setSkippedState((prev) => ({ ...prev, [key]: false }));
         setState((prev) => ({ ...prev, [key]: !prev[key] }));
     };
 
     // Skip a task
-    const skip = (key) => {
+    const skip = (key: string) => {
         // Remove from done if skipping
         setState((prev) => ({ ...prev, [key]: false }));
         setSkippedState((prev) => ({ ...prev, [key]: !prev[key] }));
