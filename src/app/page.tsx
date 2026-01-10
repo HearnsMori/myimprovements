@@ -2,16 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-type RoutineItem =
-  | { label: string; type: "done" }
-  | { label: string; type: "sets"; sets: number; record?: number }
-  | { label: string; type: "time"; value: string }
-  | { label: string; type: "options"; options: string[] }
-  | { label: string; type: "count"; unit: string };
+type RoutineItem = | { label: string; type: "done" } | { label: string; type: "sets"; sets: number; record?: number } | { label: string; type: "time"; value: string } | { label: string; type: "options"; options: string[] } | { label: string; type: "count"; unit: string };
 
 type RoutineSection = {
-  section: string;
-  items: RoutineItem[];
+    section: string;
+    items: RoutineItem[];
 };
 
 const STORAGE_KEY = "daily-routine-progress";
@@ -87,16 +82,16 @@ const routineData = [
             { label: "Hydrate 14", type: "count", unit: "glass" },
             { label: "Plank", type: "sets", sets: 2 },
             { label: "Hydrate 15", type: "count", unit: "glass" },
-            
+
             //Cooldown
             { label: "Slowly Decrease Heart Rate 2", type: "time", value: "3 mins" },
             { label: "Static Stretch 2", type: "time", value: "7 mins" },
             { label: "Hydrate 16", type: "count", unit: "glass" },
-            
+
             //Consume
             { label: "Eat Healthy (Veggies)", type: "done" },
             { label: "Hydrate 17", type: "count", unit: "glass" },
-            
+
             //Work Cycle
             { label: "30m Work 3", type: "done" },
             { label: "Meditate", type: "count", unit: "glass" },
@@ -104,7 +99,7 @@ const routineData = [
             { label: "Meditate 2", type: "count", unit: "glass" },
             { label: "30m Work 5", type: "done" },
             { label: "Hydrate 18", type: "count", unit: "glass" },
-            
+
             //Work Cycle
             { label: "30m Work 6", type: "done" },
             { label: "Meditate 3", type: "count", unit: "glass" },
@@ -135,7 +130,7 @@ const routineData = [
             { label: "Apply Moisturizer 2", type: "done" },
             { label: "Brush Teeth 2", type: "done" },
             { label: "Other Hygiene", type: "done" },
-            
+
             //Her
             { label: "Goodnight and Sleepwell", type: "done" },
             { label: "Show Her Progress", type: "done" },
@@ -211,13 +206,14 @@ export default function DailyRoutine() {
     // Calculate progress
     const totalTasks = routineData.reduce((sum, section) => sum + section.items.length, 0);
     const completedTasks = Object.values(state).filter(Boolean).length;
-    const progressPercent = Math.round((completedTasks / totalTasks) * 100);
+    const exponent = 0.2;
+    const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
 
     const styles = {
         page: { minHeight: "100vh", backgroundColor: "#000", color: "#fff", padding: 16, fontFamily: "system-ui, sans-serif" },
         tabs: { display: "flex", gap: 8, marginBottom: 16, marginTop: '8px'},
         tab: (active: boolean) => ({ flex: 1, padding: 10, borderRadius: 10, backgroundColor: active ? "#16a34a" : "#27272a", border: "none", color: "#fff", fontWeight: 600 }),
-        card: { backgroundColor: "#18181b", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
+            card: { backgroundColor: "#18181b", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
         subtitle: { color: "#a1a1aa", fontSize: 13 },
         progressContainer: { backgroundColor: "#27272a", borderRadius: 10, overflow: "hidden", margin: "10px 0", height: 20 },
         progressBar: { height: "100%", backgroundColor: "#16a34a", transition: "width 0.3s" },
@@ -226,89 +222,96 @@ export default function DailyRoutine() {
 
     return (
         <div style={styles.page}>
-            <h1>Daily Routine</h1>
-            Day Streak: {streak}
+        <h1>Daily Routine</h1>
+        Day Streak: {streak}
+        <br/>
+        Level: {`${Math.floor(progressPercent/10)}`}
+        {/* Progress Bar */}
+        <div style={styles.progressContainer}>
+            <div style={{ ...styles.progressBar, width: `${(progressPercent % 10) * 10}%` }} />
+        </div>
+        {Math.round((progressPercent % 10)*10)}% Completed
 
-            {/* Progress Bar */}
-            <div style={styles.progressContainer}>
-                <div style={{ ...styles.progressBar, width: `${progressPercent}%` }} />
-            </div>
-            {progressPercent}% Completed
+        <div style={styles.tabs}>
+        <button style={styles.tab(tab === "todo")} onClick={() => setTab("todo")}>To Do</button>
+        <button style={styles.tab(tab === "done")} onClick={() => setTab("done")}>Done</button>
+        <button style={styles.tab(tab === "skipped")} onClick={() => setTab("skipped")}>Skipped</button>
+        </div>
+        {routineData.map((section) => {
 
-            <div style={styles.tabs}>
-                <button style={styles.tab(tab === "todo")} onClick={() => setTab("todo")}>To Do</button>
-                <button style={styles.tab(tab === "done")} onClick={() => setTab("done")}>Done</button>
-                <button style={styles.tab(tab === "skipped")} onClick={() => setTab("skipped")}>Skipped</button>
-            </div>
+            // Filter items based on tab
+            const filteredItems = section.items.filter((item) => {
+                if (tab === "todo") return !state[item.label] && !skippedState[item.label];
+                if (tab === "done") return state[item.label];
+                if (tab === "skipped") return skippedState[item.label];
+                return false;
+            });
 
-            {routineData.map((section) => (
+            // If "todo", only take first 3
+            const visibleItems = tab === "todo" ? filteredItems.slice(0, 3) : filteredItems;
+
+            return (
                 <div key={section.section}>
-                    <h2>{section.section}</h2>
+                <h2>{section.section}</h2>
 
-                    {section.items
-                        .filter((item) => {
-                            if (tab === "todo") return !state[item.label] && !skippedState[item.label];
-                            if (tab === "done") return state[item.label];
-                            if (tab === "skipped") return skippedState[item.label];
-                            return false;
-                        })
-                        .map((item) => {
-                            const key = item.label;
+                {visibleItems.map((item) => {
+                    const key = item.label;
 
-                            return (
-                                <div key={key} style={styles.card}>
-                                    <div>
-                                        <div>{item.label}</div>
-                                        {item.type === "sets" && (
-                                            <div style={styles.subtitle}>
-                                                Sets: {item.sets} {item.record ? `• Record: ${item.record}` : ""}
-                                            </div>
-                                        )}
-                                        {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
-                                        {item.type === "options" && (
-                                            <div style={styles.subtitle}>{item.options?.join(" / ")}</div>
-                                        )}
-                                    </div>
+                    return (
+                        <div key={key} style={styles.card}>
+                        <div>
+                        <div>{item.label}</div>
+                        {item.type === "sets" && (
+                            <div style={styles.subtitle}>
+                            Sets: {item.sets} {item.record ? `• Record: ${item.record}` : ""}
+                            </div>
+                        )}
+                        {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
+                        {item.type === "options" && (
+                            <div style={styles.subtitle}>{item.options?.join(" / ")}</div>
+                        )}
+                        </div>
 
-                                    <div style={styles.buttonGroup}>
-                                        {tab !== "skipped" && (
-                                            <button
-                                                onClick={() => toggle(key)}
-                                                style={{
-                                                    padding: "8px 14px",
-                                                    borderRadius: 8,
-                                                    border: "none",
-                                                    backgroundColor: "#16a34a",
-                                                    color: "#fff",
-                                                    fontWeight: 600,
-                                                    cursor: "pointer",
-                                                }}
-                                            >
-                                                {tab === "done" ? "Undo" : "Done"}
-                                            </button>
-                                        )}
-                                        {tab !== "done" && (
-                                            <button
-                                                onClick={() => skip(key)}
-                                                style={{
-                                                    padding: "8px 14px",
-                                                    borderRadius: 8,
-                                                    border: "none",
-                                                    backgroundColor: "#f59e0b",
-                                                    color: "#fff",
-                                                    fontWeight: 600,
-                                                    cursor: "pointer",
-                                                }}
-                                            >
-                                                {skippedState[key] ? "Undo Skip" : "Skip"}
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            );
-                        })}
+                        <div style={styles.buttonGroup}>
+                        {tab !== "skipped" && (
+                            <button
+                            onClick={() => toggle(key)}
+                            style={{
+                                padding: "8px 14px",
+                                borderRadius: 8,
+                                border: "none",
+                                backgroundColor: "#16a34a",
+                                color: "#fff",
+                                fontWeight: 600,
+                                cursor: "pointer",
+                            }}
+                            >
+                            {tab === "done" ? "Undo" : "Done"}
+                            </button>
+                        )}
+                        {tab !== "done" && (
+                            <button
+                            onClick={() => skip(key)}
+                            style={{
+                                padding: "8px 14px",
+                                borderRadius: 8,
+                                border: "none",
+                                backgroundColor: "#f59e0b",
+                                color: "#fff",
+                                fontWeight: 600,
+                                cursor: "pointer",
+                            }}
+                            >
+                            {skippedState[key] ? "Undo Skip" : "Skip"}
+                            </button>
+                        )}
+                        </div>
+                        </div>
+                    );
+                })}
                 </div>
-            ))}
+            );
+        })}
         </div>
     );
 }
