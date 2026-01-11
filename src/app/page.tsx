@@ -19,116 +19,177 @@ const routineData = [
         section: "DAILY ROUTINE",
         items: [
             //Sleep
-            { label: "Sleep", type: "options", options: ["3 hrs", "5 hrs", "8 hrs"] },
-            //Wake
+            { label: "Sleep Total 3hrs", type: "done" },
+            { label: "Sleep Total 5hrs", type: "done" },
+            { label: "Sleep Total 8hrs", type: "done" },
+            
+            //Wakup Warmup
+            { label: "Warm-up 10mins", type: "done" },
+            { label: "Neck Warm-up 3mins", type: "done" },
 
             //Facial Appearance + Bed Hygiene
-            { label: "Neck Curl", type: "sets", sets: 4, record: 56 },
-            { label: "Neck Tuck", type: "sets", sets: 4, record: 73 },
+            { label: "Neck Curl Set 1", type: "done" },
+            { label: "4-4-8 Breathing 1min Set 1", type: "done" },
+            { label: "Neck Curl Set 2", type: "done" },
+            { label: "4-4-8 Breathing 1min Set 2", type: "done" },
+            { label: "Neck Curl Set 3", type: "done" },
+            { label: "4-4-8 Breathing 1min Set 3", type: "done" },
+            { label: "Neck Curl Set 4", type: "done" },
+            { label: "4-4-8 Breathing 1min Set 4", type: "done" },
+            { label: "Neck Tuck Set 1", type: "done" },
+            { label: "4-4-8 Breathing 1min Set 5", type: "done" },
+            { label: "Neck Tuck Set 2", type: "done" },
+            { label: "4-4-8 Breathing 1min Set 6", type: "done" },
+            { label: "Neck Tuck Set 3", type: "done" },
+            { label: "4-4-8 Breathing 1min Set 7", type: "done" },
+            { label: "Neck Tuck Set 4", type: "done" },
+            { label: "4-4-8 Breathing 1min Set 8", type: "done" },
             { label: "Clean Bed", type: "done" },
 
             //Facial Hygiene
-            { label: "Hydrate", type: "count", unit: "glass" },
+            { label: "Drink 1 Glass Set 1", type: "count", unit: "glass" },
             { label: "Light Exposure", type: "done" },
-            { label: "Wash Face (Cleanser)", type: "done" },
-            { label: "Apply Moisturizer", type: "done" },
+            { label: "Wash Face (Cleanser) Set 1", type: "done" },
+            { label: "Apply Moisturizer Set 1", type: "done" },
             { label: "Apply Sunscreen", type: "done" },
-            { label: "Hydrate 2", type: "count", unit: "glass" },
-            { label: "Brush Teeth", type: "done" },
+            { label: "Drink 1 Glass Set 2", type: "count", unit: "glass" },
+            { label: "Brush Teeth Set 1", type: "done" },
 
             //Warm-up
-            { label: "Increase Heart Rate", type: "time", value: "3 mins" },
-            { label: "Dynamic Mobility", type: "time", value: "7 mins" },
+            { label: "Increase Heart Rate Set 1", type: "time", value: "3 mins" },
+            { label: "Dynamic Mobility Set 2", type: "time", value: "7 mins" },
 
             //Exercise
-            { label: "Push Ups", type: "sets", sets: 3, record: 87 },
-            { label: "Hydrate 3", type: "count", unit: "glass" },
-            { label: "Elevated Push Ups", type: "sets", sets: 2, record: 30 },
-            { label: "Hydrate 4", type: "count", unit: "glass" },
-            { label: "Lateral Raise", type: "sets", sets: 2, record: 22 },
-            { label: "Hydrate 5", type: "count", unit: "glass" },
-            { label: "Dumbbell Row", type: "sets", sets: 3, record: 72 },
-            { label: "Hydrate 6", type: "count", unit: "glass" },
+            { label: "Push Up Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 3", type: "count", unit: "glass" },
+            { label: "Push Up Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 4", type: "count", unit: "glass" },
+            { label: "Push Up Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 5", type: "count", unit: "glass" },
+            { label: "Elevated Push Ups Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 6", type: "count", unit: "glass" },
+            { label: "Elevated Push Ups Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 7", type: "count", unit: "glass" },
+            { label: "Lateral Raise Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 8", type: "count", unit: "glass" },
+            { label: "Lateral Raise Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 9", type: "count", unit: "glass" },
+            { label: "Dumbbell Row Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 10", type: "count", unit: "glass" },
+            { label: "Dumbbell Row Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 11", type: "count", unit: "glass" },
+            { label: "Dumbbell Row Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 12", type: "count", unit: "glass" },
 
             //Cooldown
             { label: "Slowly Decrease Heart Rate", type: "time", value: "3 mins" },
             { label: "Static Stretch", type: "time", value: "7 mins" },
-            { label: "Hydrate 7", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 13", type: "count", unit: "glass" },
 
             //Hygiene
             { label: "Shower", type: "done" },
-            { label: "Hydrate 8", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 14", type: "count", unit: "glass" },
 
             //Consume
             { label: "Eat Healthy (Protein)", type: "done" },
-            { label: "Hydrate 9", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 15", type: "count", unit: "glass" },
+            
+            //Total Water Drinked 4
 
             //Work
             { label: "30m Work", type: "done" },
-            { label: "Hydrate 10", type: "count", unit: "glass" },
+            { label: "Drink 1/2 Glass Set 16", type: "count", unit: "glass" },
             { label: "30m Work 2", type: "done" },
-            { label: "Hydrate 11", type: "count", unit: "glass" },
+            { label: "Drink 1/2 Glass Set 17", type: "count", unit: "glass" },
+
+            //Total Water Drinked 5
 
             //Warm-up
             { label: "Increase Heart Rate 2", type: "time", value: "3 mins" },
             { label: "Dynamic Mobility 2", type: "time", value: "7 mins" },
 
             //Exercise
-            { label: "Bicep Curls", type: "sets", sets: 3 },
-            { label: "Hydrate 12", type: "count", unit: "glass" },
-            { label: "Pull Ups", type: "sets", sets: 3 },
-            { label: "Hydrate 13", type: "count", unit: "glass" },
-            { label: "Weight Squats", type: "sets", sets: 3 },
-            { label: "Hydrate 14", type: "count", unit: "glass" },
-            { label: "Plank", type: "sets", sets: 2 },
-            { label: "Hydrate 15", type: "count", unit: "glass" },
+            { label: "Bicep Curl Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 18", type: "count", unit: "glass" },
+            { label: "Bicep Curl Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 19", type: "count", unit: "glass" },
+            { label: "Bicep Curl Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 20", type: "count", unit: "glass" },
+            { label: "Pull Up Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 21", type: "count", unit: "glass" },
+            { label: "Pull Up Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 22", type: "count", unit: "glass" },
+            { label: "Pull Up Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 23", type: "count", unit: "glass" },
+            { label: "Weight Squats Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 24", type: "count", unit: "glass" },
+            { label: "Weight Squats Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 25", type: "count", unit: "glass" },
+            { label: "Weight Squats Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 26", type: "count", unit: "glass" },
+            { label: "Plank Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 27", type: "count", unit: "glass" },
+            { label: "Plank Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 28", type: "count", unit: "glass" },
 
             //Cooldown
             { label: "Slowly Decrease Heart Rate 2", type: "time", value: "3 mins" },
             { label: "Static Stretch 2", type: "time", value: "7 mins" },
-            { label: "Hydrate 16", type: "count", unit: "glass" },
+            { label: "Drink 1/8 Glass Set 29", type: "count", unit: "glass" },
 
             //Consume
-            { label: "Eat Healthy (Veggies)", type: "done" },
-            { label: "Hydrate 17", type: "count", unit: "glass" },
+            { label: "Eat Healthy (Veggies) Set 1", type: "done" },
+            { label: "Drink 1/4 Glass Set 30", type: "count", unit: "glass" },
 
             //Work Cycle
             { label: "30m Work 3", type: "done" },
-            { label: "Meditate", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 31", type: "count", unit: "glass" },
             { label: "30m Work 4", type: "done" },
-            { label: "Meditate 2", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 32", type: "count", unit: "glass" },
             { label: "30m Work 5", type: "done" },
-            { label: "Hydrate 18", type: "count", unit: "glass" },
+            { label: "Meditate Set 1", type: "done" },
+            
+            { label: "Drink 1 Glass Set 33", type: "count", unit: "glass" },
+            
+            //Total Water Drinked 8
 
             //Work Cycle
             { label: "30m Work 6", type: "done" },
-            { label: "Meditate 3", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 34", type: "count", unit: "glass" },
             { label: "30m Work 7", type: "done" },
-            { label: "Meditate 4", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 35", type: "count", unit: "glass" },
             { label: "30m Work 8", type: "done" },
-            { label: "Hydrate 19", type: "count", unit: "glass" },
+            { label: "Meditate Set 2", type: "done" },
 
             //Work Cycle
             { label: "30m Work 9", type: "done" },
-            { label: "Meditate 5", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 36", type: "count", unit: "glass" },
             { label: "30m Work 10", type: "done" },
-            { label: "Meditate 6", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 37", type: "count", unit: "glass" },
             { label: "30m Work 11", type: "done" },
-            { label: "Hydrate 20", type: "count", unit: "glass" },
+            { label: "Meditate Set 3", type: "done" },
+            
+            //Total Water Drinked 9
 
             //Work Cycle
             { label: "30m Work 12", type: "done" },
-            { label: "Meditate 7", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 38", type: "count", unit: "glass" },
             { label: "30m Work 13", type: "done" },
-            { label: "Meditate 8", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 39", type: "count", unit: "glass" },
             { label: "30m Work 14", type: "done" },
-            { label: "Hydrate 21", type: "count", unit: "glass" },
+            { label: "Meditate Set 4", type: "done" },
+            
+            //Consume
+            { label: "Eat Healthy (Veggies) Set 2", type: "done" },
+            { label: "Drink 1 Glass Set 40", type: "count", unit: "glass" },
+            
+            //Total Water Drinked 10
 
             //Night Routine
             { label: "Clean Environment", type: "done" },
-            { label: "Wash Face (Cleanser) 2", type: "done" },
-            { label: "Apply Moisturizer 2", type: "done" },
-            { label: "Brush Teeth 2", type: "done" },
+            { label: "Wash Face (Cleanser) Set 2", type: "done" },
+            { label: "Apply Moisturizer Set 2", type: "done" },
+            { label: "Brush Teeth Set 2", type: "done" },
             { label: "Other Hygiene", type: "done" },
 
             //Her
@@ -175,6 +236,8 @@ export default function DailyRoutine() {
             setState({});
             setSkippedState({});
         } else {
+            //localStorage.removeItem(STORAGE_KEY);
+            //localStorage.removeItem(SKIPPED_KEY);
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
             if (saved) setState(JSON.parse(saved) as Record<string, boolean>);
@@ -206,8 +269,10 @@ export default function DailyRoutine() {
     // Calculate progress
     const totalTasks = routineData.reduce((sum, section) => sum + section.items.length, 0);
     const completedTasks = Object.values(state).filter(Boolean).length;
-    const exponent = 0.2;
-    const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
+    const maxLevel = 100/37.3737;
+    const exponent = 0.7;
+    const progressPercent = Math.round(100 * Math.pow(completedTasks / totalTasks, exponent));
+
 
     const styles = {
         page: { minHeight: "100vh", backgroundColor: "#000", color: "#fff", padding: 16, fontFamily: "system-ui, sans-serif" },
@@ -225,12 +290,12 @@ export default function DailyRoutine() {
         <h1>Daily Routine</h1>
         Day Streak: {streak}
         <br/>
-        Level: {`${Math.floor(progressPercent/10)}`}
+        Level: {`${Math.floor(progressPercent/maxLevel)}`}
         {/* Progress Bar */}
         <div style={styles.progressContainer}>
-            <div style={{ ...styles.progressBar, width: `${(progressPercent % 10) * 10}%` }} />
+            <div style={{ ...styles.progressBar, width: `${(progressPercent % maxLevel)/maxLevel * 100}%` }} />
         </div>
-        {Math.round((progressPercent % 10)*10)}% Completed
+        {Math.round((progressPercent % maxLevel)/maxLevel * 100)}% Completed
 
         <div style={styles.tabs}>
         <button style={styles.tab(tab === "todo")} onClick={() => setTab("todo")}>To Do</button>
