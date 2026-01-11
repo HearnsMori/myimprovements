@@ -24,8 +24,9 @@ const routineData = [
             { label: "Sleep Total 8hrs", type: "done" },
             
             //Wakup Warmup
-            { label: "Warm-up 10mins", type: "done" },
-            { label: "Neck Warm-up 3mins", type: "done" },
+            { label: "Making Amethyst Morning Feel Good", type: "done" },
+            { label: "Warm-up 7mins", type: "done" },
+            { label: "Neck Warm-up 2mins", type: "done" },
 
             //Facial Appearance + Bed Hygiene
             { label: "Neck Curl Set 1", type: "done" },
@@ -54,6 +55,16 @@ const routineData = [
             { label: "Apply Sunscreen", type: "done" },
             { label: "Drink 1 Glass Set 2", type: "count", unit: "glass" },
             { label: "Brush Teeth Set 1", type: "done" },
+
+            //Hobby
+            { label: "Play Instruments for 15mins Set 1", type: "done" },
+            { label: "Play Instruments for 15mins Set 2", type: "done" },
+            { label: "Play Instruments for 15mins Set 3", type: "done" },
+            { label: "Play Instruments for 15mins Set 4", type: "done" },
+
+            //Consume
+            { label: "Eat Healthy (Fiber, Complex Carbs, Protein)", type: "done" },
+            { label: "Drink 1/2 Glass Probiotics/Water", type: "count", unit: "glass" },
 
             //Warm-up
             { label: "Increase Heart Rate Set 1", type: "time", value: "3 mins" },
@@ -94,7 +105,7 @@ const routineData = [
             { label: "Eat Healthy (Protein)", type: "done" },
             { label: "Drink 1/4 Glass Set 15", type: "count", unit: "glass" },
             
-            //Total Water Drinked 4
+            //Total Water Drinked 4.5
 
             //Work
             { label: "30m Work", type: "done" },
@@ -102,7 +113,7 @@ const routineData = [
             { label: "30m Work 2", type: "done" },
             { label: "Drink 1/2 Glass Set 17", type: "count", unit: "glass" },
 
-            //Total Water Drinked 5
+            //Total Water Drinked 5.5
 
             //Warm-up
             { label: "Increase Heart Rate 2", type: "time", value: "3 mins" },
@@ -151,7 +162,7 @@ const routineData = [
             
             { label: "Drink 1 Glass Set 33", type: "count", unit: "glass" },
             
-            //Total Water Drinked 8
+            //Total Water Drinked 8.5
 
             //Work Cycle
             { label: "30m Work 6", type: "done" },
@@ -169,7 +180,7 @@ const routineData = [
             { label: "30m Work 11", type: "done" },
             { label: "Meditate Set 3", type: "done" },
             
-            //Total Water Drinked 9
+            //Total Water Drinked 9.5
 
             //Work Cycle
             { label: "30m Work 12", type: "done" },
@@ -183,7 +194,7 @@ const routineData = [
             { label: "Eat Healthy (Veggies) Set 2", type: "done" },
             { label: "Drink 1 Glass Set 40", type: "count", unit: "glass" },
             
-            //Total Water Drinked 10
+            //Total Water Drinked 10.5
 
             //Night Routine
             { label: "Clean Environment", type: "done" },
@@ -193,9 +204,7 @@ const routineData = [
             { label: "Other Hygiene", type: "done" },
 
             //Her
-            { label: "Goodnight and Sleepwell", type: "done" },
-            { label: "Show Her Progress", type: "done" },
-            { label: "Variety of I love you", type: "done" },
+            { label: "Make Amethyst Night Feel Good", type: "done" },
 
             { label: "Stretch + Diaphragm Breathing", type: "done" },
             { label: "Read Books Until Sleepy", type: "done" },
