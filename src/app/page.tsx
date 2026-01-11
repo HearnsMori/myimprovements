@@ -327,9 +327,6 @@ export default function DailyRoutine() {
                         <div>
                         <div>{item.label}</div>
                         {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
-                        {item.type === "options" && (
-                            <div style={styles.subtitle}>{item.options?.join(" / ")}</div>
-                        )}
                         </div>
 
                         <div style={styles.buttonGroup}>
