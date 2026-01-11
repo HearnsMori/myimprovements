@@ -326,11 +326,6 @@ export default function DailyRoutine() {
                         <div key={key} style={styles.card}>
                         <div>
                         <div>{item.label}</div>
-                        {item.type === "sets" && (
-                            <div style={styles.subtitle}>
-                            Sets: {item.sets} {item.record ? `• Record: ${item.record}` : ""}
-                            </div>
-                        )}
                         {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
                         {item.type === "options" && (
                             <div style={styles.subtitle}>{item.options?.join(" / ")}</div>
