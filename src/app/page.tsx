@@ -14,6 +14,52 @@ const SKIPPED_KEY = "daily-routine-skipped";
 const DATE_KEY = "daily-routine-date";
 const STREAK_KEY = "daily-routine-streak";
 
+const rankingData = [
+    { level: 0,  name: "zero", image: "level0.png" },
+    { level: 1,  name: "severely impaired", image: "level1.png" },
+    { level: 2,  name: "very dysfunctional", image: "level2.png" },
+    { level: 3,  name: "far below average", image: "level3.png" },
+    { level: 4,  name: "below average (low)", image: "level4.png" },
+    { level: 5,  name: "below average", image: "level5.png" },
+    { level: 6,  name: "below average (high)", image: "level6.png" },
+
+    { level: 7,  name: "weak functioning", image: "level7.png" },
+    { level: 8,  name: "inconsistent", image: "level8.png" },
+    { level: 9,  name: "lower normal", image: "level9.png" },
+    { level: 10, name: "low average", image: "level10.png" },
+    { level: 11, name: "low average (stable)", image: "level11.png" },
+    { level: 12, name: "low average (strong)", image: "level12.png" },
+
+    { level: 13, name: "barely average", image: "level13.png" },
+    { level: 14, name: "average (low)", image: "level14.png" },
+    { level: 15, name: "average", image: "level15.png" },
+    { level: 16, name: "average (stable)", image: "level16.png" },
+    { level: 17, name: "average (competent)", image: "level17.png" },
+    { level: 18, name: "average (solid)", image: "level18.png" },
+    { level: 19, name: "true average", image: "level19.png" },
+    { level: 20, name: "average (aware)", image: "level20.png" },
+    { level: 21, name: "average (motivated)", image: "level21.png" },
+    { level: 22, name: "average (consistent)", image: "level22.png" },
+    { level: 23, name: "average (skilled)", image: "level23.png" },
+    { level: 24, name: "average (high)", image: "level24.png" },
+    { level: 25, name: "high average", image: "level25.png" },
+
+    { level: 26, name: "above average", image: "level26.png" },
+    { level: 27, name: "strong performer", image: "level27.png" },
+    { level: 28, name: "advanced", image: "level28.png" },
+    { level: 29, name: "highly capable", image: "level29.png" },
+    { level: 30, name: "top-tier normal", image: "level30.png" },
+    { level: 31, name: "exceptional", image: "level31.png" },
+
+    { level: 32, name: "elite", image: "level32.png" },
+    { level: 33, name: "very elite", image: "level33.png" },
+    { level: 34, name: "near master", image: "level34.png" },
+    { level: 35, name: "world-class", image: "level35.png" },
+    { level: 36, name: "extreme outlier", image: "level36.png" },
+
+    { level: 37, name: "human ceiling", image: "level37.png" }
+];
+
 const routineData = [
     {
         section: "DAILY ROUTINE",
@@ -22,7 +68,7 @@ const routineData = [
             { label: "Sleep Total 3hrs", type: "done" },
             { label: "Sleep Total 5hrs", type: "done" },
             { label: "Sleep Total 8hrs", type: "done" },
-            
+
             //Wakup Warmup
             { label: "Making Amethyst Morning Feel Good", type: "done" },
             { label: "Warm-up 7mins", type: "done" },
@@ -64,144 +110,172 @@ const routineData = [
 
             //Consume
             { label: "Eat Healthy (Fiber, Complex Carbs, Protein)", type: "done" },
-            { label: "Drink 1/2 Glass Probiotics/Water", type: "count", unit: "glass" },
+            { label: "Drink Probiotics", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass Set 3", type: "count", unit: "glass" },
+
+            //Total Water Drinked = 2.25
+
+            //Work
+            { label: "Work 30m Set 1", type: "done" },
+            { label: "Drink 1/4 Glass Set 4", type: "count", unit: "glass" },
+            { label: "Work 30m Set 2", type: "done" },
+            { label: "Drink 1/4 Glass Set 5", type: "count", unit: "glass" },
+            { label: "Work 30m Set 3", type: "done" },
+            { label: "Drink 1/4 Glass Set 6", type: "count", unit: "glass" },
+            { label: "Work 30m Set 4", type: "done" },
+            { label: "Drink 1/4 Glass Set 7", type: "count", unit: "glass" },
+            { label: "Work 30m Set 5", type: "done" },
+            { label: "Eat Healthy Snack Set 1", type: "done" },
+            { label: "Drink 1/4 Glass Set 8", type: "count", unit: "glass" },
+            { label: "Work 30m Set 6", type: "done" },
+            { label: "Drink 1/4 Glass Set 9", type: "count", unit: "glass" },
+
+            //Total Water Drinked = 3.75
 
             //Warm-up
             { label: "Increase Heart Rate Set 1", type: "time", value: "3 mins" },
             { label: "Dynamic Mobility Set 2", type: "time", value: "7 mins" },
+            { label: "Drink 1/8 Glass Set 10", type: "count", unit: "glass" },
 
             //Exercise
             { label: "Push Up Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 3", type: "count", unit: "glass" },
-            { label: "Push Up Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 4", type: "count", unit: "glass" },
-            { label: "Push Up Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 5", type: "count", unit: "glass" },
-            { label: "Elevated Push Ups Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 6", type: "count", unit: "glass" },
-            { label: "Elevated Push Ups Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 7", type: "count", unit: "glass" },
-            { label: "Lateral Raise Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 8", type: "count", unit: "glass" },
-            { label: "Lateral Raise Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 9", type: "count", unit: "glass" },
-            { label: "Dumbbell Row Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 10", type: "count", unit: "glass" },
-            { label: "Dumbbell Row Set 2", type: "done" },
             { label: "Drink 1/8 Glass Set 11", type: "count", unit: "glass" },
-            { label: "Dumbbell Row Set 3", type: "done" },
+            { label: "Push Up Set 2", type: "done" },
             { label: "Drink 1/8 Glass Set 12", type: "count", unit: "glass" },
+            { label: "Push Up Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 13", type: "count", unit: "glass" },
+            { label: "Elevated Push Ups Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 14", type: "count", unit: "glass" },
+            { label: "Elevated Push Ups Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 15", type: "count", unit: "glass" },
+            { label: "Lateral Raise Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 16", type: "count", unit: "glass" },
+            { label: "Lateral Raise Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 17", type: "count", unit: "glass" },
+            { label: "Dumbbell Row Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 18", type: "count", unit: "glass" },
+            { label: "Dumbbell Row Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 19", type: "count", unit: "glass" },
+            { label: "Dumbbell Row Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 20", type: "count", unit: "glass" },
 
             //Cooldown
-            { label: "Slowly Decrease Heart Rate", type: "time", value: "3 mins" },
-            { label: "Static Stretch", type: "time", value: "7 mins" },
-            { label: "Drink 1/4 Glass Set 13", type: "count", unit: "glass" },
-
-            //Hygiene
-            { label: "Shower", type: "done" },
-            { label: "Drink 1/4 Glass Set 14", type: "count", unit: "glass" },
-
-            //Consume
+            { label: "Slowly Decrease Heart Rate Set 1", type: "time", value: "3 mins" },
+            { label: "Static Stretch Set 1", type: "time", value: "7 mins" },
             { label: "Eat Healthy (Protein)", type: "done" },
-            { label: "Drink 1/4 Glass Set 15", type: "count", unit: "glass" },
-            
-            //Total Water Drinked 4.5
+            { label: "Drink 1/8 Glass Set 21", type: "count", unit: "glass" },
+
+            //Total Water Drinked = 5.25
+
+            //Hygiene + Food
+            { label: "Take Shower", type: "done" },
+            { label: "Drink 1/4 Glass Set 22", type: "count", unit: "glass" },
+            { label: "Other Hygiene Set 1", type: "done" },
+            { label: "Drink 1/4 Glass Set 23", type: "count", unit: "glass" },
+
+            //Total Water Drinked 5.75
 
             //Work
-            { label: "30m Work", type: "done" },
-            { label: "Drink 1/2 Glass Set 16", type: "count", unit: "glass" },
-            { label: "30m Work 2", type: "done" },
-            { label: "Drink 1/2 Glass Set 17", type: "count", unit: "glass" },
+            { label: "Work 30m Set 7", type: "done" },
+            { label: "Eat Healthy Snack Set 2", type: "done" },
+            { label: "Drink 1/2 Glass Set 24", type: "count", unit: "glass" },
+            { label: "Work 30m Set 8", type: "done" },
+            { label: "Drink 1/2 Glass Set 25", type: "count", unit: "glass" },
 
-            //Total Water Drinked 5.5
+            //Total Water Drinked 6.75
 
             //Warm-up
             { label: "Increase Heart Rate 2", type: "time", value: "3 mins" },
             { label: "Dynamic Mobility 2", type: "time", value: "7 mins" },
+            { label: "Drink 1/8 Glass Set 26", type: "count", unit: "glass" },
 
             //Exercise
             { label: "Bicep Curl Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 18", type: "count", unit: "glass" },
-            { label: "Bicep Curl Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 19", type: "count", unit: "glass" },
-            { label: "Bicep Curl Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 20", type: "count", unit: "glass" },
-            { label: "Pull Up Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 21", type: "count", unit: "glass" },
-            { label: "Pull Up Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 22", type: "count", unit: "glass" },
-            { label: "Pull Up Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 23", type: "count", unit: "glass" },
-            { label: "Weight Squats Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 24", type: "count", unit: "glass" },
-            { label: "Weight Squats Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 25", type: "count", unit: "glass" },
-            { label: "Weight Squats Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 26", type: "count", unit: "glass" },
-            { label: "Plank Set 1", type: "done" },
             { label: "Drink 1/8 Glass Set 27", type: "count", unit: "glass" },
-            { label: "Plank Set 2", type: "done" },
+            { label: "Bicep Curl Set 2", type: "done" },
             { label: "Drink 1/8 Glass Set 28", type: "count", unit: "glass" },
+            { label: "Bicep Curl Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 29", type: "count", unit: "glass" },
+            { label: "Pull Up Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 30", type: "count", unit: "glass" },
+            { label: "Pull Up Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 31", type: "count", unit: "glass" },
+            { label: "Pull Up Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 32", type: "count", unit: "glass" },
+            { label: "Weight Squats Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 33", type: "count", unit: "glass" },
+            { label: "Weight Squats Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 34", type: "count", unit: "glass" },
+            { label: "Weight Squats Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 35", type: "count", unit: "glass" },
+            { label: "Plank Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 36", type: "count", unit: "glass" },
+            { label: "Plank Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 37", type: "count", unit: "glass" },
 
             //Cooldown
             { label: "Slowly Decrease Heart Rate 2", type: "time", value: "3 mins" },
             { label: "Static Stretch 2", type: "time", value: "7 mins" },
-            { label: "Drink 1/8 Glass Set 29", type: "count", unit: "glass" },
+            { label: "Drink 1/8 Glass Set 38", type: "count", unit: "glass" },
+
+            //Total Water Drinked 8.375
 
             //Consume
             { label: "Eat Healthy (Veggies) Set 1", type: "done" },
-            { label: "Drink 1/4 Glass Set 30", type: "count", unit: "glass" },
+            { label: "Drink 1/8 Glass Set 39", type: "count", unit: "glass" },
 
-            //Work Cycle
-            { label: "30m Work 3", type: "done" },
-            { label: "Drink 1/4 Glass Set 31", type: "count", unit: "glass" },
-            { label: "30m Work 4", type: "done" },
-            { label: "Drink 1/4 Glass Set 32", type: "count", unit: "glass" },
-            { label: "30m Work 5", type: "done" },
-            { label: "Meditate Set 1", type: "done" },
-            
-            { label: "Drink 1 Glass Set 33", type: "count", unit: "glass" },
-            
             //Total Water Drinked 8.5
 
             //Work Cycle
-            { label: "30m Work 6", type: "done" },
-            { label: "Drink 1/4 Glass Set 34", type: "count", unit: "glass" },
-            { label: "30m Work 7", type: "done" },
-            { label: "Drink 1/4 Glass Set 35", type: "count", unit: "glass" },
-            { label: "30m Work 8", type: "done" },
-            { label: "Meditate Set 2", type: "done" },
+            { label: "Work 30m Set 9", type: "done" },
+            { label: "Drink 1/8 Glass Set 40", type: "count", unit: "glass" },
+            { label: "Work 30m Set 10", type: "done" },
+            { label: "Drink 1/8 Glass Set 41", type: "count", unit: "glass" },
+            { label: "Work 30m Set 11", type: "done" },
+            { label: "Meditate 5m Set 1", type: "done" }, 
+
+            //Total Water Drinked 8.75
 
             //Work Cycle
-            { label: "30m Work 9", type: "done" },
-            { label: "Drink 1/4 Glass Set 36", type: "count", unit: "glass" },
-            { label: "30m Work 10", type: "done" },
-            { label: "Drink 1/4 Glass Set 37", type: "count", unit: "glass" },
-            { label: "30m Work 11", type: "done" },
-            { label: "Meditate Set 3", type: "done" },
-            
-            //Total Water Drinked 9.5
+            { label: "Work 30m Set 12", type: "done" },
+            { label: "Drink 1/8 Glass Set 42", type: "count", unit: "glass" },
+            { label: "Work 30m Set 13", type: "done" },
+            { label: "Drink 1/8 Glass Set 43", type: "count", unit: "glass" },
+            { label: "Work 30m Set 14", type: "done" },
+            { label: "Meditate 5m Set 2", type: "done" },
+
+            //Total Water Drinked 9.00
 
             //Work Cycle
-            { label: "30m Work 12", type: "done" },
-            { label: "Drink 1/4 Glass Set 38", type: "count", unit: "glass" },
-            { label: "30m Work 13", type: "done" },
-            { label: "Drink 1/4 Glass Set 39", type: "count", unit: "glass" },
-            { label: "30m Work 14", type: "done" },
-            { label: "Meditate Set 4", type: "done" },
-            
+            { label: "Work 30m Set 15", type: "done" },
+            { label: "Drink 1/8 Glass Set 44", type: "count", unit: "glass" },
+            { label: "Work 30m Set 16", type: "done" },
+            { label: "Drink 1/8 Glass Set 45", type: "count", unit: "glass" },
+            { label: "Work 30m Set 17", type: "done" },
+            { label: "Meditate 5m Set 3", type: "done" },
+
+            //Total Water Drinked 9.25
+
+            //Work Cycle
+            { label: "Work 30m Set 18", type: "done" },
+            { label: "Drink 1/8 Glass Set 46", type: "count", unit: "glass" },
+            { label: "Work 30m Set 19", type: "done" },
+            { label: "Drink 1/8 Glass Set 47", type: "count", unit: "glass" },
+            { label: "Work 30m Set 20", type: "done" },
+            { label: "Meditate 5m Set 4", type: "done" },
+
             //Consume
             { label: "Eat Healthy (Veggies) Set 2", type: "done" },
-            { label: "Drink 1 Glass Set 40", type: "count", unit: "glass" },
-            
-            //Total Water Drinked 10.5
+            { label: "Drink 1/2 Glass Set 48", type: "count", unit: "glass" },
+
+            //Total Water Drinked 10
 
             //Night Routine
             { label: "Clean Environment", type: "done" },
             { label: "Wash Face (Cleanser) Set 2", type: "done" },
             { label: "Apply Moisturizer Set 2", type: "done" },
             { label: "Brush Teeth Set 2", type: "done" },
-            { label: "Other Hygiene", type: "done" },
+            { label: "Other Hygiene Set 2", type: "done" },
 
             //Her
             { label: "Make Amethyst Night Feel Good", type: "done" },
@@ -218,6 +292,13 @@ export default function DailyRoutine() {
     const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
     const [tab, setTab] = useState<"todo" | "done" | "skipped">("todo");
     const [streak, setStreak] = useState<number>(0);
+
+    //For level up effect
+    const [currentLevel, setCurrentLevel] = useState<number>(0);
+    const [showLevelUp, setShowLevelUp] = useState<boolean>(false);
+    const [leveledUpRank, setLeveledUpRank] = useState<typeof rankingData[number] | null>(null);
+    const [leveledUpRankPast, setLeveledUpRankPast] = useState<typeof rankingData[number] | null>(null);
+
 
     useEffect(() => {
         const today = new Date().toDateString();
@@ -245,8 +326,10 @@ export default function DailyRoutine() {
             setState({});
             setSkippedState({});
         } else {
+            //Uncomment the two below when reset
             //localStorage.removeItem(STORAGE_KEY);
             //localStorage.removeItem(SKIPPED_KEY);
+
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
             if (saved) setState(JSON.parse(saved) as Record<string, boolean>);
@@ -279,8 +362,22 @@ export default function DailyRoutine() {
     const totalTasks = routineData.reduce((sum, section) => sum + section.items.length, 0);
     const completedTasks = Object.values(state).filter(Boolean).length;
     const maxLevel = 100/37.3737;
-    const exponent = 0.7;
-    const progressPercent = Math.round(100 * Math.pow(completedTasks / totalTasks, exponent));
+    const exponent = 0.5;
+    const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
+    const level = Math.min(
+        37,
+        Math.max(1, Math.floor(progressPercent / maxLevel))
+    );
+    useEffect(() => {
+        if (level > currentLevel) {
+            const rank = rankingData.find(r => r.level === level) || null;
+            const rank2 = rankingData.find(r => r.level === level-1) || null;
+            setCurrentLevel(level);
+            setLeveledUpRank(rank);
+            setLeveledUpRankPast(rank2);
+            setShowLevelUp(true);
+        }
+    }, [level]);
 
 
     const styles = {
@@ -296,13 +393,79 @@ export default function DailyRoutine() {
 
     return (
         <div style={styles.page}>
+        {showLevelUp && leveledUpRank && (
+            <div
+            style={{
+                position: "fixed",
+                inset: 0,
+                backgroundColor: "rgba(0,0,0,0.85)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 9999,
+            }}
+            >
+            <div
+            style={{
+                backgroundColor: "#18181b",
+                borderRadius: 16,
+                padding: 24,
+                textAlign: "center",
+                maxWidth: 320,
+                width: "100%",
+            }}
+            >
+            <h2 style={{ color: "#16a34a", marginBottom: 8 }}>
+            Congratulations
+            </h2>
+
+            <p style={{ fontSize: 18, fontWeight: 600 }}>
+            You reached Level {leveledUpRank.level}
+            </p>
+
+            <p style={{ color: "#a1a1aa", marginBottom: 16 }}>
+            {leveledUpRankPast.name}=&gt;{leveledUpRank.name}
+            </p>
+
+            <img
+            src={`/level${leveledUpRank.level}.jpeg`}
+            alt={leveledUpRank.name}
+            style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "contain",
+                marginBottom: 16,
+            }}
+            />
+
+            <button
+            onClick={() => setShowLevelUp(false)}
+            style={{
+                padding: "10px 16px",
+                borderRadius: 10,
+                border: "none",
+                backgroundColor: "#16a34a",
+                color: "#fff",
+                fontWeight: 700,
+                cursor: "pointer",
+                width: "100%",
+            }}
+            >
+            Continue
+            </button>
+            </div>
+            </div>
+        )}
         <h1>Daily Routine</h1>
         Day Streak: {streak}
         <br/>
-        Level: {`${Math.floor(progressPercent/maxLevel)}`}
+        <br/>
+        Level: {`${level}`}
+        <br/>
+        Status Rarity: {leveledUpRank?.name}
         {/* Progress Bar */}
         <div style={styles.progressContainer}>
-            <div style={{ ...styles.progressBar, width: `${(progressPercent % maxLevel)/maxLevel * 100}%` }} />
+        <div style={{ ...styles.progressBar, width: `${(progressPercent % maxLevel)/maxLevel * 100}%` }} />
         </div>
         {Math.round((progressPercent % maxLevel)/maxLevel * 100)}% Completed
 
