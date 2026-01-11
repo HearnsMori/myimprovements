@@ -420,16 +420,16 @@ export default function DailyRoutine() {
             </h2>
 
             <p style={{ fontSize: 18, fontWeight: 600 }}>
-            You reached Level {leveledUpRank.level}
+            You reached Level {leveledUpRank?.level}
             </p>
 
             <p style={{ color: "#a1a1aa", marginBottom: 16 }}>
-            {leveledUpRankPast.name}=&gt;{leveledUpRank.name}
+            {leveledUpRankPast?.name}=&gt;{leveledUpRank?.name}
             </p>
 
             <img
             src={`/level${leveledUpRank.level}.jpeg`}
-            alt={leveledUpRank.name}
+            alt={leveledUpRank?.name}
             style={{
                 width: "100%",
                 height: "auto",
