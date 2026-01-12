@@ -550,7 +550,7 @@ export default function DailyRoutine() {
                         </div>
 
                         <div style={styles.buttonGroup}>
-                        {tab !== "skipped" && (
+                        {tab && (
                             <button
                             onClick={() => toggle(key)}
                             style={{
