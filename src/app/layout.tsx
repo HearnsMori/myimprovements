@@ -14,8 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MyImprovements",
-  description: "My Improvements Productivity Tools develop by Mori",
-  developer: "Hearns S. Mori",
+  description: "My Improvements Productivity Tools develop by Hearns S. Mori",
 };
 
 export default function RootLayout({
