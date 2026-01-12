@@ -97,9 +97,9 @@ const routineData = [
             { label: "Brush Teeth Set 1", type: "done" },
             { label: "Wash Face Set 1", type: "done" },
             { label: "Use Celeteque Brightening Facial Cleanser Set 1", type: "done" },
+            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m Set 1", type: "done" },
             { label: "Apply Vitamin C Serum Set 1", type: "done" },
             { label: "Apply Celeteque Skin Defense Set 1", type: "done" },
-            { label: "Use Jade Roller for 10m Set 1", type: "done" },
             { label: "Drink 1 Glass Set 2", type: "count", unit: "glass" },
 
             //Hobby
@@ -201,7 +201,7 @@ const routineData = [
             { label: "Exercise the Eye Set 2", type: "done" },
             { label: "Exercise the Chick Set 3", type: "done" },
             { label: "Exercise the Eye Set 3", type: "done" },
-            { label: "Use Gua Sha", type: "done" },
+            { label: "Apply Jojoba Oil and Use Gua Sha Very Lightly for 10min", type: "done" },
             { label: "Drink 1/4 Glass Set 33", type: "count", unit: "glass" },
             { label: "Other Hygiene Set 1", type: "done" },
             { label: "Drink 1/4 Glass Set 34", type: "count", unit: "glass" },
@@ -276,9 +276,9 @@ const routineData = [
             { label: "Brush Teeth Set 2", type: "done" },
             { label: "Wash Face Set 2", type: "done" },
             { label: "Use Celeteque Brightening Facial Cleanser Set 2", type: "done" },
+            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m Set 2", type: "done" },
             { label: "Apply Vitamin C Serum Set 2", type: "done" },
             { label: "Apply Celeteque Skin Defense Set 2", type: "done" },
-            { label: "Use Jade Roller for 10m Set 2", type: "done" },
             { label: "Other Hygiene Set 2", type: "done" },
 
             //Her
