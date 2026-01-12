@@ -71,8 +71,9 @@ const routineData = [
 
             //Wakup Warmup
             { label: "Making Amethyst Morning Feel Good", type: "done" },
+            { label: "Express Gratitude to Amethyst through Transparency", type: "done" },
             { label: "Warm-up 7mins", type: "done" },
-            { label: "Neck Warm-up 2mins", type: "done" },
+            { label: "Warm-up Neck 2mins", type: "done" },
 
             //Facial Appearance + Bed Hygiene
             { label: "Neck Curl Set 1", type: "done" },
@@ -96,9 +97,12 @@ const routineData = [
             //Facial Hygiene
             { label: "Drink 1 Glass Set 1", type: "count", unit: "glass" },
             { label: "Light Exposure", type: "done" },
-            { label: "Wash Face (Cleanser) Set 1", type: "done" },
+            { label: "Wash Face Set 1", type: "done" },
+            { label: "Use Cleanser Set 1", type: "done" },
+            { label: "Apply Vitamin C Serum Set 1", type: "done" },
             { label: "Apply Moisturizer Set 1", type: "done" },
             { label: "Apply Sunscreen", type: "done" },
+            { label: "Use Jade Roller for 10m Set 1", type: "done" },
             { label: "Drink 1 Glass Set 2", type: "count", unit: "glass" },
             { label: "Brush Teeth Set 1", type: "done" },
 
@@ -169,6 +173,14 @@ const routineData = [
 
             //Hygiene + Food
             { label: "Take Shower", type: "done" },
+            { label: "Exercise the Chick Set 1", type: "done" },
+            { label: "Exercise the Eye Set 1", type: "done" },
+            { label: "Exercise the Chick Set 1", type: "done" },
+            { label: "Exercise the Eye Set 2", type: "done" },
+            { label: "Exercise the Chick Set 2", type: "done" },
+            { label: "Exercise the Eye Set 3", type: "done" },
+            { label: "Exercise the Chick Set 3", type: "done" },
+            { label: "Use Gua Sha", type: "done" },
             { label: "Drink 1/4 Glass Set 22", type: "count", unit: "glass" },
             { label: "Other Hygiene Set 1", type: "done" },
             { label: "Drink 1/4 Glass Set 23", type: "count", unit: "glass" },
@@ -225,6 +237,8 @@ const routineData = [
             { label: "Drink 1/8 Glass Set 39", type: "count", unit: "glass" },
 
             //Total Water Drinked 8.5
+            { label: "Make Amethyst Afternoon Feel Good", type: "done" },
+            { label: "Show Progress to Amethyst through Novelty  Preplan", type: "done" },
 
             //Work Cycle
             { label: "Work 30m Set 9", type: "done" },
@@ -272,13 +286,17 @@ const routineData = [
 
             //Night Routine
             { label: "Clean Environment", type: "done" },
-            { label: "Wash Face (Cleanser) Set 2", type: "done" },
+            { label: "Wash Face Set 2", type: "done" },
+            { label: "Use Cleanser Set 2", type: "done" },
+            { label: "Apply Vitamin C Serum Set 2", type: "done" },
             { label: "Apply Moisturizer Set 2", type: "done" },
+            { label: "Use Jade Roller for 10m Set 2", type: "done" },
             { label: "Brush Teeth Set 2", type: "done" },
             { label: "Other Hygiene Set 2", type: "done" },
 
             //Her
             { label: "Make Amethyst Night Feel Good", type: "done" },
+            { label: "Show Emotional Security to Amethyst but with Safe Unknown", type: "done" },
 
             { label: "Stretch + Diaphragm Breathing", type: "done" },
             { label: "Read Books Until Sleepy", type: "done" },
@@ -327,8 +345,8 @@ export default function DailyRoutine() {
             setSkippedState({});
         } else {
             //Uncomment the two below when reset
-            //localStorage.removeItem(STORAGE_KEY);
-            //localStorage.removeItem(SKIPPED_KEY);
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(SKIPPED_KEY);
 
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
@@ -361,13 +379,53 @@ export default function DailyRoutine() {
     // Calculate progress
     const totalTasks = routineData.reduce((sum, section) => sum + section.items.length, 0);
     const completedTasks = Object.values(state).filter(Boolean).length;
-    const maxLevel = 100/37.3737;
-    const exponent = 0.5;
+    const MAX_LEVEL = 24;
+    const MAX_PER_SEC = 500000;
+    const maxLevel = 100/MAX_LEVEL;
+    const exponent = 0.6;
     const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
+
+    // level
     const level = Math.min(
-        37,
-        Math.max(1, Math.floor(progressPercent / maxLevel))
+        MAX_LEVEL,
+        Math.max(0, Math.floor(progressPercent / maxLevel))
     );
+
+    const levelNotRound = Math.min(
+        MAX_LEVEL,
+        Math.max(0, progressPercent / maxLevel)
+    );
+
+    const levelToHourlySalary = (clevel: number) => {
+        if (clevel === 1) return 0.000000025*60*60*24;
+        if (clevel === 2) return 0.00000025*60*60*24;
+        if (clevel === 3) return 0.0000025*60*60*24;
+        if (clevel === 4) return 0.000025*60*60*24;
+        if (clevel === 5) return 0.00025*60*60*24;
+        if (clevel === 6) return 0.00125*60*60*24;
+        if (clevel === 7) return 0.0025*60*60*24;
+        if (clevel === 8) return 0.005*60*60*24;
+        if (clevel === 9) return 0.01*60*60*24;
+        if (clevel === 10) return 0.5*60*60*24;
+        if (clevel === 11) return 1*60*60*24;
+        if (clevel === 12) return 2.5*60*60*24;
+        if (clevel === 13) return 5*60*60*24;
+        if (clevel === 14) return 25*60*60*24;
+        if (clevel === 15) return 50*60*60*24;
+        if (clevel === 16) return 100*60*60*24;
+        if (clevel === 17) return 200*60*60*24;
+        if (clevel === 18) return 1500*60*60*24;
+        if (clevel === 19) return 3500*60*60*24;
+        if (clevel === 20) return 7500*60*60*24;
+        if (clevel === 21) return 60000*60*60*24;
+        if (clevel === 22) return 120000*60*60*24;
+        if (clevel === 23) return 250000*60*60*24;
+        if (clevel === 24) return 500000*60*60*24;
+    }
+
+    // hourly salary
+    const hourlySalary = levelToHourlySalary(level);
+
     useEffect(() => {
         if (level > currentLevel) {
             const rank = rankingData.find(r => r.level === level) || null;
@@ -463,6 +521,8 @@ export default function DailyRoutine() {
         Level: {`${level}`}
         <br/>
         Status Rarity: {leveledUpRank?.name}
+        <br/>
+        {/*Income per hour: {hourlySalary} Php*/}
         {/* Progress Bar */}
         <div style={styles.progressContainer}>
         <div style={{ ...styles.progressBar, width: `${(progressPercent % maxLevel)/maxLevel * 100}%` }} />
