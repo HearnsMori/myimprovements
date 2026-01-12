@@ -16,48 +16,36 @@ const STREAK_KEY = "daily-routine-streak";
 
 const rankingData = [
     { level: 0,  name: "zero", image: "level0.png" },
-    { level: 1,  name: "severely impaired", image: "level1.png" },
-    { level: 2,  name: "very dysfunctional", image: "level2.png" },
-    { level: 3,  name: "far below average", image: "level3.png" },
-    { level: 4,  name: "below average (low)", image: "level4.png" },
-    { level: 5,  name: "below average", image: "level5.png" },
-    { level: 6,  name: "below average (high)", image: "level6.png" },
+    { level: 1,  name: "far below average", image: "level3.png" },
+    { level: 2,  name: "below average (low)", image: "level4.png" },
+    { level: 3,  name: "below average", image: "level5.png" },
+    { level: 4,  name: "below average (high)", image: "level6.png" },
 
-    { level: 7,  name: "weak functioning", image: "level7.png" },
-    { level: 8,  name: "inconsistent", image: "level8.png" },
-    { level: 9,  name: "lower normal", image: "level9.png" },
-    { level: 10, name: "low average", image: "level10.png" },
-    { level: 11, name: "low average (stable)", image: "level11.png" },
-    { level: 12, name: "low average (strong)", image: "level12.png" },
+    { level: 5,  name: "lower normal", image: "level9.png" },
+    { level: 6, name: "low average", image: "level10.png" },
+    { level: 7, name: "low average (stable)", image: "level11.png" },
+    { level: 8, name: "low average (strong)", image: "level12.png" },
 
-    { level: 13, name: "barely average", image: "level13.png" },
-    { level: 14, name: "average (low)", image: "level14.png" },
-    { level: 15, name: "average", image: "level15.png" },
-    { level: 16, name: "average (stable)", image: "level16.png" },
-    { level: 17, name: "average (competent)", image: "level17.png" },
-    { level: 18, name: "average (solid)", image: "level18.png" },
-    { level: 19, name: "true average", image: "level19.png" },
-    { level: 20, name: "average (aware)", image: "level20.png" },
-    { level: 21, name: "average (motivated)", image: "level21.png" },
-    { level: 22, name: "average (consistent)", image: "level22.png" },
-    { level: 23, name: "average (skilled)", image: "level23.png" },
-    { level: 24, name: "average (high)", image: "level24.png" },
-    { level: 25, name: "high average", image: "level25.png" },
+    { level: 9, name: "barely average", image: "level13.png" },
+    { level: 10, name: "average (low)", image: "level14.png" },
+    { level: 11, name: "average", image: "level15.png" },
+    { level: 12, name: "average (competent)", image: "level17.png" },
+    { level: 13, name: "true average", image: "level19.png" },
+    { level: 14, name: "average (consistent)", image: "level22.png" },
+    { level: 15, name: "average (high)", image: "level24.png" },
+    { level: 16, name: "high average", image: "level25.png" },
 
-    { level: 26, name: "above average", image: "level26.png" },
-    { level: 27, name: "strong performer", image: "level27.png" },
-    { level: 28, name: "advanced", image: "level28.png" },
-    { level: 29, name: "highly capable", image: "level29.png" },
-    { level: 30, name: "top-tier normal", image: "level30.png" },
-    { level: 31, name: "exceptional", image: "level31.png" },
+    { level: 17, name: "above average", image: "level26.png" },
+    { level: 18, name: "advanced", image: "level28.png" },
+    { level: 19, name: "exceptional advanced", image: "level31.png" },
 
-    { level: 32, name: "elite", image: "level32.png" },
-    { level: 33, name: "very elite", image: "level33.png" },
-    { level: 34, name: "near master", image: "level34.png" },
-    { level: 35, name: "world-class", image: "level35.png" },
-    { level: 36, name: "extreme outlier", image: "level36.png" },
+    { level: 20, name: "elite", image: "level32.png" },
+    { level: 21, name: "master", image: "level34.png" },
+    
+    { level: 22, name: "above genius", image: "level34.png" },
+    { level: 23, name: "top genius", image: "level34.png" },
 
-    { level: 37, name: "human ceiling", image: "level37.png" }
+    { level: 24, name: "one of the most influencial", image: "level37.png" }
 ];
 
 const routineData = [
@@ -175,11 +163,10 @@ const routineData = [
             { label: "Take Shower", type: "done" },
             { label: "Exercise the Chick Set 1", type: "done" },
             { label: "Exercise the Eye Set 1", type: "done" },
-            { label: "Exercise the Chick Set 1", type: "done" },
-            { label: "Exercise the Eye Set 2", type: "done" },
             { label: "Exercise the Chick Set 2", type: "done" },
-            { label: "Exercise the Eye Set 3", type: "done" },
+            { label: "Exercise the Eye Set 2", type: "done" },
             { label: "Exercise the Chick Set 3", type: "done" },
+            { label: "Exercise the Eye Set 3", type: "done" },
             { label: "Use Gua Sha", type: "done" },
             { label: "Drink 1/4 Glass Set 22", type: "count", unit: "glass" },
             { label: "Other Hygiene Set 1", type: "done" },
@@ -487,7 +474,7 @@ export default function DailyRoutine() {
             </p>
 
             <img
-            src={`/level${leveledUpRank.level}.jpeg`}
+            src={`/levels${leveledUpRank.level}.jpeg`}
             alt={leveledUpRank?.name}
             style={{
                 width: "100%",
