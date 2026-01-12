@@ -299,6 +299,7 @@ const routineData = [
             { label: "Show Emotional Security to Amethyst but with Safe Unknown", type: "done" },
 
             { label: "Stretch + Diaphragm Breathing", type: "done" },
+            { label: "Correct the Daily Routine", type: "done" },
             { label: "Read Books Until Sleepy", type: "done" },
         ],
     },
@@ -345,8 +346,8 @@ export default function DailyRoutine() {
             setSkippedState({});
         } else {
             //Uncomment the two below when reset
-            localStorage.removeItem(STORAGE_KEY);
-            localStorage.removeItem(SKIPPED_KEY);
+            //localStorage.removeItem(STORAGE_KEY);
+            //localStorage.removeItem(SKIPPED_KEY);
 
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
