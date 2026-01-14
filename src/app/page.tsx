@@ -107,11 +107,14 @@ const routineData = [
             { label: "Play Guitar for 15mins Set 2", type: "done" },
             { label: "Play Guitar for 15mins Set 3", type: "done" },
             { label: "Play Guitar for 15mins Set 4", type: "done" },
+            { label: "Play Guitar for 15mins Set 5", type: "done" },
+            { label: "Play Guitar for 15mins Set 6", type: "done" },
 
             //Consume
             { label: "Eat Healthy (Fiber, Complex Carbs, Protein)", type: "done" },
             { label: "Drink Probiotics", type: "count", unit: "glass" },
             { label: "Drink 1/4 Glass Set 3", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing Set 1", type: "done" },
 
             //Total Water Drinked = 2.25
 
@@ -137,8 +140,8 @@ const routineData = [
             //
 
             //Warm-up
-            { label: "Increase Heart Rate", type: "time", value: "3 mins" },
-            { label: "Dynamic Mobility", type: "time", value: "7 mins" },
+            { label: "Increase Heart Rate Set 1", type: "time", value: "3 mins" },
+            { label: "Dynamic Mobility Set 1", type: "time", value: "7 mins" },
             { label: "Drink 1/8 Glass Set 10", type: "count", unit: "glass" },
 
             //Exercise
@@ -162,7 +165,38 @@ const routineData = [
             { label: "Drink 1/8 Glass Set 19", type: "count", unit: "glass" },
             { label: "Dumbbell Row Set 3", type: "done" },
             { label: "Drink 1/8 Glass Set 20", type: "count", unit: "glass" },
+            
+            //Cooldown
+            { label: "Slowly Decrease Heart Rate Set 1", type: "time", value: "3 mins" },
+            { label: "Static Stretch Set 1", type: "time", value: "7 mins" },
 
+            { label: "Eat Healthy (Protein)", type: "done" },
+            { label: "Drink 1/8 Glass Set 32", type: "count", unit: "glass" },
+
+            //Hygiene + Food
+            { label: "Take Shower", type: "done" },
+            { label: "Exercise Chick Lifter Focus on Resistance Set 1", type: "done" },
+            { label: "Exercise Eyebrow Lifter Focus on Resistance Set 1", type: "done" },
+            { label: "Exercise Chick Lifter Focus on Resistance Set 2", type: "done" },
+            { label: "Exercise Eyebrow Lifter Focus on Resistance Set 2", type: "done" },
+            { label: "Exercise Chick Lifter Focus on Resistance Set 3", type: "done" },
+            { label: "Exercise Eyebrow Lifter Focus on Resistance Set 3", type: "done" },
+            { label: "Apply Jojoba Oil and Use Gua Sha Very Lightly for 10min", type: "done" },
+            { label: "Drink 1/4 Glass Set 33", type: "count", unit: "glass" },
+            { label: "Other Hygiene Set 1", type: "done" },
+            { label: "Drink 1/4 Glass Set 34", type: "count", unit: "glass" },
+
+            //Work
+            { label: "Work 30m Set 7", type: "done" },
+            { label: "Eat Healthy Snack Set 2", type: "done" },
+            { label: "Drink 1/2 Glass Set 35", type: "count", unit: "glass" },
+            { label: "Work 30m Set 8", type: "done" },
+            { label: "Drink 1/2 Glass Set 36", type: "count", unit: "glass" },
+            
+            //Warm-up
+            { label: "Increase Heart Rate Set 2", type: "time", value: "3 mins" },
+            { label: "Dynamic Mobility Set 2", type: "time", value: "7 mins" },
+            
             //Exercise 2
             { label: "Bicep Curl Set 1", type: "done" },
             { label: "Drink 1/8 Glass Set 21", type: "count", unit: "glass" },
@@ -188,40 +222,29 @@ const routineData = [
             { label: "Drink 1/8 Glass Set 31", type: "count", unit: "glass" },
 
             //Cooldown
-            { label: "Slowly Decrease Heart Rate", type: "time", value: "3 mins" },
-            { label: "Static Stretch", type: "time", value: "7 mins" },
-            { label: "Eat Healthy (Protein)", type: "done" },
-            { label: "Drink 1/8 Glass Set 32", type: "count", unit: "glass" },
-
-            //Hygiene + Food
-            { label: "Take Shower", type: "done" },
-            { label: "Exercise the Chick Set 1", type: "done" },
-            { label: "Exercise the Eye Set 1", type: "done" },
-            { label: "Exercise the Chick Set 2", type: "done" },
-            { label: "Exercise the Eye Set 2", type: "done" },
-            { label: "Exercise the Chick Set 3", type: "done" },
-            { label: "Exercise the Eye Set 3", type: "done" },
-            { label: "Apply Jojoba Oil and Use Gua Sha Very Lightly for 10min", type: "done" },
-            { label: "Drink 1/4 Glass Set 33", type: "count", unit: "glass" },
-            { label: "Other Hygiene Set 1", type: "done" },
-            { label: "Drink 1/4 Glass Set 34", type: "count", unit: "glass" },
-
-            //Work
-            { label: "Work 30m Set 7", type: "done" },
-            { label: "Eat Healthy Snack Set 2", type: "done" },
-            { label: "Drink 1/2 Glass Set 35", type: "count", unit: "glass" },
-            { label: "Work 30m Set 8", type: "done" },
-            { label: "Drink 1/2 Glass Set 36", type: "count", unit: "glass" },
-
+            { label: "Slowly Decrease Heart Rate Set 2", type: "time", value: "3 mins" },
+            { label: "Static Stretch Set 2", type: "time", value: "7 mins" },
+            
+            { label: "Cleanse with Water Only", type: "done" },
+            { label: "Eat Healthy Snack Set 3", type: "done" },
+            
+            //Work Cycle
+            { label: "Work 30m Set 12", type: "done" },
+            { label: "Drink 1/8 Glass Set 40", type: "count", unit: "glass" },
+            { label: "Work 30m Set 13", type: "done" },
+            { label: "Drink 1/8 Glass Set 41", type: "count", unit: "glass" },
+            { label: "Work 30m Set 14", type: "done" },
+            { label: "Meditate 15m Set 2", type: "done" },
 
             //Total Water Drinked 8.125
 
             //
-            //Night
+            //Evening
             //
 
             //Consume
             { label: "Eat Healthy (Veggies) Set 1", type: "done" },
+            { label: "Walk while Diaphragm Breathing Set 2", type: "done" },
             { label: "Drink 1/8 Glass Set 37", type: "count", unit: "glass" },
 
             { label: "Make Amethyst Afternoon Feel Good", type: "done" },
@@ -233,19 +256,11 @@ const routineData = [
             { label: "Work 30m Set 10", type: "done" },
             { label: "Drink 1/8 Glass Set 39", type: "count", unit: "glass" },
             { label: "Work 30m Set 11", type: "done" },
-            { label: "Meditate 5m Set 1", type: "done" }, 
+            { label: "Meditate 15m Set 1", type: "done" }, 
 
-            //Total Water Drinked 8.5
-
-            //Work Cycle
-            { label: "Work 30m Set 12", type: "done" },
-            { label: "Drink 1/8 Glass Set 40", type: "count", unit: "glass" },
-            { label: "Work 30m Set 13", type: "done" },
-            { label: "Drink 1/8 Glass Set 41", type: "count", unit: "glass" },
-            { label: "Work 30m Set 14", type: "done" },
-            { label: "Meditate 5m Set 2", type: "done" },
-
-            //Total Water Drinked 8.75
+            //
+            //Night
+            //
 
             //Work Cycle
             { label: "Work 30m Set 15", type: "done" },
@@ -253,7 +268,7 @@ const routineData = [
             { label: "Work 30m Set 16", type: "done" },
             { label: "Drink 1/8 Glass Set 43", type: "count", unit: "glass" },
             { label: "Work 30m Set 17", type: "done" },
-            { label: "Meditate 5m Set 3", type: "done" },
+            { label: "Meditate 15m Set 3", type: "done" },
 
             //Total Water Drinked 9.00
 
@@ -263,7 +278,7 @@ const routineData = [
             { label: "Work 30m Set 19", type: "done" },
             { label: "Drink 1/8 Glass Set 45", type: "count", unit: "glass" },
             { label: "Work 30m Set 20", type: "done" },
-            { label: "Meditate 5m Set 4", type: "done" },
+            { label: "Meditate 15m Set 4", type: "done" },
 
             //Consume
             { label: "Eat Healthy (Veggies) Set 2", type: "done" },
@@ -283,11 +298,12 @@ const routineData = [
 
             //Her
             { label: "Make Amethyst Night Feel Good", type: "done" },
-            { label: "Show Emotional Security to Amethyst but with Safe Unknown", type: "done" },
+            { label: "Show Emotional Security to Amethyst but with Safe Unknown and Curiousity", type: "done" },
 
             { label: "Stretch + Diaphragm Breathing", type: "done" },
             { label: "Correct the Daily Routine", type: "done" },
             { label: "Read Books Until Sleepy", type: "done" },
+            { label: "Elevated Legs Until Sleepy", type: "done" },
         ],
     },
 ];
