@@ -130,6 +130,7 @@ const routineData = [
             { label: "Work 30m Set 5", type: "done" },
             { label: "Eat Healthy Snack Set 1", type: "done" },
             { label: "Drink 1/4 Glass Set 8", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m Set 2", type: "done" },
             { label: "Work 30m Set 6", type: "done" },
             { label: "Drink 1/4 Glass Set 9", type: "count", unit: "glass" },
 
@@ -172,6 +173,7 @@ const routineData = [
 
             { label: "Eat Healthy (Protein)", type: "done" },
             { label: "Drink 1/8 Glass Set 32", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m Set 3", type: "done" },
 
             //Hygiene + Food
             { label: "Take Shower", type: "done" },
@@ -190,6 +192,7 @@ const routineData = [
             { label: "Work 30m Set 7", type: "done" },
             { label: "Eat Healthy Snack Set 2", type: "done" },
             { label: "Drink 1/2 Glass Set 35", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m Set 4", type: "done" },
             { label: "Work 30m Set 8", type: "done" },
             { label: "Drink 1/2 Glass Set 36", type: "count", unit: "glass" },
             
@@ -227,6 +230,7 @@ const routineData = [
             
             { label: "Cleanse with Water Only", type: "done" },
             { label: "Eat Healthy Snack Set 3", type: "done" },
+            { label: "Walk while Diaphragm Breathing for 10m Set 5", type: "done" },
             
             //Work Cycle
             { label: "Work 30m Set 12", type: "done" },
@@ -244,8 +248,8 @@ const routineData = [
 
             //Consume
             { label: "Eat Healthy (Veggies) Set 1", type: "done" },
-            { label: "Walk while Diaphragm Breathing Set 2", type: "done" },
             { label: "Drink 1/8 Glass Set 37", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m Set 6", type: "done" },
 
             { label: "Make Amethyst Afternoon Feel Good", type: "done" },
             { label: "Show Progress to Amethyst through Novelty  Preplan", type: "done" },
@@ -283,6 +287,7 @@ const routineData = [
             //Consume
             { label: "Eat Healthy (Veggies) Set 2", type: "done" },
             { label: "Drink 1/4 Glass Set 46", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m Set 7", type: "done" },
 
             //Total Water Drinked 9.5
 
