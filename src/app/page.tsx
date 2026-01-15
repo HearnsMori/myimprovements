@@ -52,27 +52,66 @@ const routineData = [
     {
         section: "DAILY ROUTINE",
         items: [
-            //
-            //Morning
-            //
-
-            //Sleep
+            //============
+            //4hrs - 1
+            //============
             { label: "Sleep Total 1hrs", type: "done" },
             { label: "Sleep Total 2hrs", type: "done" },
             { label: "Sleep Total 3hrs", type: "done" },
             { label: "Sleep Total 4hrs", type: "done" },
+
+            //============
+            //4hrs - 2
+            //============
             { label: "Sleep Total 5hrs", type: "done" },
             { label: "Sleep Total 6hrs", type: "done" },
             { label: "Sleep Total 7hrs", type: "done" },
             { label: "Sleep Total 8hrs", type: "done" },
 
-            //Wakup Warmup
-            { label: "Making Amethyst Morning Feel Good", type: "done" },
+            //============
+            //4hrs - 3
+            //============
+            
+            //First thing to do
+            { label: "Make Amethyst Morning Feels Good", type: "done" },
             { label: "Express Gratitude to Amethyst through Transparency", type: "done" },
+            { label: "Clean-up the Bed", type: "done" },
+            { label: "Drink 1 Glass Set 1", type: "count", unit: "glass" },
+
+            //Getting ready
             { label: "Warm-up 7mins", type: "done" },
-            { label: "Warm-up Neck 2mins", type: "done" },
+            { label: "Expose to Light", type: "done" },
+
+            //Hygiene
+            { label: "Brush Teeth Set 1", type: "done" },
+            { label: "Wash Face Set 1", type: "done" },
+            { label: "Use Celeteque Brightening Facial Cleanser Set 1", type: "done" },
+            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m Set 1", type: "done" },
+            { label: "Apply Vitamin C Serum Set 1", type: "done" },
+            { label: "Apply Celeteque Skin Defense Set 1", type: "done" },
+            
+            //Reflection
+            { label: "Correct the Daily Routine for 30m", type: "done" },
+            
+            //Gut Health
+            { label: "Drink 1 Glass Set 2", type: "count", unit: "glass" },
+            { label: "Drink Probiotics", type: "count", unit: "glass" },
+            
+            //Hobby
+            { label: "Play Guitar for 15mins Set 1", type: "done" },
+            { label: "Play Guitar for 15mins Set 2", type: "done" },
+            
+            //Snacks
+            { label: "Light Snack (A piece of fruit like banana or apple)", type: "done" },
+            
+            //Hobby
+            { label: "Play Guitar for 15mins Set 3", type: "done" },
+            { label: "Play Guitar for 15mins Set 4", type: "done" },
+
 
             //Facial Appearance + Bed Hygiene
+            { label: "Warm-up Neck 2mins", type: "done" },
+
             { label: "Neck Curl Set 1", type: "done" },
             { label: "4-4-8 Breathing 1min Set 1", type: "done" },
             { label: "Neck Curl Set 2", type: "done" },
@@ -89,34 +128,17 @@ const routineData = [
             { label: "4-4-8 Breathing 1min Set 7", type: "done" },
             { label: "Neck Tuck Set 4", type: "done" },
             { label: "4-4-8 Breathing 1min Set 8", type: "done" },
-            { label: "Clean Bed", type: "done" },
 
-            //Facial Hygiene
-            { label: "Drink 1 Glass Set 1", type: "count", unit: "glass" },
-            { label: "Expose to Light", type: "done" },
-            { label: "Brush Teeth Set 1", type: "done" },
-            { label: "Wash Face Set 1", type: "done" },
-            { label: "Use Celeteque Brightening Facial Cleanser Set 1", type: "done" },
-            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m Set 1", type: "done" },
-            { label: "Apply Vitamin C Serum Set 1", type: "done" },
-            { label: "Apply Celeteque Skin Defense Set 1", type: "done" },
-            { label: "Drink 1 Glass Set 2", type: "count", unit: "glass" },
-
-            //Hobby
-            { label: "Play Guitar for 15mins Set 1", type: "done" },
-            { label: "Play Guitar for 15mins Set 2", type: "done" },
-            { label: "Play Guitar for 15mins Set 3", type: "done" },
-            { label: "Play Guitar for 15mins Set 4", type: "done" },
-            { label: "Play Guitar for 15mins Set 5", type: "done" },
-            { label: "Play Guitar for 15mins Set 6", type: "done" },
-
-            //Consume
+            //Breakfast
             { label: "Eat Healthy (Fiber, Complex Carbs, Protein)", type: "done" },
-            { label: "Drink Probiotics", type: "count", unit: "glass" },
             { label: "Drink 1/4 Glass Set 3", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing Set 1", type: "done" },
 
             //Total Water Drinked = 2.25
+
+            //============
+            //4hrs - 4
+            //============
 
             //Work
             { label: "Work 30m Set 1", type: "done" },
@@ -125,6 +147,7 @@ const routineData = [
             { label: "Drink 1/4 Glass Set 5", type: "count", unit: "glass" },
             { label: "Work 30m Set 3", type: "done" },
             { label: "Drink 1/4 Glass Set 6", type: "count", unit: "glass" },
+
             { label: "Work 30m Set 4", type: "done" },
             { label: "Drink 1/4 Glass Set 7", type: "count", unit: "glass" },
             { label: "Work 30m Set 5", type: "done" },
@@ -135,11 +158,7 @@ const routineData = [
             { label: "Drink 1/4 Glass Set 9", type: "count", unit: "glass" },
 
             //Total Water Drinked = 3.75
-
-            //
-            //Afternoon
-            //
-
+            
             //Warm-up
             { label: "Increase Heart Rate Set 1", type: "time", value: "3 mins" },
             { label: "Dynamic Mobility Set 1", type: "time", value: "7 mins" },
@@ -160,17 +179,16 @@ const routineData = [
             { label: "Drink 1/8 Glass Set 16", type: "count", unit: "glass" },
             { label: "Lateral Raise Set 2", type: "done" },
             { label: "Drink 1/8 Glass Set 17", type: "count", unit: "glass" },
-            { label: "Dumbbell Row Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 18", type: "count", unit: "glass" },
-            { label: "Dumbbell Row Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 19", type: "count", unit: "glass" },
-            { label: "Dumbbell Row Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 20", type: "count", unit: "glass" },
             
             //Cooldown
             { label: "Slowly Decrease Heart Rate Set 1", type: "time", value: "3 mins" },
             { label: "Static Stretch Set 1", type: "time", value: "7 mins" },
 
+
+            //============
+            //4hrs - 5
+            //============
+            
             { label: "Eat Healthy (Protein)", type: "done" },
             { label: "Drink 1/8 Glass Set 32", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m Set 3", type: "done" },
@@ -201,6 +219,12 @@ const routineData = [
             { label: "Dynamic Mobility Set 2", type: "time", value: "7 mins" },
             
             //Exercise 2
+            { label: "Dumbbell Row Set 1", type: "done" },
+            { label: "Drink 1/8 Glass Set 18", type: "count", unit: "glass" },
+            { label: "Dumbbell Row Set 2", type: "done" },
+            { label: "Drink 1/8 Glass Set 19", type: "count", unit: "glass" },
+            { label: "Dumbbell Row Set 3", type: "done" },
+            { label: "Drink 1/8 Glass Set 20", type: "count", unit: "glass" },
             { label: "Bicep Curl Set 1", type: "done" },
             { label: "Drink 1/8 Glass Set 21", type: "count", unit: "glass" },
             { label: "Bicep Curl Set 2", type: "done" },
@@ -228,10 +252,15 @@ const routineData = [
             { label: "Slowly Decrease Heart Rate Set 2", type: "time", value: "3 mins" },
             { label: "Static Stretch Set 2", type: "time", value: "7 mins" },
             
+            //After exercise hygiene and maximizer
             { label: "Cleanse with Water Only", type: "done" },
             { label: "Eat Healthy Snack Set 3", type: "done" },
             { label: "Walk while Diaphragm Breathing for 10m Set 5", type: "done" },
-            
+
+            //============
+            //4hrs - 5
+            //============
+          
             //Work Cycle
             { label: "Work 30m Set 12", type: "done" },
             { label: "Drink 1/8 Glass Set 40", type: "count", unit: "glass" },
@@ -239,12 +268,19 @@ const routineData = [
             { label: "Drink 1/8 Glass Set 41", type: "count", unit: "glass" },
             { label: "Work 30m Set 14", type: "done" },
             { label: "Meditate 15m Set 2", type: "done" },
+            
+            { label: "Work 30m Set 15", type: "done" },
+            { label: "Drink 1/8 Glass Set 47", type: "count", unit: "glass" },
+            { label: "Work 30m Set 16", type: "done" },
+            { label: "Drink 1/8 Glass Set 48", type: "count", unit: "glass" },
+            { label: "Work 30m Set 17", type: "done" },
+            { label: "Meditate 15m Set 5", type: "done" },
 
             //Total Water Drinked 8.125
 
-            //
-            //Evening
-            //
+            //============
+            //4hrs - 5
+            //============
 
             //Consume
             { label: "Eat Healthy (Veggies) Set 1", type: "done" },
@@ -262,32 +298,32 @@ const routineData = [
             { label: "Work 30m Set 11", type: "done" },
             { label: "Meditate 15m Set 1", type: "done" }, 
 
-            //
-            //Night
-            //
-
             //Work Cycle
-            { label: "Work 30m Set 15", type: "done" },
+            { label: "Work 30m Set 18", type: "done" },
             { label: "Drink 1/8 Glass Set 42", type: "count", unit: "glass" },
-            { label: "Work 30m Set 16", type: "done" },
+            { label: "Work 30m Set 19", type: "done" },
             { label: "Drink 1/8 Glass Set 43", type: "count", unit: "glass" },
-            { label: "Work 30m Set 17", type: "done" },
+            { label: "Work 30m Set 20", type: "done" },
             { label: "Meditate 15m Set 3", type: "done" },
 
             //Total Water Drinked 9.00
-
-            //Work Cycle
-            { label: "Work 30m Set 18", type: "done" },
-            { label: "Drink 1/8 Glass Set 44", type: "count", unit: "glass" },
-            { label: "Work 30m Set 19", type: "done" },
-            { label: "Drink 1/8 Glass Set 45", type: "count", unit: "glass" },
-            { label: "Work 30m Set 20", type: "done" },
-            { label: "Meditate 15m Set 4", type: "done" },
-
+            
+            //============
+            //4hrs - 6
+            //============
+            
             //Consume
             { label: "Eat Healthy (Veggies) Set 2", type: "done" },
             { label: "Drink 1/4 Glass Set 46", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m Set 7", type: "done" },
+
+            //Work Cycle
+            { label: "Work 30m Set 21", type: "done" },
+            { label: "Drink 1/8 Glass Set 44", type: "count", unit: "glass" },
+            { label: "Work 30m Set 22", type: "done" },
+            { label: "Drink 1/8 Glass Set 45", type: "count", unit: "glass" },
+            { label: "Work 30m Set 23", type: "done" },
+            { label: "Meditate 15m Set 4", type: "done" },
 
             //Total Water Drinked 9.5
 
@@ -306,7 +342,6 @@ const routineData = [
             { label: "Show Emotional Security to Amethyst but with Safe Unknown and Curiousity", type: "done" },
 
             { label: "Stretch + Diaphragm Breathing", type: "done" },
-            { label: "Correct the Daily Routine", type: "done" },
             { label: "Read Books Until Sleepy", type: "done" },
             { label: "Elevated Legs Until Sleepy", type: "done" },
         ],
