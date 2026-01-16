@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-type RoutineItem = | { label: string; type: "done" } | { label: string; type: "sets"; sets: number; record?: number } | { label: string; type: "time"; value: string } | { label: string; type: "options"; options: string[] } | { label: string; type: "count"; unit: string };
+type RoutineItem = | { label: string; type: "done"; id: null|string } | { label: string; type: "sets"; sets: number; record?: number; id: null|string } | { label: string; type: "time"; value: string; id: null|string } | { label: string; type: "options"; options: string[]; id: null|string } | { label: string; type: "count"; unit: string; id: null|string };
 type RoutineSection = {
     section: string;
     items: RoutineItem[];
