@@ -1,9 +1,7 @@
 "use client";
-
 import { useEffect, useState } from "react";
 
 type RoutineItem = | { label: string; type: "done" } | { label: string; type: "sets"; sets: number; record?: number } | { label: string; type: "time"; value: string } | { label: string; type: "options"; options: string[] } | { label: string; type: "count"; unit: string };
-
 type RoutineSection = {
     section: string;
     items: RoutineItem[];
@@ -48,7 +46,7 @@ const rankingData = [
     { level: 24, name: "one of the most influencial", image: "level37.png" }
 ];
 
-const routineData = [
+var routineData = [
     {
         section: "DAILY ROUTINE",
         items: [
@@ -67,6 +65,7 @@ const routineData = [
             { label: "Sleep Total 6hrs", type: "done" },
             { label: "Sleep Total 7hrs", type: "done" },
             { label: "Sleep Total 8hrs", type: "done" },
+            { label: "Sleep in Back (Did You?)", type: "done" },
 
             //============
             //4hrs - 3
@@ -76,235 +75,220 @@ const routineData = [
             { label: "Make Amethyst Morning Feels Good", type: "done" },
             { label: "Express Gratitude to Amethyst through Transparency", type: "done" },
             { label: "Clean-up the Bed", type: "done" },
-            { label: "Drink 1 Glass Set 1", type: "count", unit: "glass" },
+            { label: "Drink 1 Glass", type: "count", unit: "glass" },
 
             //Getting ready
             { label: "Warm-up 7mins", type: "done" },
-            { label: "Expose to Light", type: "done" },
+            { label: "Expose to Light (Indirect: Open Window)", type: "done" },
 
             //Hygiene
-            { label: "Brush Teeth Set 1", type: "done" },
-            { label: "Wash Face Set 1", type: "done" },
-            { label: "Use Celeteque Brightening Facial Cleanser Set 1", type: "done" },
-            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m Set 1", type: "done" },
-            { label: "Apply Vitamin C Serum Set 1", type: "done" },
-            { label: "Apply Celeteque Skin Defense Set 1", type: "done" },
+            { label: "Brush Teeth", type: "done" },
+            { label: "Wash Face", type: "done" },
+            { label: "Use Celeteque Brightening Facial Cleanser", type: "done" },
+            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
+            { label: "Apply Vitamin C Serum", type: "done" },
+            { label: "Apply Celeteque Skin Defense", type: "done" },
             
             //Reflection
             { label: "Correct the Daily Routine for 30m", type: "done" },
             
             //Gut Health
-            { label: "Drink 1 Glass Set 2", type: "count", unit: "glass" },
+            { label: "Drink 1 Glass", type: "count", unit: "glass" },
             { label: "Drink Probiotics", type: "count", unit: "glass" },
             
             //Hobby
-            { label: "Play Guitar for 15mins Set 1", type: "done" },
-            { label: "Play Guitar for 15mins Set 2", type: "done" },
+            { label: "Play Guitar for 15mins", type: "done" },
+            { label: "Play Guitar for 15mins", type: "done" },
             
             //Snacks
             { label: "Light Snack (A piece of fruit like banana or apple)", type: "done" },
             
             //Hobby
-            { label: "Play Guitar for 15mins Set 3", type: "done" },
-            { label: "Play Guitar for 15mins Set 4", type: "done" },
-
+            { label: "Play Music for 15mins", type: "done" },
+            { label: "Play Music for 15mins", type: "done" },
 
             //Facial Appearance + Bed Hygiene
             { label: "Warm-up Neck 2mins", type: "done" },
 
-            { label: "Neck Curl Set 1", type: "done" },
-            { label: "4-4-8 Breathing 1min Set 1", type: "done" },
-            { label: "Neck Curl Set 2", type: "done" },
-            { label: "4-4-8 Breathing 1min Set 2", type: "done" },
-            { label: "Neck Curl Set 3", type: "done" },
-            { label: "4-4-8 Breathing 1min Set 3", type: "done" },
-            { label: "Neck Curl Set 4", type: "done" },
-            { label: "4-4-8 Breathing 1min Set 4", type: "done" },
-            { label: "Neck Tuck Set 1", type: "done" },
-            { label: "4-4-8 Breathing 1min Set 5", type: "done" },
-            { label: "Neck Tuck Set 2", type: "done" },
-            { label: "4-4-8 Breathing 1min Set 6", type: "done" },
-            { label: "Neck Tuck Set 3", type: "done" },
-            { label: "4-4-8 Breathing 1min Set 7", type: "done" },
-            { label: "Neck Tuck Set 4", type: "done" },
-            { label: "4-4-8 Breathing 1min Set 8", type: "done" },
+            { label: "Neck Curl Hand Resistance", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Curl Hand Resistance", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Curl Hand Resistance", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Curl Hand Resistance", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Tuck", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Tuck", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Tuck", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Tuck", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
 
             //Breakfast
-            { label: "Eat Healthy (Fiber, Complex Carbs, Protein)", type: "done" },
-            { label: "Drink 1/4 Glass Set 3", type: "count", unit: "glass" },
-            { label: "Walk while Diaphragm Breathing Set 1", type: "done" },
-
-            //Total Water Drinked = 2.25
+            { label: "Eat Healthy (Focus: Fiber, Complex Carbs, Protein)", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing", type: "done" },
+            
+            //Work plan
+            { label: "Breakdown & Plan Work into 30m Block and SMART Task Prioritization for 15m", type: "done" },
 
             //============
             //4hrs - 4
             //============
 
             //Work
-            { label: "Work 30m Set 1", type: "done" },
-            { label: "Drink 1/4 Glass Set 4", type: "count", unit: "glass" },
-            { label: "Work 30m Set 2", type: "done" },
-            { label: "Drink 1/4 Glass Set 5", type: "count", unit: "glass" },
-            { label: "Work 30m Set 3", type: "done" },
-            { label: "Drink 1/4 Glass Set 6", type: "count", unit: "glass" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "Meditate for 10m", type: "done" },
 
-            { label: "Work 30m Set 4", type: "done" },
-            { label: "Drink 1/4 Glass Set 7", type: "count", unit: "glass" },
-            { label: "Work 30m Set 5", type: "done" },
-            { label: "Eat Healthy Snack Set 1", type: "done" },
-            { label: "Drink 1/4 Glass Set 8", type: "count", unit: "glass" },
-            { label: "Walk while Diaphragm Breathing for 10m Set 2", type: "done" },
-            { label: "Work 30m Set 6", type: "done" },
-            { label: "Drink 1/4 Glass Set 9", type: "count", unit: "glass" },
 
-            //Total Water Drinked = 3.75
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Eat Healthy Snack", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+
+            { label: "Make Amethyst Afternoon Feels Good", type: "done" },
+            { label: "Show Progress to Amethyst through Novelty Preplan", type: "done" },
             
             //Warm-up
-            { label: "Increase Heart Rate Set 1", type: "time", value: "3 mins" },
-            { label: "Dynamic Mobility Set 1", type: "time", value: "7 mins" },
-            { label: "Drink 1/8 Glass Set 10", type: "count", unit: "glass" },
+            { label: "Increase Heart Rate", type: "time", value: "3 mins" },
+            { label: "Dynamic Mobility", type: "time", value: "7 mins" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
 
             //Exercise
-            { label: "Push Up Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 11", type: "count", unit: "glass" },
-            { label: "Push Up Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 12", type: "count", unit: "glass" },
-            { label: "Push Up Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 13", type: "count", unit: "glass" },
-            { label: "Elevated Push Ups Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 14", type: "count", unit: "glass" },
-            { label: "Elevated Push Ups Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 15", type: "count", unit: "glass" },
-            { label: "Lateral Raise Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 16", type: "count", unit: "glass" },
-            { label: "Lateral Raise Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 17", type: "count", unit: "glass" },
-            
-            //Cooldown
-            { label: "Slowly Decrease Heart Rate Set 1", type: "time", value: "3 mins" },
-            { label: "Static Stretch Set 1", type: "time", value: "7 mins" },
-
+            { label: "Deep Squat", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Deep Squat", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Deep Squat", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Max Effort Pull", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Max Effort Pull", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Max Effort Pull", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
 
             //============
             //4hrs - 5
             //============
+
+            { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            
+            //Cooldown
+            { label: "Slowly Decrease Heart Rate", type: "time", value: "3 mins" },
+            { label: "Static Stretch", type: "time", value: "7 mins" },
+
             
             { label: "Eat Healthy (Protein)", type: "done" },
-            { label: "Drink 1/8 Glass Set 32", type: "count", unit: "glass" },
-            { label: "Walk while Diaphragm Breathing for 10m Set 3", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
 
             //Hygiene + Food
             { label: "Take Shower", type: "done" },
-            { label: "Exercise Chick Lifter Focus on Resistance Set 1", type: "done" },
-            { label: "Exercise Eyebrow Lifter Focus on Resistance Set 1", type: "done" },
-            { label: "Exercise Chick Lifter Focus on Resistance Set 2", type: "done" },
-            { label: "Exercise Eyebrow Lifter Focus on Resistance Set 2", type: "done" },
-            { label: "Exercise Chick Lifter Focus on Resistance Set 3", type: "done" },
-            { label: "Exercise Eyebrow Lifter Focus on Resistance Set 3", type: "done" },
+            { label: "Exercise Chick Lifter Focus on Resistance", type: "done" },
+            { label: "Exercise Eyebrow Lifter Focus on Resistance", type: "done" },
+            { label: "Exercise Chick Lifter Focus on Resistance", type: "done" },
+            { label: "Exercise Eyebrow Lifter Focus on Resistance", type: "done" },
+            { label: "Exercise Chick Lifter Focus on Resistance", type: "done" },
+            { label: "Exercise Eyebrow Lifter Focus on Resistance", type: "done" },
             { label: "Apply Jojoba Oil and Use Gua Sha Very Lightly for 10min", type: "done" },
-            { label: "Drink 1/4 Glass Set 33", type: "count", unit: "glass" },
-            { label: "Other Hygiene Set 1", type: "done" },
-            { label: "Drink 1/4 Glass Set 34", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
 
             //Work
-            { label: "Work 30m Set 7", type: "done" },
-            { label: "Eat Healthy Snack Set 2", type: "done" },
-            { label: "Drink 1/2 Glass Set 35", type: "count", unit: "glass" },
-            { label: "Walk while Diaphragm Breathing for 10m Set 4", type: "done" },
-            { label: "Work 30m Set 8", type: "done" },
-            { label: "Drink 1/2 Glass Set 36", type: "count", unit: "glass" },
+            { label: "Work 30m", type: "done" },
+            { label: "Eat Healthy Snack", type: "done" },
+            { label: "Drink 1/2 Glass", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/2 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
             
-            //Warm-up
-            { label: "Increase Heart Rate Set 2", type: "time", value: "3 mins" },
-            { label: "Dynamic Mobility Set 2", type: "time", value: "7 mins" },
-            
-            //Exercise 2
-            { label: "Dumbbell Row Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 18", type: "count", unit: "glass" },
-            { label: "Dumbbell Row Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 19", type: "count", unit: "glass" },
-            { label: "Dumbbell Row Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 20", type: "count", unit: "glass" },
-            { label: "Bicep Curl Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 21", type: "count", unit: "glass" },
-            { label: "Bicep Curl Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 22", type: "count", unit: "glass" },
-            { label: "Bicep Curl Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 23", type: "count", unit: "glass" },
-            { label: "Pull Up Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 24", type: "count", unit: "glass" },
-            { label: "Pull Up Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 25", type: "count", unit: "glass" },
-            { label: "Pull Up Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 26", type: "count", unit: "glass" },
-            { label: "Weight Squats Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 27", type: "count", unit: "glass" },
-            { label: "Weight Squats Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 28", type: "count", unit: "glass" },
-            { label: "Weight Squats Set 3", type: "done" },
-            { label: "Drink 1/8 Glass Set 29", type: "count", unit: "glass" },
-            { label: "Plank Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 30", type: "count", unit: "glass" },
-            { label: "Plank Set 2", type: "done" },
-            { label: "Drink 1/8 Glass Set 31", type: "count", unit: "glass" },
-
-            //Cooldown
-            { label: "Slowly Decrease Heart Rate Set 2", type: "time", value: "3 mins" },
-            { label: "Static Stretch Set 2", type: "time", value: "7 mins" },
-            
-            //After exercise hygiene and maximizer
-            { label: "Cleanse with Water Only", type: "done" },
-            { label: "Eat Healthy Snack Set 3", type: "done" },
-            { label: "Walk while Diaphragm Breathing for 10m Set 5", type: "done" },
-
             //============
             //4hrs - 5
             //============
           
             //Work Cycle
-            { label: "Work 30m Set 12", type: "done" },
-            { label: "Drink 1/8 Glass Set 40", type: "count", unit: "glass" },
-            { label: "Work 30m Set 13", type: "done" },
-            { label: "Drink 1/8 Glass Set 41", type: "count", unit: "glass" },
-            { label: "Work 30m Set 14", type: "done" },
-            { label: "Meditate 15m Set 2", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Meditate 10m", type: "done" },
             
-            { label: "Work 30m Set 15", type: "done" },
-            { label: "Drink 1/8 Glass Set 47", type: "count", unit: "glass" },
-            { label: "Work 30m Set 16", type: "done" },
-            { label: "Drink 1/8 Glass Set 48", type: "count", unit: "glass" },
-            { label: "Work 30m Set 17", type: "done" },
-            { label: "Meditate 15m Set 5", type: "done" },
-
-            //Total Water Drinked 8.125
-
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Meditate 10m", type: "done" },
+            
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            
             //============
             //4hrs - 5
             //============
 
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Meditate 10m", type: "done" },
+
             //Consume
-            { label: "Eat Healthy (Veggies) Set 1", type: "done" },
-            { label: "Drink 1/8 Glass Set 37", type: "count", unit: "glass" },
-            { label: "Walk while Diaphragm Breathing for 10m Set 6", type: "done" },
-
-            { label: "Make Amethyst Afternoon Feel Good", type: "done" },
-            { label: "Show Progress to Amethyst through Novelty  Preplan", type: "done" },
+            { label: "Eat Healthy (Veggies)", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
 
             //Work Cycle
-            { label: "Work 30m Set 9", type: "done" },
-            { label: "Drink 1/8 Glass Set 38", type: "count", unit: "glass" },
-            { label: "Work 30m Set 10", type: "done" },
-            { label: "Drink 1/8 Glass Set 39", type: "count", unit: "glass" },
-            { label: "Work 30m Set 11", type: "done" },
-            { label: "Meditate 15m Set 1", type: "done" }, 
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "Work 30m", type: "done" },
+            { label: "Meditate 15m", type: "done" }, 
 
             //Work Cycle
-            { label: "Work 30m Set 18", type: "done" },
-            { label: "Drink 1/8 Glass Set 42", type: "count", unit: "glass" },
-            { label: "Work 30m Set 19", type: "done" },
-            { label: "Drink 1/8 Glass Set 43", type: "count", unit: "glass" },
-            { label: "Work 30m Set 20", type: "done" },
-            { label: "Meditate 15m Set 3", type: "done" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
 
             //Total Water Drinked 9.00
             
@@ -312,41 +296,54 @@ const routineData = [
             //4hrs - 6
             //============
             
+            { label: "Work 30m", type: "done" },
+            { label: "Meditate 10m", type: "done" },
+            
             //Consume
-            { label: "Eat Healthy (Veggies) Set 2", type: "done" },
-            { label: "Drink 1/4 Glass Set 46", type: "count", unit: "glass" },
-            { label: "Walk while Diaphragm Breathing for 10m Set 7", type: "done" },
+            { label: "Eat Healthy (Veggies)", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
 
             //Work Cycle
-            { label: "Work 30m Set 21", type: "done" },
-            { label: "Drink 1/8 Glass Set 44", type: "count", unit: "glass" },
-            { label: "Work 30m Set 22", type: "done" },
-            { label: "Drink 1/8 Glass Set 45", type: "count", unit: "glass" },
-            { label: "Work 30m Set 23", type: "done" },
-            { label: "Meditate 15m Set 4", type: "done" },
-
-            //Total Water Drinked 9.5
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "Work 30m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "Work 30m", type: "done" },
+            { label: "Meditate 15m", type: "done" },
 
             //Night Routine
             { label: "Clean Environment", type: "done" },
-            { label: "Brush Teeth Set 2", type: "done" },
-            { label: "Wash Face Set 2", type: "done" },
-            { label: "Use Celeteque Brightening Facial Cleanser Set 2", type: "done" },
-            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m Set 2", type: "done" },
-            { label: "Apply Vitamin C Serum Set 2", type: "done" },
-            { label: "Apply Celeteque Skin Defense Set 2", type: "done" },
-            { label: "Other Hygiene Set 2", type: "done" },
+            { label: "Brush Teeth", type: "done" },
+            { label: "Wash Face", type: "done" },
+            { label: "Use Celeteque Brightening Facial Cleanses", type: "done" },
+            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
+            { label: "Apply Vitamin C Serum", type: "done" },
+            { label: "Apply Celeteque Skin Defense", type: "done" },
+            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
 
             //Her
-            { label: "Make Amethyst Night Feel Good", type: "done" },
+            { label: "Make Amethyst Night Feels Good", type: "done" },
             { label: "Show Emotional Security to Amethyst but with Safe Unknown and Curiousity", type: "done" },
 
             { label: "Stretch + Diaphragm Breathing", type: "done" },
             { label: "Read Books Until Sleepy", type: "done" },
-            { label: "Elevated Legs Until Sleepy", type: "done" },
+            { label: "Elevate Legs Until Sleepy", type: "done" },
         ],
     },
 ];
+
+function addUniqueIdsToRoutine(data: RoutineSection[]): RoutineSection[] {
+    return data.map((section, sectionIndex) => ({
+        ...section,
+        items: section.items.map((item, itemIndex) => ({
+            ...item,
+            id: `${sectionIndex}-${itemIndex}-${item.label.replace(/\s+/g, '-')}` // unique id
+        }))
+    }));
+}
+
+routineData = addUniqueIdsToRoutine(routineData);
 
 
 export default function DailyRoutine() {
@@ -389,8 +386,8 @@ export default function DailyRoutine() {
             setSkippedState({});
         } else {
             //Uncomment the two below when reset
-            //localStorage.removeItem(STORAGE_KEY);
-            //localStorage.removeItem(SKIPPED_KEY);
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(SKIPPED_KEY);
 
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
@@ -426,7 +423,7 @@ export default function DailyRoutine() {
     const MAX_LEVEL = 24;
     const MAX_PER_SEC = 500000;
     const maxLevel = 100/MAX_LEVEL;
-    const exponent = 0.5;
+    const exponent = 0.48;
     const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
 
     // level
@@ -582,9 +579,9 @@ export default function DailyRoutine() {
 
             // Filter items based on tab
             const filteredItems = section.items.filter((item) => {
-                if (tab === "todo") return !state[item.label] && !skippedState[item.label];
-                if (tab === "done") return state[item.label];
-                if (tab === "skipped") return skippedState[item.label];
+                if (tab === "todo") return !state[item.id] && !skippedState[item.id];
+                if (tab === "done") return state[item.id];
+                if (tab === "skipped") return skippedState[item.id];
                 return false;
             });
 
@@ -595,8 +592,8 @@ export default function DailyRoutine() {
                 <div key={section.section}>
                 <h2>{section.section}</h2>
 
-                {visibleItems.map((item) => {
-                    const key = item.label;
+                {visibleItems.map((item, index) => {
+                    const key = item.id;
 
                     return (
                         <div key={key} style={styles.card}>
