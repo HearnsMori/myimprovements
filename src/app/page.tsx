@@ -386,8 +386,8 @@ export default function DailyRoutine() {
             setSkippedState({});
         } else {
             //Uncomment the two below when reset
-            localStorage.removeItem(STORAGE_KEY);
-            localStorage.removeItem(SKIPPED_KEY);
+            //localStorage.removeItem(STORAGE_KEY);
+            //localStorage.removeItem(SKIPPED_KEY);
 
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
@@ -418,7 +418,7 @@ export default function DailyRoutine() {
     };
 
     // Calculate progress
-    const totalTasks = routineData.reduce((sum, section) => sum + section.items.length, 0);
+    const totalTasks = routineData.reduce((sum: number, section) => sum + section.items.length, 0);
     const completedTasks = Object.values(state).filter(Boolean).length;
     const MAX_LEVEL = 24;
     const MAX_PER_SEC = 500000;
