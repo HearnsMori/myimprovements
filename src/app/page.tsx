@@ -334,9 +334,9 @@ var routineData = [
 ];
 
 function addUniqueIdsToRoutine(data: any): any {
-    return data.map((section, sectionIndex) => ({
+    return data.map((section: any, sectionIndex: number) => ({
         ...section,
-        items: section.items.map((item, itemIndex) => ({
+        items: section.items.map((item: any, itemIndex: number) => ({
             ...item,
             id: `${sectionIndex}-${itemIndex}-${item.label.replace(/\s+/g, '-')}` // unique id
         }))
