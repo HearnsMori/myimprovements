@@ -46,7 +46,7 @@ const rankingData = [
     { level: 24, name: "one of the most influencial", image: "level37.png" }
 ];
 
-var routineData = [
+var routineData: RoutineSection[] = [
     {
         section: "DAILY ROUTINE",
         items: [
@@ -333,10 +333,10 @@ var routineData = [
     },
 ];
 
-function addUniqueIdsToRoutine(data: any): any {
-    return data.map((section: any, sectionIndex: number) => ({
+function addUniqueIdsToRoutine(data: RoutineSection[]): any {
+    return data.map((section, sectionIndex) => ({
         ...section,
-        items: section.items.map((item: any, itemIndex: number) => ({
+        items: section.items.map((item, itemIndex) => ({
             ...item,
             id: `${sectionIndex}-${itemIndex}-${item.label.replace(/\s+/g, '-')}` // unique id
         }))
