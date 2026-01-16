@@ -333,7 +333,7 @@ var routineData = [
     },
 ];
 
-function addUniqueIdsToRoutine(data: RoutineSection[]): RoutineSection[] {
+function addUniqueIdsToRoutine(data: any): any {
     return data.map((section, sectionIndex) => ({
         ...section,
         items: section.items.map((item, itemIndex) => ({
