@@ -1,7 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 
-type RoutineItem = | { label: string; type: "done"; id?: string } | { label: string; type: "sets"; sets: number; record?: number; id?: string } | { label: string; type: "time"; value: string; id?: string } | { label: string; type: "options"; options: string[]; id?: string } | { label: string; type: "count"; unit: string; id?: string };
+type RoutineItemNoId = | { label: string; type: "done"; id?: string } | { label: string; type: "sets"; sets: number; record?: number; id?: string } | { label: string; type: "time"; value: string; id?: string } | { label: string; type: "options"; options: string[]; id?: string } | { label: string; type: "count"; unit: string; id?: string };
+type RoutineItem = | { label: string; type: "done"; id: string } | { label: string; type: "sets"; sets: number; record?: number; id: string } | { label: string; type: "time"; value: string; id: string } | { label: string; type: "options"; options: string[]; id: string } | { label: string; type: "count"; unit: string; id: string };
+type RoutineSectionNoId = {
+    section: string;
+    items: RoutineItemNoId[];
+};
 type RoutineSection = {
     section: string;
     items: RoutineItem[];
@@ -46,7 +51,7 @@ const rankingData = [
     { level: 24, name: "one of the most influencial", image: "level37.png" }
 ];
 
-const routineDataNoId: RoutineSection[] = [
+const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "DAILY ROUTINE",
         items: [
@@ -333,7 +338,7 @@ const routineDataNoId: RoutineSection[] = [
     },
 ];
 
-function addUniqueIdsToRoutine(data: RoutineSection[]): any {
+function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
     return data.map((section, sectionIndex) => ({
         ...section,
         items: section.items.map((item, itemIndex) => ({
@@ -343,7 +348,7 @@ function addUniqueIdsToRoutine(data: RoutineSection[]): any {
     }));
 }
 
-const routineData = addUniqueIdsToRoutine(routineDataNoId);
+const routineData: RoutineSection[] = addUniqueIdsToRoutine(routineDataNoId);
 
 
 export default function DailyRoutine() {
