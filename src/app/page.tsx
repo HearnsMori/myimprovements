@@ -46,7 +46,7 @@ const rankingData = [
     { level: 24, name: "one of the most influencial", image: "level37.png" }
 ];
 
-var routineData: RoutineSection[] = [
+const routineDataNoId: RoutineSection[] = [
     {
         section: "DAILY ROUTINE",
         items: [
@@ -343,7 +343,7 @@ function addUniqueIdsToRoutine(data: RoutineSection[]): any {
     }));
 }
 
-routineData = addUniqueIdsToRoutine(routineData);
+const routineData = addUniqueIdsToRoutine(routineDataNoId);
 
 
 export default function DailyRoutine() {
