@@ -575,7 +575,7 @@ export default function DailyRoutine() {
         <button style={styles.tab(tab === "done")} onClick={() => setTab("done")}>Done</button>
         <button style={styles.tab(tab === "skipped")} onClick={() => setTab("skipped")}>Skipped</button>
         </div>
-        {routineData.map((section) => {
+        {routineData.map((section: RoutineSection) => {
 
             // Filter items based on tab
             const filteredItems = section.items.filter((item) => {
