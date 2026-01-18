@@ -7,6 +7,7 @@ type RoutineSectionNoId = {
     section: string;
     items: RoutineItemNoId[];
 };
+
 type RoutineSection = {
     section: string;
     items: RoutineItem[];
@@ -53,7 +54,7 @@ const rankingData = [
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
-        section: "DAILY ROUTINE",
+        section: "Sleep",
         items: [
             //============
             //4hrs - 1
@@ -71,11 +72,14 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Sleep Total 7hrs", type: "done" },
             { label: "Sleep Total 8hrs", type: "done" },
             { label: "Sleep in Back (Did You?)", type: "done" },
-
+        ],
+    },
+    {
+        section: "Waking-up",
+        items: [
             //============
             //4hrs - 3
             //============
-
             //First thing to do
             { label: "Make Amethyst Morning Feels Good", type: "done" },
             { label: "Express Gratitude to Amethyst through Transparency", type: "done" },
@@ -85,7 +89,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             //Getting ready
             { label: "Warm-up 7mins", type: "done" },
             { label: "Expose to Light (Indirect: Open Window)", type: "done" },
-
+        ],
+    },
+    {
+        section: "Facial Routine",
+        items: [
             //Hygiene
             { label: "Brush Teeth", type: "done" },
             { label: "Wash Face", type: "done" },
@@ -93,7 +101,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
             { label: "Apply Vitamin C Serum", type: "done" },
             { label: "Apply Celeteque Skin Defense", type: "done" },
-
+        ],
+    },
+    {
+        section: "Building Momentum",
+        items: [
             //Reflection
             { label: "Correct the Daily Routine for 30m", type: "done" },
 
@@ -104,7 +116,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             //Hobby
             { label: "Play Guitar for 15mins", type: "done" },
             { label: "Play Guitar for 15mins", type: "done" },
-
+        ],
+    },
+    {
+        section: "Neck",
+        items: [
             //Snacks
             { label: "Light Snack (A piece of fruit like banana or apple)", type: "done" },
 
@@ -127,7 +143,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Neck Tuck", type: "done" },
             { label: "4-4-8 Breathing 1min", type: "done" },
-
+        ],
+    },
+    {
+        section: "Work Planning",
+        items: [
             //Breakfast
             { label: "Eat Healthy (Focus: Fiber, Complex Carbs, Protein)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
@@ -135,11 +155,14 @@ const routineDataNoId: RoutineSectionNoId[] = [
 
             //Work plan
             { label: "Breakdown & Plan Work into 30m Block and SMART Task Prioritization for 15m", type: "done" },
-
+        ],
+    },
+    {
+        section: "Work",
+        items: [
             //============
             //4hrs - 4
             //============
-
             //Work
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
@@ -161,10 +184,14 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
-
+        ],
+    },
+    {
+        section: "Exercise",
+        items: [
             { label: "Make Amethyst Afternoon Feels Good", type: "done" },
             { label: "Show Progress to Amethyst through Novelty Preplan", type: "done" },
-
+        
             //Warm-up
             { label: "Increase Heart Rate for 3m", type: "time", value: "3 mins" },
             { label: "Dynamic Mobility for 7m", type: "time", value: "7 mins" },
@@ -207,12 +234,19 @@ const routineDataNoId: RoutineSectionNoId[] = [
             //Cooldown
             { label: "Slowly Decrease Heart Rate", type: "time", value: "3 mins" },
             { label: "Static Stretch", type: "time", value: "7 mins" },
-
-
+        ],
+    },
+    {
+        section: "Healthy Diet",
+        items: [
             { label: "Eat Healthy (Protein)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
-
+        ],
+    },
+    {
+        section: "Hygiene",
+        items: [
             //Hygiene + Food
             { label: "Take Shower", type: "done" },
             { label: "Exercise Chick Lifter Focus on Resistance", type: "done" },
@@ -225,7 +259,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
-
+        ],
+    },
+    {
+        section: "Micro Work",
+        items: [
             //Work
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
@@ -233,11 +271,14 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "4-4-8 Breathing 1min", type: "done" },
-
+        ],
+    },
+    {
+        section: "Macro Work",
+        items: [
             //============
             //4hrs - 5
             //============
-
             //Work Cycle
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
@@ -272,17 +313,27 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Work 30m", type: "done" },
             { label: "Meditate 10m", type: "done" },
-
+        ],
+    },
+    {
+        section: "Healthy Diet 2",
+        items: [
             //Consume
             { label: "Eat Healthy (Veggies)", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
-
+        ],
+    },
+    {
+        section: "Macro Work 2",
+        items: [
             //Work Cycle
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Work 30m", type: "done" },
             { label: "Meditate 10m", type: "done" }, 
 
@@ -300,12 +351,20 @@ const routineDataNoId: RoutineSectionNoId[] = [
 
             { label: "Work 30m", type: "done" },
             { label: "Meditate 10m", type: "done" },
-
+        ],
+    },
+    {
+        section: "Healthy Diet 3",
+        items: [
             //Consume
             { label: "Eat Healthy (Veggies)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
-
+        ],
+    },
+    {
+        section: "Micro Work 2",
+        items: [
             //Work Cycle
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
@@ -313,7 +372,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "Work 30m", type: "done" },
             { label: "Meditate 15m", type: "done" },
-
+        ],
+    },
+    {
+        section: "Facial Routine 2",
+        items: [
             //Night Routine
             { label: "Clean Environment", type: "done" },
             { label: "Brush Teeth", type: "done" },
@@ -323,7 +386,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Apply Vitamin C Serum", type: "done" },
             { label: "Apply Celeteque Skin Defense", type: "done" },
             { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
-
+        ],
+    },
+    {
+        section: "Sleep Routine",
+        items: [
             //Her
             { label: "Make Amethyst Night Feels Good", type: "done" },
             { label: "Show Emotional Security to Amethyst but with Safe Unknown and Curiousity", type: "done" },
@@ -353,6 +420,9 @@ export default function DailyRoutine() {
     const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
     const [tab, setTab] = useState<"todo" | "done" | "skipped">("todo");
     const [streak, setStreak] = useState<number>(0);
+
+    //For visible section
+    const [openSection, setOpenSection] = useState<string>("Sleep");
 
     //For level up effect
     const [currentLevel, setCurrentLevel] = useState<number>(0);
@@ -702,7 +772,39 @@ export default function DailyRoutine() {
         <button style={styles.tab(tab === "done")} onClick={() => setTab("done")}>Done</button>
         <button style={styles.tab(tab === "skipped")} onClick={() => setTab("skipped")}>Skipped</button>
         </div>
+
         {routineData.map((section: RoutineSection) => {
+            const getSectionProgress = (section: RoutineSection) => {
+                const total = section.items.length;
+                const done = section.items.filter(i => state[i.id]).length;
+                return {
+                    total,
+                    done,
+                    percent: total === 0 ? 0 : Math.round((done / total) * 100),
+                    completed: done === total && total > 0,
+                };
+            };
+
+            function CircleProgress({ percent }: { percent: number }) {
+                return (
+                    <div
+                    style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: "50%",
+                        background: `conic-gradient(#16a34a ${percent * 3.6}deg, #27272a 0deg)`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 12,
+                        fontWeight: 700,
+                        color: "#fff",
+                    }}
+                    >
+                    {percent}%
+                    </div>
+                );
+            }
 
             // Filter items based on tab
             const filteredItems = section.items.filter((item) => {
@@ -714,12 +816,48 @@ export default function DailyRoutine() {
 
             // If "todo", only take first 3
             const visibleItems = tab === "todo" ? filteredItems.slice(0, 3) : filteredItems;
-
+            const progress = getSectionProgress(section);
             return (
-                <div key={section.section}>
-                <h2>{section.section}</h2>
+                <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
+                    marginBottom: "7vw",
+                }}>
+                <div>
+                <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 8,
+                    position: "relative",
+                }}
+                >
+                <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
+                {section.section}
+                </div>
+
+                <CircleProgress percent={progress.percent} />
+
+                {progress.completed && (
+                    <div
+                    style={{
+                        position: "absolute",
+                        left: 0,
+                        right: 0,
+                        top: "50%",
+                        height: 2,
+                        backgroundColor: "#16a34a",
+                        opacity: 0.6,
+                    }}
+                    />
+                )}
+                </div>
+                </div>
+
 
                 {visibleItems.map((item, index) => {
+                    if(section.section !== openSection) {
+                        return;
+                    }
                     const key = item.id;
 
                     return (
