@@ -121,10 +121,6 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Neck Curl Hand Resistance", type: "done" },
             { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Curl Hand Resistance", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Tuck", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Neck Tuck", type: "done" },
             { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Neck Tuck", type: "done" },
@@ -170,8 +166,8 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Show Progress to Amethyst through Novelty Preplan", type: "done" },
             
             //Warm-up
-            { label: "Increase Heart Rate", type: "time", value: "3 mins" },
-            { label: "Dynamic Mobility", type: "time", value: "7 mins" },
+            { label: "Increase Heart Rate for 3m", type: "time", value: "3 mins" },
+            { label: "Dynamic Mobility for 7m", type: "time", value: "7 mins" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
 
             //Exercise
@@ -214,7 +210,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
 
             
             { label: "Eat Healthy (Protein)", type: "done" },
-            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
 
             //Hygiene + Food
@@ -232,11 +228,10 @@ const routineDataNoId: RoutineSectionNoId[] = [
 
             //Work
             { label: "Work 30m", type: "done" },
-            { label: "Eat Healthy Snack", type: "done" },
-            { label: "Drink 1/2 Glass", type: "count", unit: "glass" },
-            { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Work 30m", type: "done" },
-            { label: "Drink 1/2 Glass", type: "count", unit: "glass" },
+            { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "4-4-8 Breathing 1min", type: "done" },
             
             //============
@@ -251,7 +246,9 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Work 30m", type: "done" },
-            { label: "Meditate 10m", type: "done" },
+            { label: "Eat Healthy (Protein)", type: "done" },
+            { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
+            { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
             
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
@@ -287,7 +284,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "Work 30m", type: "done" },
-            { label: "Meditate 15m", type: "done" }, 
+            { label: "Meditate 10m", type: "done" }, 
 
             //Work Cycle
             { label: "Work 30m", type: "done" },
