@@ -44,7 +44,7 @@ const rankingData = [
 
     { level: 20, name: "elite", image: "level32.png" },
     { level: 21, name: "master", image: "level34.png" },
-    
+
     { level: 22, name: "above genius", image: "level34.png" },
     { level: 23, name: "top genius", image: "level34.png" },
 
@@ -75,7 +75,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
             //============
             //4hrs - 3
             //============
-            
+
             //First thing to do
             { label: "Make Amethyst Morning Feels Good", type: "done" },
             { label: "Express Gratitude to Amethyst through Transparency", type: "done" },
@@ -93,21 +93,21 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
             { label: "Apply Vitamin C Serum", type: "done" },
             { label: "Apply Celeteque Skin Defense", type: "done" },
-            
+
             //Reflection
             { label: "Correct the Daily Routine for 30m", type: "done" },
-            
+
             //Gut Health
             { label: "Drink 1 Glass", type: "count", unit: "glass" },
             { label: "Drink Probiotics", type: "count", unit: "glass" },
-            
+
             //Hobby
             { label: "Play Guitar for 15mins", type: "done" },
             { label: "Play Guitar for 15mins", type: "done" },
-            
+
             //Snacks
             { label: "Light Snack (A piece of fruit like banana or apple)", type: "done" },
-            
+
             //Hobby
             { label: "Play Music for 15mins", type: "done" },
             { label: "Play Music for 15mins", type: "done" },
@@ -132,7 +132,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Eat Healthy (Focus: Fiber, Complex Carbs, Protein)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing", type: "done" },
-            
+
             //Work plan
             { label: "Breakdown & Plan Work into 30m Block and SMART Task Prioritization for 15m", type: "done" },
 
@@ -164,7 +164,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
 
             { label: "Make Amethyst Afternoon Feels Good", type: "done" },
             { label: "Show Progress to Amethyst through Novelty Preplan", type: "done" },
-            
+
             //Warm-up
             { label: "Increase Heart Rate for 3m", type: "time", value: "3 mins" },
             { label: "Dynamic Mobility for 7m", type: "time", value: "7 mins" },
@@ -203,12 +203,12 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "4-4-8 Breathing 1min", type: "done" },
-            
+
             //Cooldown
             { label: "Slowly Decrease Heart Rate", type: "time", value: "3 mins" },
             { label: "Static Stretch", type: "time", value: "7 mins" },
 
-            
+
             { label: "Eat Healthy (Protein)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
@@ -233,11 +233,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "4-4-8 Breathing 1min", type: "done" },
-            
+
             //============
             //4hrs - 5
             //============
-          
+
             //Work Cycle
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
@@ -249,7 +249,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Eat Healthy (Protein)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
-            
+
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "4-4-8 Breathing 1min", type: "done" },
@@ -258,11 +258,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Work 30m", type: "done" },
             { label: "Meditate 10m", type: "done" },
-            
+
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
             { label: "4-4-8 Breathing 1min", type: "done" },
-            
+
             //============
             //4hrs - 5
             //============
@@ -293,14 +293,14 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
 
             //Total Water Drinked 9.00
-            
+
             //============
             //4hrs - 6
             //============
-            
+
             { label: "Work 30m", type: "done" },
             { label: "Meditate 10m", type: "done" },
-            
+
             //Consume
             { label: "Eat Healthy (Veggies)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
@@ -359,6 +359,18 @@ export default function DailyRoutine() {
     const [showLevelUp, setShowLevelUp] = useState<boolean>(false);
     const [leveledUpRank, setLeveledUpRank] = useState<typeof rankingData[number] | null>(null);
     const [leveledUpRankPast, setLeveledUpRankPast] = useState<typeof rankingData[number] | null>(null);
+
+    //Math
+    const [challengeTaskId, setChallengeTaskId] = useState<string | null>(null);
+    const [challengeA, setChallengeA] = useState<number>(0);
+    const [challengeB, setChallengeB] = useState<number>(0);
+    const [challengeC, setChallengeC] = useState<number>(0);
+    const [challengeD, setChallengeD] = useState<number>(0);
+    const [challengeAnswer, setChallengeAnswer] = useState<string>("");
+    const [challengeStep, setChallengeStep] = useState<number>(0);
+    const [challengeError, setChallengeError] = useState<string | null>(null);
+
+    const randomDigit = (min, max) => Math.floor(min/*Minimum*/ + Math.random() * (max-min));
 
 
     useEffect(() => {
@@ -494,6 +506,119 @@ export default function DailyRoutine() {
 
     return (
         <div style={styles.page}>
+        {challengeTaskId && (
+            <div
+            style={{
+                position: "fixed",
+                inset: 0,
+                backgroundColor: "rgba(0,0,0,0.85)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 9999,
+            }}
+            >
+            <div
+            style={{
+                backgroundColor: "#18181b",
+                borderRadius: 16,
+                padding: 24,
+                maxWidth: 320,
+                width: "100%",
+                textAlign: "center",
+        
+            }}
+            >
+            <h3 style={{ marginBottom: 8 }}>
+            Solve to Unlock Task
+            </h3>
+
+            <p style={{ color: "#a1a1aa", marginBottom: 12 }}>
+            Question {challengeStep} of 1
+            </p>
+
+            <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 12 }}>
+            ({challengeA} × {challengeB}) + {challengeC} - {challengeD}
+            </div>
+
+            <input
+            type="number"
+            value={challengeAnswer}
+            onChange={(e) => setChallengeAnswer(e.target.value)}
+            style={{
+                width: "100%",
+                padding: 10,
+                borderRadius: 8,
+                border: "none",
+                marginBottom: 10,
+                fontSize: 16,
+            }}
+            />
+
+            {challengeError && (
+                <div style={{ color: "#ef4444", marginBottom: 10 }}>
+                {challengeError}
+                </div>
+            )}
+
+            <button
+            onClick={() => {
+                const correct = (challengeA * challengeB) + challengeC - challengeD;
+                if (Number(challengeAnswer) !== correct) {
+                    setChallengeError("Wrong answer. Challenge reset.");
+                    setChallengeStep(1);
+                    setChallengeA(randomDigit(10,99));
+                    setChallengeB(randomDigit(10,99));
+                    setChallengeC(randomDigit(0,198));
+                    setChallengeD(randomDigit(0,99));
+                    setChallengeAnswer("");
+                    return;
+                }
+
+                if (challengeStep === 1) {
+                    // ✅ UNLOCK TASK
+                    toggle(challengeTaskId);
+                    setChallengeTaskId(null);
+                    return;
+                }
+
+                // Next question
+                setChallengeStep((s) => s + 1);
+                setChallengeError(null);
+                setChallengeA(randomDigit(10,99));
+                setChallengeB(randomDigit(10,99));
+                setChallengeC(randomDigit(0,198));
+                setChallengeD(randomDigit(0,99));
+                setChallengeAnswer("");
+            }}
+            style={{
+                padding: "10px 16px",
+                borderRadius: 10,
+                border: "none",
+                backgroundColor: "#16a34a",
+                color: "#fff",
+                fontWeight: 700,
+                width: "100%",
+            }}
+            >
+            Submit
+            </button>
+
+            <button
+            onClick={() => setChallengeTaskId(null)}
+            style={{
+                marginTop: 8,
+                background: "none",
+                border: "none",
+                color: "#a1a1aa",
+                cursor: "pointer",
+            }}
+            >
+            Cancel
+            </button>
+            </div>
+            </div>
+        )}
         {showLevelUp && leveledUpRank && (
             <div
             style={{
@@ -607,7 +732,16 @@ export default function DailyRoutine() {
                         <div style={styles.buttonGroup}>
                         {tab && (
                             <button
-                            onClick={() => toggle(key)}
+                            onClick={() => {
+                                setChallengeTaskId(key);
+                                setChallengeA(randomDigit(10,99));
+                                setChallengeB(randomDigit(10,99));
+                                setChallengeC(randomDigit(0,198));
+                                setChallengeD(randomDigit(0,99));
+                                setChallengeAnswer("");
+                                setChallengeStep(1);
+                                setChallengeError(null);
+                            }}
                             style={{
                                 padding: "8px 14px",
                                 borderRadius: 8,
