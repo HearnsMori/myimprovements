@@ -370,7 +370,7 @@ export default function DailyRoutine() {
     const [challengeStep, setChallengeStep] = useState<number>(0);
     const [challengeError, setChallengeError] = useState<string | null>(null);
 
-    const randomDigit = (min, max) => Math.floor(min/*Minimum*/ + Math.random() * (max-min));
+    const randomDigit = (min: number, max: number) => Math.floor(min/*Minimum*/ + Math.random() * (max-min));
 
 
     useEffect(() => {
