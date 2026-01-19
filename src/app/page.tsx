@@ -608,7 +608,7 @@ export default function DailyRoutine() {
             </p>
 
             <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 12 }}>
-            ({challengeA} × {challengeB}) + {challengeC} - {challengeD}
+            {challengeA} × {challengeB} {/*+ {challengeC} - {challengeD}*/}
             </div>
 
             <input
@@ -633,7 +633,7 @@ export default function DailyRoutine() {
 
             <button
             onClick={() => {
-                const correct = (challengeA * challengeB) + challengeC - challengeD;
+                const correct = (challengeA * challengeB) /*+ challengeC - challengeD*/;
                 if (Number(challengeAnswer) !== correct) {
                     setChallengeError("Wrong answer. Challenge reset.");
                     setChallengeStep(1);
