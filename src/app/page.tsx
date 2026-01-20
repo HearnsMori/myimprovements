@@ -860,7 +860,7 @@ export default function DailyRoutine() {
             // If "todo", only take first 3
             const visibleItems = tab === "todo" ? filteredItems.slice(0, 3) : filteredItems;
             const progress = getSectionProgress(section);
-            if (progress.percent === 100) return;
+            if (progress.percent === 100 && tab === "todo") return;
             return (
                 <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
                     marginBottom: "7vw",
