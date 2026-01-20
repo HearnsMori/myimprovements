@@ -15,6 +15,8 @@ type RoutineSection = {
 
 const STORAGE_KEY = "daily-routine-progress";
 const SKIPPED_KEY = "daily-routine-skipped";
+const STORAGE_KEY_PAST = "daily-routine-progress-past";
+const SKIPPED_KEY_PAST = "daily-routine-skipped-past";
 const DATE_KEY = "daily-routine-date";
 const STREAK_KEY = "daily-routine-streak";
 
@@ -461,6 +463,8 @@ const routineData: RoutineSection[] = addUniqueIdsToRoutine(routineDataNoId);
 export default function DailyRoutine() {
     const [state, setState] = useState<Record<string, boolean>>({});
     const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
+    const [pastState, setPastState] = useState<Record<string, boolean>>({});
+    const [pastSkippedState, setPastSkippedState] = useState<Record<string, boolean>>({});
     const [tab, setTab] = useState<"todo" | "done" | "skipped">("todo");
     const [streak, setStreak] = useState<number>(0);
 
@@ -472,6 +476,8 @@ export default function DailyRoutine() {
     const [showLevelUp, setShowLevelUp] = useState<boolean>(false);
     const [leveledUpRank, setLeveledUpRank] = useState<typeof rankingData[number] | null>(null);
     const [leveledUpRankPast, setLeveledUpRankPast] = useState<typeof rankingData[number] | null>(null);
+    const [pastLevel, setPastLevel] = useState<number>(0);
+    const [pastProgressPercent, setPastProgressPercent] = useState<number>(0);
 
     //Math
     const [challengeTaskId, setChallengeTaskId] = useState<string | null>(null);
@@ -484,6 +490,15 @@ export default function DailyRoutine() {
     const [challengeError, setChallengeError] = useState<string | null>(null);
 
     const randomDigit = (min: number, max: number) => Math.floor(min/*Minimum*/ + Math.random() * (max-min));
+    
+    // Calculate progress
+    const totalTasks = routineData.reduce((sum: number, section: RoutineSection) => sum + section.items.length, 0);
+    const completedTasks = Object.values(state).filter(Boolean).length;
+    const MAX_LEVEL = 24;
+    const MAX_PER_SEC = 500000;
+    const maxLevel = 100/MAX_LEVEL;
+    const exponent = 0.48;
+    const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
 
 
     useEffect(() => {
@@ -505,6 +520,15 @@ export default function DailyRoutine() {
         setStreak(newStreak);
 
         if (savedDate !== today) {
+                
+            localStorage.setItem("pastLevel", level);
+            localStorage.setItem("pastProgressPercent", progressPercent);
+
+            const a = localStorage.getItem(STORAGE_KEY);
+            const b = localStorage.getItem(SKIPPED_KEY);
+            localStorage.setItem(STORAGE_KEY_PAST, a);
+            localStorage.setItem(SKIPPED_KEY_PAST, b);
+
             localStorage.removeItem(STORAGE_KEY);
             localStorage.removeItem(SKIPPED_KEY);
             localStorage.setItem(DATE_KEY, today);
@@ -515,11 +539,19 @@ export default function DailyRoutine() {
             //Uncomment the two below when reset
             //localStorage.removeItem(STORAGE_KEY);
             //localStorage.removeItem(SKIPPED_KEY);
-
+            const a = localStorage.getItem("pastLevel");
+            const b = localStorage.getItem("pastProgressPercent");
+            
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
+            const pastSaved = localStorage.getItem(STORAGE_KEY_PAST);
+            const pastSkipped = localStorage.getItem(SKIPPED_KEY_PAST);
+            if (a) setPastLevel(Number(a));
+            if (b) setPastProgressPercent(Number(b));
             if (saved) setState(JSON.parse(saved) as Record<string, boolean>);
             if (skipped) setSkippedState(JSON.parse(skipped) as Record<string, boolean>);
+            if (pastSaved) setPastState(JSON.parse(pastSaved) as Record<string, boolean>);
+            if (pastSkipped) setPastSkippedState(JSON.parse(pastSkipped) as Record<string, boolean>);
         }
     }, []);
 
@@ -544,14 +576,6 @@ export default function DailyRoutine() {
         setSkippedState((prev) => ({ ...prev, [key]: !prev[key] }));
     };
 
-    // Calculate progress
-    const totalTasks = routineData.reduce((sum: number, section: RoutineSection) => sum + section.items.length, 0);
-    const completedTasks = Object.values(state).filter(Boolean).length;
-    const MAX_LEVEL = 24;
-    const MAX_PER_SEC = 500000;
-    const maxLevel = 100/MAX_LEVEL;
-    const exponent = 0.48;
-    const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
 
     // level
     const level = Math.min(
@@ -617,6 +641,20 @@ export default function DailyRoutine() {
         buttonGroup: { display: "flex", gap: 8 },
     };
 
+    function percentTo8PM(input?: Date | string | number): number {
+        const date: Date =
+            input instanceof Date
+                ? input
+                : new Date(input ?? Date.now());
+
+                const hours =
+                    date.getHours() +
+                    date.getMinutes() / 60 +
+                    date.getSeconds() / 3600;
+
+                return Math.min(Math.max(hours / 20, 0), 1);
+    }
+
     return (
         <div style={styles.page}>
         {challengeTaskId && (
@@ -639,7 +677,7 @@ export default function DailyRoutine() {
                 maxWidth: 320,
                 width: "100%",
                 textAlign: "center",
-        
+
             }}
             >
             <h3 style={{ marginBottom: 8 }}>
@@ -808,6 +846,15 @@ export default function DailyRoutine() {
         <div style={styles.progressContainer}>
         <div style={{ ...styles.progressBar, width: `${(progressPercent % maxLevel)/maxLevel * 100}%` }} />
         </div>
+
+        Enemy Level (Yesterday Self): {`${percentTo8PM(pastLevel)}`}
+        <br/>
+        {/*Income per hour: {hourlySalary} Php*/}
+        {/* Progress Bar */}
+        <div style={styles.progressContainer}>
+        <div style={{ ...styles.progressBar, width: `${(pastProgressPercent % maxLevel)/maxLevel * 100}%` }} />
+        </div>
+
         {Math.round((progressPercent % maxLevel)/maxLevel * 100)}% Completed
 
         <div style={styles.tabs}>
