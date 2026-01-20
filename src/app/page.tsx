@@ -54,7 +54,7 @@ const rankingData = [
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
-        section: "Sleep",
+        section: "Total Sleep",
         items: [
             //============
             //4hrs - 1
@@ -75,7 +75,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Waking-up",
+        section: "Morning Amethyst Routine",
         items: [
             //============
             //4hrs - 3
@@ -83,6 +83,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
             //First thing to do
             { label: "Make Amethyst Morning Feels Good", type: "done" },
             { label: "Express Gratitude to Amethyst through Transparency", type: "done" },
+        ],
+    },
+    {
+        section: "Wake-up Routine",
+        items: [
             { label: "Clean-up the Bed", type: "done" },
             { label: "Drink 1 Glass", type: "count", unit: "glass" },
 
@@ -92,7 +97,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Facial Routine",
+        section: "Face Routine",
         items: [
             //Hygiene
             { label: "Brush Teeth", type: "done" },
@@ -104,30 +109,46 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Building Momentum",
+        section: "Improving This App Routine",
         items: [
             //Reflection
             { label: "Correct the Daily Routine for 30m", type: "done" },
-
+        ],
+    },
+    {
+        section: "Probiotics Routine",
+        items: [
             //Gut Health
             { label: "Drink 1 Glass", type: "count", unit: "glass" },
             { label: "Drink Probiotics", type: "count", unit: "glass" },
-
+        ],
+    },
+    {
+        section: "Guitar Routine",
+        items: [
             //Hobby
             { label: "Play Guitar for 15mins", type: "done" },
             { label: "Play Guitar for 15mins", type: "done" },
         ],
     },
     {
-        section: "Neck",
+        section: "Snack Routine",
         items: [
             //Snacks
             { label: "Light Snack (A piece of fruit like banana or apple)", type: "done" },
-
+        ],
+    },
+    {
+        section: "Guitar Routine 2",
+        items: [
             //Hobby
             { label: "Play Music for 15mins", type: "done" },
             { label: "Play Music for 15mins", type: "done" },
-
+        ],
+    },
+    {
+        section: "Neck Routine",
+        items: [
             //Facial Appearance + Bed Hygiene
             { label: "Warm-up Neck 2mins", type: "done" },
 
@@ -146,19 +167,23 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Work Planning",
+        section: "Meal Routine",
         items: [
             //Breakfast
             { label: "Eat Healthy (Focus: Fiber, Complex Carbs, Protein)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing", type: "done" },
-
+        ],
+    },
+    {
+        section: "Work Planning Routine",
+        items: [
             //Work plan
             { label: "Breakdown & Plan Work into 30m Block and SMART Task Prioritization for 15m", type: "done" },
         ],
     },
     {
-        section: "Work",
+        section: "Work Routine",
         items: [
             //============
             //4hrs - 4
@@ -179,19 +204,33 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "4-4-8 Breathing 1min", type: "done" },
             { label: "Work 30m", type: "done" },
+        ],
+    },
+    {
+        section: "Snack Routine 2",
+        items: [
             { label: "Eat Healthy Snack", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
+        ],
+    },
+    {
+        section: "Microwork Routine",
+        items: [
             { label: "Work 30m", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
         ],
     },
     {
-        section: "Exercise",
+        section: "Afternoon Amethyst Routine",
         items: [
             { label: "Make Amethyst Afternoon Feels Good", type: "done" },
             { label: "Show Progress to Amethyst through Novelty Preplan", type: "done" },
-        
+        ],
+    },
+    {
+        section: "Exercise Routine",
+        items: [
             //Warm-up
             { label: "Increase Heart Rate for 3m", type: "time", value: "3 mins" },
             { label: "Dynamic Mobility for 7m", type: "time", value: "7 mins" },
@@ -237,7 +276,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Healthy Diet",
+        section: "Meal Routine 2",
         items: [
             { label: "Eat Healthy (Protein)", type: "done" },
             { label: "Drink 1/4 Glass", type: "count", unit: "glass" },
@@ -245,7 +284,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Hygiene",
+        section: "Hygiene Routine",
         items: [
             //Hygiene + Food
             { label: "Take Shower", type: "done" },
@@ -262,7 +301,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Micro Work",
+        section: "Microwork Routine 2",
         items: [
             //Work
             { label: "Work 30m", type: "done" },
@@ -274,7 +313,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Macro Work",
+        section: "Work Routine 2",
         items: [
             //============
             //4hrs - 5
@@ -316,7 +355,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Healthy Diet 2",
+        section: "Meal Routine 3",
         items: [
             //Consume
             { label: "Eat Healthy (Veggies)", type: "done" },
@@ -325,7 +364,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Macro Work 2",
+        section: "Work Routine 3",
         items: [
             //Work Cycle
             { label: "Work 30m", type: "done" },
@@ -354,7 +393,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Healthy Diet 3",
+        section: "Meal Routine 4",
         items: [
             //Consume
             { label: "Eat Healthy (Veggies)", type: "done" },
@@ -363,7 +402,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Micro Work 2",
+        section: "Microwork Routine 3",
         items: [
             //Work Cycle
             { label: "Work 30m", type: "done" },
@@ -375,7 +414,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Facial Routine 2",
+        section: "Face Routine 2",
         items: [
             //Night Routine
             { label: "Clean Environment", type: "done" },
@@ -389,12 +428,16 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Sleep Routine",
+        section: "Evening Amethyst Routine",
         items: [
             //Her
             { label: "Make Amethyst Night Feels Good", type: "done" },
             { label: "Show Emotional Security to Amethyst but with Safe Unknown and Curiousity", type: "done" },
-
+        ],
+    },
+    {
+        section: "Sleep Routine",
+        items: [
             { label: "Stretch + Diaphragm Breathing", type: "done" },
             { label: "Read Books Until Sleepy", type: "done" },
             { label: "Elevate Legs Until Sleepy", type: "done" },
@@ -817,6 +860,7 @@ export default function DailyRoutine() {
             // If "todo", only take first 3
             const visibleItems = tab === "todo" ? filteredItems.slice(0, 3) : filteredItems;
             const progress = getSectionProgress(section);
+            if (progress.precent === 100) return;
             return (
                 <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
                     marginBottom: "7vw",
