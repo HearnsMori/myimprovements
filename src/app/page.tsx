@@ -521,8 +521,8 @@ export default function DailyRoutine() {
 
         if (savedDate !== today) {
                 
-            localStorage.setItem("pastLevel", level);
-            localStorage.setItem("pastProgressPercent", progressPercent);
+            localStorage.setItem("pastLevel", String(level));
+            localStorage.setItem("pastProgressPercent", String(progressPercent));
 
             const a = localStorage.getItem(STORAGE_KEY);
             const b = localStorage.getItem(SKIPPED_KEY);
