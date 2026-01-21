@@ -526,8 +526,9 @@ export default function DailyRoutine() {
 
             const a = localStorage.getItem(STORAGE_KEY);
             const b = localStorage.getItem(SKIPPED_KEY);
-            localStorage.setItem(STORAGE_KEY_PAST, a);
-            localStorage.setItem(SKIPPED_KEY_PAST, b);
+
+            if (a) localStorage.setItem(STORAGE_KEY_PAST, a);
+            if (b) localStorage.setItem(SKIPPED_KEY_PAST, b);
 
             localStorage.removeItem(STORAGE_KEY);
             localStorage.removeItem(SKIPPED_KEY);
