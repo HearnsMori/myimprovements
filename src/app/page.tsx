@@ -643,17 +643,13 @@ export default function DailyRoutine() {
     };
 
     function percentTo8PM(input?: Date | string | number): number {
-        const date: Date =
-            input instanceof Date
-                ? input
-                : new Date(input ?? Date.now());
+        const date: Date = new Date();
+        const hours =
+            date.getHours() +
+            date.getMinutes() / 60 +
+            date.getSeconds() / 3600;
 
-                const hours =
-                    date.getHours() +
-                    date.getMinutes() / 60 +
-                    date.getSeconds() / 3600;
-
-                return Math.min(Math.max(hours / 20, 0), 1);
+        return input * ((Math.max(Math.min(hours, 20), 4)-4)/20);
     }
 
     return (
@@ -663,7 +659,7 @@ export default function DailyRoutine() {
             style={{
                 position: "fixed",
                 inset: 0,
-                backgroundColor: "rgba(0,0,0,0.85)",
+                backgroundColor: "rgba 0,0,0,0.85)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -853,7 +849,7 @@ export default function DailyRoutine() {
         {/*Income per hour: {hourlySalary} Php*/}
         {/* Progress Bar */}
         <div style={styles.progressContainer}>
-        <div style={{ ...styles.progressBar, width: `${(pastProgressPercent % maxLevel)/maxLevel * 100}%` }} />
+        <div style={{ ...styles.progressBar, width: `${(percentTo8PM(pastProgressPercent) % maxLevel)/maxLevel * 100}%` }} />
         </div>
 
         {Math.round((progressPercent % maxLevel)/maxLevel * 100)}% Completed
