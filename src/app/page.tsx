@@ -642,7 +642,7 @@ export default function DailyRoutine() {
         buttonGroup: { display: "flex", gap: 8 },
     };
 
-    function percentTo8PM(input?: Date | string | number): number {
+    function percentTo8PM(input: number): number {
         const date: Date = new Date();
         const hours =
             date.getHours() +
