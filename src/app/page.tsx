@@ -478,6 +478,7 @@ export default function DailyRoutine() {
     const [leveledUpRankPast, setLeveledUpRankPast] = useState<typeof rankingData[number] | null>(null);
     const [pastLevel, setPastLevel] = useState<number>(0);
     const [pastProgressPercent, setPastProgressPercent] = useState<number>(0);
+    const [pastRank, setPastRank] = useState<number>(0);
 
     //Math
     const [challengeTaskId, setChallengeTaskId] = useState<string | null>(null);
@@ -568,6 +569,8 @@ export default function DailyRoutine() {
             const pastSkipped = localStorage.getItem(SKIPPED_KEY_PAST);
             if (a) setPastLevel(Math.max(Number(a), 18));
             if (b) setPastProgressPercent(Number(b));
+            const rank = rankingData.find(r => r.level === pastLevel) || null;
+            setPastRank(rank);
             if (saved) setState(JSON.parse(saved) as Record<string, boolean>);
             if (skipped) setSkippedState(JSON.parse(skipped) as Record<string, boolean>);
             if (pastSaved) setPastState(JSON.parse(pastSaved) as Record<string, boolean>);
@@ -856,6 +859,8 @@ export default function DailyRoutine() {
         </div>
 
         Enemy Level (Yesterday Self): {`${percentTo8PM(pastLevel)}`}
+        <br/>
+        Enemy Status Rarity: {pastRank?.name}
         <br/>
         {/*Income per hour: {hourlySalary} Php*/}
         {/* Progress Bar */}
