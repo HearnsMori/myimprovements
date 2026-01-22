@@ -854,7 +854,7 @@ export default function DailyRoutine() {
         {/*Income per hour: {hourlySalary} Php*/}
         {/* Progress Bar */}
         <div style={styles.progressContainer}>
-        <div style={{ ...styles.progressBar, width: `${(percentTo8PM(pastProgressPercent) % maxLevel)/maxLevel * 100}%` }} />
+        <div style={{ ...styles.progressBar, width: `${Math.round(Math.random()*100)}%` }} />
         </div>
 
         {Math.round((progressPercent % maxLevel)/maxLevel * 100)}% Completed
