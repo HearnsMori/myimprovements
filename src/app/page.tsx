@@ -488,6 +488,8 @@ export default function DailyRoutine() {
     const [challengeAnswer, setChallengeAnswer] = useState<string>("");
     const [challengeStep, setChallengeStep] = useState<number>(0);
     const [challengeError, setChallengeError] = useState<string | null>(null);
+    
+    const [randomPercent, setRandomPercent] = useState<number>(0);
 
     const randomDigit = (min: number, max: number) => Math.floor(min/*Minimum*/ + Math.random() * (max-min));
     
@@ -551,10 +553,13 @@ export default function DailyRoutine() {
             localStorage.setItem(STREAK_KEY, String(newStreak));
             setState({});
             setSkippedState({});
+
         } else {
+
             //Uncomment the two below when reset
             //localStorage.removeItem(STORAGE_KEY);
             //localStorage.removeItem(SKIPPED_KEY);
+            setRandomPercent(Math.random()*100);
             const a = localStorage.getItem("pastLevel");
             const b = localStorage.getItem("pastProgressPercent");
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -567,6 +572,7 @@ export default function DailyRoutine() {
             if (skipped) setSkippedState(JSON.parse(skipped) as Record<string, boolean>);
             if (pastSaved) setPastState(JSON.parse(pastSaved) as Record<string, boolean>);
             if (pastSkipped) setPastSkippedState(JSON.parse(pastSkipped) as Record<string, boolean>);
+
         }
     }, []);
 
@@ -854,7 +860,7 @@ export default function DailyRoutine() {
         {/*Income per hour: {hourlySalary} Php*/}
         {/* Progress Bar */}
         <div style={styles.progressContainer}>
-        <div style={{ ...styles.progressBar, width: `${Math.round(Math.random()*100)}%` }} />
+        <div style={{ ...styles.progressBar, width: `${randomPercent}%` }} />
         </div>
 
         {Math.round((progressPercent % maxLevel)/maxLevel * 100)}% Completed
