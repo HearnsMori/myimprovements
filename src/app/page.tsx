@@ -514,6 +514,17 @@ export default function DailyRoutine() {
         Math.max(0, progressPercent / maxLevel)
     );
 
+    function percentTo8PM(input: number): number {
+        const date: Date = new Date();
+        const hours =
+            date.getHours() +
+            date.getMinutes() / 60 +
+            date.getSeconds() / 3600;
+        const out = input * ((Math.max(Math.min(hours, 20), 4)-4)/16);
+        //alert(input);
+        //alert(out);
+        return Math.round(out);
+    }
 
     useEffect(() => {
         const today = new Date().toDateString();
@@ -577,7 +588,7 @@ export default function DailyRoutine() {
         }
     }, []);
     useEffect(() => {
-        const rank = rankingData.find(r => r.level === pastLevel) || null;
+        const rank = rankingData.find(r => r.level === percentTo8PM(pastLevel)) || null;
         setPastRank(rank);
     }, [pastLevel]);
 
@@ -655,18 +666,6 @@ export default function DailyRoutine() {
         progressBar: { height: "100%", backgroundColor: "#16a34a", transition: "width 0.3s" },
         buttonGroup: { display: "flex", gap: 8 },
     };
-
-    function percentTo8PM(input: number): number {
-        const date: Date = new Date();
-        const hours =
-            date.getHours() +
-            date.getMinutes() / 60 +
-            date.getSeconds() / 3600;
-        const out = input * ((Math.max(Math.min(hours, 20), 4)-4)/16);
-        //alert(input);
-        //alert(out);
-        return Math.round(out);
-    }
 
     return (
         <div style={styles.page}>
