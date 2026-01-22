@@ -445,6 +445,42 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Elevate Legs Until Sleepy", type: "done" },
         ],
     },
+    //==============
+    //==============
+    //Not to do list
+    //==============
+    //==============
+    {
+        section: "Amethyst",
+        items: [
+            { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 12 AM to 8 AM)", type: "done" },
+            { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 12 AM to 8 AM)", type: "done" },
+            { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 12 AM to 8 AM)", type: "done" },
+            { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 8 AM to 4 PM)", type: "done" },
+            { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 8 AM to 4 PM)", type: "done" },
+            { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 8 AM to 4 PM)", type: "done" },
+            { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 4 PM to 12 AM)", type: "done" },
+            { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 4 PM to 12 AM)", type: "done" },
+            { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 4 PM to 12 AM)", type: "done" },
+        ],
+    },
+    {
+        section: "Unproductive",
+        items: [
+            { label: "Do not be unproductive for 12 AM to 2 AM", type: "done" },
+            { label: "Do not be unproductive for 2 AM to 4 AM", type: "done" },
+            { label: "Do not be unproductive for 4 AM to 6 AM", type: "done" },
+            { label: "Do not be unproductive for 6 AM to 8 AM", type: "done" },
+            { label: "Do not be unproductive for 8 AM to 10 AM", type: "done" },
+            { label: "Do not be unproductive for 10 AM to 12 PM", type: "done" },
+            { label: "Do not be unproductive for 12 PM to 2 PM", type: "done" },
+            { label: "Do not be unproductive for 2 PM to 4 PM", type: "done" },
+            { label: "Do not be unproductive for 4 PM to 6 PM", type: "done" },
+            { label: "Do not be unproductive for 6 PM to 8 PM", type: "done" },
+            { label: "Do not be unproductive for 8 PM to 10 PM", type: "done" },
+            { label: "Do not be unproductive for 10 PM to 12 AM", type: "done" },
+        ],
+    },
 ];
 
 function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
@@ -459,13 +495,12 @@ function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
 
 const routineData: RoutineSection[] = addUniqueIdsToRoutine(routineDataNoId);
 
-
 export default function DailyRoutine() {
     const [state, setState] = useState<Record<string, boolean>>({});
     const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
     const [pastState, setPastState] = useState<Record<string, boolean>>({});
     const [pastSkippedState, setPastSkippedState] = useState<Record<string, boolean>>({});
-    const [tab, setTab] = useState<"todo" | "done" | "skipped">("todo");
+    const [tab, setTab] = useState<"todo" | "done" | "skipped" | "nottodo" | "plan">("todo");
     const [streak, setStreak] = useState<number>(0);
 
     //For visible section
@@ -876,8 +911,13 @@ export default function DailyRoutine() {
         <button style={styles.tab(tab === "done")} onClick={() => setTab("done")}>Done</button>
         <button style={styles.tab(tab === "skipped")} onClick={() => setTab("skipped")}>Skipped</button>
         </div>
+        <div style={styles.tabs}>
+        <button style={styles.tab(tab === "nottodo")} onClick={() => setTab("nottodo")}>Not To Do</button>
+        <button style={styles.tab(tab === "plan")} onClick={() => setTab("plan")}>Plan</button>
+        </div>
 
-        {routineData.map((section: RoutineSection) => {
+        {
+        routineData.map((section: RoutineSection) => {
             const getSectionProgress = (section: RoutineSection) => {
                 const total = section.items.length;
                 const done = section.items.filter(i => state[i.id]).length;
@@ -888,6 +928,7 @@ export default function DailyRoutine() {
                     completed: done === total && total > 0,
                 };
             };
+
 
             function CircleProgress({ percent }: { percent: number }) {
                 return (
@@ -913,113 +954,220 @@ export default function DailyRoutine() {
             // Filter items based on tab
             const filteredItems = section.items.filter((item) => {
                 if (tab === "todo") return !state[item.id] && !skippedState[item.id];
+                if (tab === "nottodo") return !state[item.id] && !skippedState[item.id];
                 if (tab === "done") return state[item.id];
                 if (tab === "skipped") return skippedState[item.id];
                 return false;
             });
 
             // If "todo", only take first 3
-            const visibleItems = tab === "todo" ? filteredItems.slice(0, 3) : filteredItems;
+            const visibleItems = (tab === "todo" || tab === "nottodo") ? filteredItems.slice(0, 3) : filteredItems;
             const progress = getSectionProgress(section);
             if (progress.percent === 100 && tab === "todo") return;
-            return (
-                <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
-                    marginBottom: "7vw",
-                }}>
-                <div>
-                <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: 8,
-                    position: "relative",
-                }}
-                >
-                <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
-                {section.section}
-                </div>
-
-                <CircleProgress percent={progress.percent} />
-
-                {progress.completed && (
+            if (tab === "todo" || tab === "done" || tab === "skipped") {
+                if(tab === "todo" && (section.section === "Amethyst" || section.section === "Unproductive")) return;
+                return (
+                    <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
+                        marginBottom: "7vw",
+                    }}>
+                    <div>
                     <div
                     style={{
-                        position: "absolute",
-                        left: 0,
-                        right: 0,
-                        top: "50%",
-                        height: 2,
-                        backgroundColor: "#16a34a",
-                        opacity: 0.6,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginBottom: 8,
+                        position: "relative",
                     }}
-                    />
-                )}
-                </div>
-                </div>
+                    >
+                    <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
+                    {section.section}
+                    </div>
+
+                    <CircleProgress percent={progress.percent} />
+
+                    {progress.completed && (
+                        <div
+                        style={{
+                            position: "absolute",
+                            left: 0,
+                            right: 0,
+                            top: "50%",
+                            height: 2,
+                            backgroundColor: "#16a34a",
+                            opacity: 0.6,
+                        }}
+                        />
+                    )}
+                    </div>
+                    </div>
 
 
-                {visibleItems.map((item, index) => {
-                    if(section.section !== openSection) {
-                        return;
-                    }
-                    const key = item.id;
+                    {visibleItems.map((item, index) => {
+                        if(section.section !== openSection) {
+                            return;
+                        }
+                        const key = item.id;
 
-                    return (
-                        <div key={key} style={styles.card}>
-                        <div>
-                        <div>{item.label}</div>
-                        {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
-                        </div>
+                        return (
+                            <div key={key} style={styles.card}>
+                            <div>
+                            <div>{item.label}</div>
+                            {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
+                            </div>
 
-                        <div style={styles.buttonGroup}>
-                        {tab && (
-                            <button
-                            onClick={() => {
-                                setChallengeTaskId(key);
-                                setChallengeA(randomDigit(10,99));
-                                setChallengeB(randomDigit(10,99));
-                                setChallengeC(randomDigit(0,198));
-                                setChallengeD(randomDigit(0,99));
-                                setChallengeAnswer("");
-                                setChallengeStep(1);
-                                setChallengeError(null);
-                            }}
-                            style={{
-                                padding: "8px 14px",
-                                borderRadius: 8,
-                                border: "none",
-                                backgroundColor: "#16a34a",
-                                color: "#fff",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                            }}
-                            >
-                            {tab === "done" ? "Undo" : "Done"}
-                            </button>
-                        )}
-                        {tab !== "done" && (
-                            <button
-                            onClick={() => skip(key)}
-                            style={{
-                                padding: "8px 14px",
-                                borderRadius: 8,
-                                border: "none",
-                                backgroundColor: "#f59e0b",
-                                color: "#fff",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                            }}
-                            >
-                            {skippedState[key] ? "Undo Skip" : "Skip"}
-                            </button>
-                        )}
-                        </div>
-                        </div>
-                    );
-                })}
-                </div>
-            );
+                            <div style={styles.buttonGroup}>
+                            {tab && (
+                                <button
+                                onClick={() => {
+                                    setChallengeTaskId(key);
+                                    setChallengeA(randomDigit(10,99));
+                                    setChallengeB(randomDigit(10,99));
+                                    setChallengeC(randomDigit(0,198));
+                                    setChallengeD(randomDigit(0,99));
+                                    setChallengeAnswer("");
+                                    setChallengeStep(1);
+                                    setChallengeError(null);
+                                }}
+                                style={{
+                                    padding: "8px 14px",
+                                    borderRadius: 8,
+                                    border: "none",
+                                    backgroundColor: "#16a34a",
+                                    color: "#fff",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                }}
+                                >
+                                {tab === "done" ? "Undo" : "Done"}
+                                </button>
+                            )}
+                            {tab !== "done" && (
+                                <button
+                                onClick={() => skip(key)}
+                                style={{
+                                    padding: "8px 14px",
+                                    borderRadius: 8,
+                                    border: "none",
+                                    backgroundColor: "#f59e0b",
+                                    color: "#fff",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                }}
+                                >
+                                {skippedState[key] ? "Undo Skip" : "Skip"}
+                                </button>
+                            )}
+                            </div>
+                            </div>
+                        );
+                    })}
+                    </div>
+                );
+            } else if (tab === "nottodo") {
+                if(section.section !== "Amethyst" && section.section !== "Unproductive") return;
+                return (
+                    <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
+                        marginBottom: "7vw",
+                    }}>
+                    <div>
+                    <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginBottom: 8,
+                        position: "relative",
+                    }}
+                    >
+                    <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
+                    {section.section}
+                    </div>
+
+                    <CircleProgress percent={progress.percent} />
+
+                    {progress.completed && (
+                        <div
+                        style={{
+                            position: "absolute",
+                            left: 0,
+                            right: 0,
+                            top: "50%",
+                            height: 2,
+                            backgroundColor: "#16a34a",
+                            opacity: 0.6,
+                        }}
+                        />
+                    )}
+                    </div>
+                    </div>
+
+
+                    {visibleItems.map((item, index) => {
+                        if(section.section !== openSection) {
+                            //alert("hi");
+                            return;
+                        }
+                        const key = item.id;
+
+                        return (
+                            <div key={key} style={styles.card}>
+                            <div>
+                            <div>{item.label}</div>
+                            {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
+                            </div>
+
+                            <div style={styles.buttonGroup}>
+                            {tab && (
+                                <button
+                                onClick={() => {
+                                    setChallengeTaskId(key);
+                                    setChallengeA(randomDigit(10,99));
+                                    setChallengeB(randomDigit(10,99));
+                                    setChallengeC(randomDigit(0,198));
+                                    setChallengeD(randomDigit(0,99));
+                                    setChallengeAnswer("");
+                                    setChallengeStep(1);
+                                    setChallengeError(null);
+                                }}
+                                style={{
+                                    padding: "8px 14px",
+                                    borderRadius: 8,
+                                    border: "none",
+                                    backgroundColor: "#16a34a",
+                                    color: "#fff",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                }}
+                                >
+                                {tab === "done" ? "Undo" : "Done"}
+                                </button>
+                            )}
+                            {tab !== "done" || tab !== "nottodo" && (
+                                <button
+                                onClick={() => skip(key)}
+                                style={{
+                                    padding: "8px 14px",
+                                    borderRadius: 8,
+                                    border: "none",
+                                    backgroundColor: "#f59e0b",
+                                    color: "#fff",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                }}
+                                >
+                                {skippedState[key] ? "Undo Skip" : "Skip"}
+                                </button>
+                            )}
+                            </div>
+                            </div>
+                        );
+                    })}
+                    </div>
+                );
+            } else {
+                return;
+            }
         })}
         </div>
     );
