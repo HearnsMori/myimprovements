@@ -561,7 +561,7 @@ export default function DailyRoutine() {
             const skipped = localStorage.getItem(SKIPPED_KEY);
             const pastSaved = localStorage.getItem(STORAGE_KEY_PAST);
             const pastSkipped = localStorage.getItem(SKIPPED_KEY_PAST);
-            if (a) setPastLevel(Number(a));
+            if (a) setPastLevel(Math.max(Number(a), 18));
             if (b) setPastProgressPercent(Number(b));
             if (saved) setState(JSON.parse(saved) as Record<string, boolean>);
             if (skipped) setSkippedState(JSON.parse(skipped) as Record<string, boolean>);
