@@ -1143,7 +1143,7 @@ export default function DailyRoutine() {
                                 {tab === "done" ? "Undo" : "Done"}
                                 </button>
                             )}
-                            {tab !== "done" || tab !== "nottodo" && (
+                            {(tab !== "done" || tab !== "nottodo") && (
                                 <button
                                 onClick={() => skip(key)}
                                 style={{
