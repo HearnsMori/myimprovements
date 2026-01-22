@@ -500,6 +500,17 @@ export default function DailyRoutine() {
     const exponent = 0.48;
     const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
 
+    // level
+    const level = Math.min(
+        MAX_LEVEL,
+        Math.max(0, Math.floor(progressPercent / maxLevel))
+    );
+
+    const levelNotRound = Math.min(
+        MAX_LEVEL,
+        Math.max(0, progressPercent / maxLevel)
+    );
+
 
     useEffect(() => {
         const today = new Date().toDateString();
@@ -512,17 +523,21 @@ export default function DailyRoutine() {
             const diff =
                 (new Date(today).getTime() - new Date(savedDate).getTime()) /
                 (1000 * 60 * 60 * 24);
-            if (diff === 1) newStreak = savedStreak + 1;
-            else if (diff > 1) newStreak = 1;
-            else newStreak = savedStreak;
+            if (diff === 1) {
+                newStreak = savedStreak + 1;
+                localStorage.setItem("pastLevel", String(level));
+                localStorage.setItem("pastProgressPercent", String(progressPercent));
+            } else if (diff > 1) {
+                newStreak = 1;
+            } else {
+                newStreak = savedStreak;
+            }
         }
 
         setStreak(newStreak);
 
         if (savedDate !== today) {
                 
-            localStorage.setItem("pastLevel", String(level));
-            localStorage.setItem("pastProgressPercent", String(progressPercent));
 
             const a = localStorage.getItem(STORAGE_KEY);
             const b = localStorage.getItem(SKIPPED_KEY);
@@ -542,7 +557,6 @@ export default function DailyRoutine() {
             //localStorage.removeItem(SKIPPED_KEY);
             const a = localStorage.getItem("pastLevel");
             const b = localStorage.getItem("pastProgressPercent");
-            
             const saved = localStorage.getItem(STORAGE_KEY);
             const skipped = localStorage.getItem(SKIPPED_KEY);
             const pastSaved = localStorage.getItem(STORAGE_KEY_PAST);
@@ -577,17 +591,6 @@ export default function DailyRoutine() {
         setSkippedState((prev) => ({ ...prev, [key]: !prev[key] }));
     };
 
-
-    // level
-    const level = Math.min(
-        MAX_LEVEL,
-        Math.max(0, Math.floor(progressPercent / maxLevel))
-    );
-
-    const levelNotRound = Math.min(
-        MAX_LEVEL,
-        Math.max(0, progressPercent / maxLevel)
-    );
 
     const levelToHourlySalary = (clevel: number) => {
         if (clevel === 1) return 0.000000025*60*60*24;
@@ -648,8 +651,10 @@ export default function DailyRoutine() {
             date.getHours() +
             date.getMinutes() / 60 +
             date.getSeconds() / 3600;
-
-        return input * ((Math.max(Math.min(hours, 20), 4)-4)/20);
+        const out = input * ((Math.max(Math.min(hours, 20), 4)-4)/16);
+        //alert(input);
+        //alert(out);
+        return Math.round(out);
     }
 
     return (
