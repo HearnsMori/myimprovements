@@ -478,7 +478,7 @@ export default function DailyRoutine() {
     const [leveledUpRankPast, setLeveledUpRankPast] = useState<typeof rankingData[number] | null>(null);
     const [pastLevel, setPastLevel] = useState<number>(0);
     const [pastProgressPercent, setPastProgressPercent] = useState<number>(0);
-    const [pastRank, setPastRank] = useState<number>(0);
+    const [pastRank, setPastRank] = useState<typeof rankingData[number] | null>(null);
 
     //Math
     const [challengeTaskId, setChallengeTaskId] = useState<string | null>(null);
