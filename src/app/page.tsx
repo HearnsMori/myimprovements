@@ -859,7 +859,7 @@ export default function DailyRoutine() {
         <div style={{ ...styles.progressBar, width: `${(progressPercent % maxLevel)/maxLevel * 100}%` }} />
         </div>
 
-        Enemy Level (Yesterday Self): {`${percentTo8PM(pastLevel)}`}
+        Enemy Level: {`${percentTo8PM(pastLevel)}`}
         <br/>
         Enemy Status Rarity: {pastRank?.name}
         <br/>
