@@ -1140,7 +1140,7 @@ export default function DailyRoutine() {
                                     cursor: "pointer",
                                 }}
                                 >
-                                {tab === "done" ? "Undo" : "Done"}
+                                Done
                                 </button>
                             )}
                             {(tab !== "done" || tab !== "nottodo") && (
