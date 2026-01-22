@@ -1143,7 +1143,7 @@ export default function DailyRoutine() {
                                 Done
                                 </button>
                             )}
-                            {(tab !== "done" || tab !== "nottodo") && (
+                        
                                 <button
                                 onClick={() => skip(key)}
                                 style={{
@@ -1158,7 +1158,7 @@ export default function DailyRoutine() {
                                 >
                                 {skippedState[key] ? "Undo Skip" : "Skip"}
                                 </button>
-                            )}
+                            
                             </div>
                             </div>
                         );
