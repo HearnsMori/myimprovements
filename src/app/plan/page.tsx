@@ -178,7 +178,7 @@ export default function PlannerPage() {
                                            {sorted.map((task) => (
                                                <div key={task.id} style={{ border: "1px solid #222", marginTop: 10, padding: 8 }}>
 
-                                            <textarea name="comments" rows="3" cols="50"
+                                            <textarea name="comments" rows={3} cols={50}
                                                value={task.title}
                                                onChange={(e) =>
                                                    updateTask(block.id, task.id, { title: e.target.value })
