@@ -22,37 +22,37 @@ const DATE_KEY = "daily-routine-date";
 const STREAK_KEY = "daily-routine-streak";
 
 const rankingData = [
-    { level: 0,  name: "zero", image: "level0.png" },
-    { level: 1,  name: "far below average", image: "level3.png" },
-    { level: 2,  name: "below average (low)", image: "level4.png" },
-    { level: 3,  name: "below average", image: "level5.png" },
-    { level: 4,  name: "below average (high)", image: "level6.png" },
+    { level: 0,  name: "unalive", image: "level0.png" },
 
-    { level: 5,  name: "lower normal", image: "level9.png" },
-    { level: 6, name: "low average", image: "level10.png" },
-    { level: 7, name: "low average (stable)", image: "level11.png" },
-    { level: 8, name: "low average (strong)", image: "level12.png" },
+    { level: 1,  name: "worm", image: "level3.png" },
+    { level: 2,  name: "fish", image: "level4.png" },
+    { level: 3,  name: "dog", image: "level5.png" },
+    { level: 4,  name: "monkey", image: "level6.png" },
 
-    { level: 9, name: "barely average", image: "level13.png" },
-    { level: 10, name: "almost average", image: "level14.png" },
-    { level: 11, name: "average (low)", image: "level15.png" },
-    { level: 12, name: "average (low-mid)", image: "level17.png" },
-    { level: 13, name: "average (mid)", image: "level19.png" },
-    { level: 14, name: "average (mid-high)", image: "level22.png" },
-    { level: 15, name: "average (high)", image: "level24.png" },
-    { level: 16, name: "almost above average", image: "level25.png" },
+    { level: 5,  name: "borderline", image: "level9.png" },
+    { level: 6, name: "extremely below average", image: "level10.png" },
+    { level: 7, name: "below average", image: "level11.png" },
+    { level: 8, name: "barely average", image: "level12.png" },
 
-    { level: 17, name: "above average", image: "level26.png" },
-    { level: 18, name: "advanced", image: "level28.png" },
-    { level: 19, name: "exceptional advanced", image: "level31.png" },
+    { level: 9, name: "close average", image: "level13.png" },
+    { level: 10, name: "average", image: "level14.png" },
+    { level: 11, name: "average (good)", image: "level15.png" },
+    { level: 12, name: "average (high)", image: "level17.png" },
 
+    { level: 13, name: "above average", image: "level19.png" },
+    { level: 14, name: "above average (good)", image: "level22.png" },
+    { level: 15, name: "above average (high)", image: "level24.png" },
+    { level: 16, name: "highly above average", image: "level25.png" },
+
+    { level: 17, name: "almost gifted", image: "level26.png" },
+    { level: 18, name: "gifted", image: "level28.png" },
+    { level: 19, name: "genius", image: "level31.png" },
     { level: 20, name: "elite", image: "level32.png" },
-    { level: 21, name: "master", image: "level34.png" },
 
-    { level: 22, name: "above genius", image: "level34.png" },
-    { level: 23, name: "top genius", image: "level34.png" },
-
-    { level: 24, name: "one of the most influencial", image: "level37.png" }
+    { level: 21, name: "one of hundred millions", image: "level34.png" },
+    { level: 22, name: "one of billions", image: "level34.png" },
+    { level: 23, name: "one of ten billions", image: "level34.png" },
+    { level: 24, name: "perfection", image: "level37.png" }
 ];
 
 const routineDataNoId: RoutineSectionNoId[] = [
