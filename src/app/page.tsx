@@ -1,4 +1,5 @@
 "use client";
+import Plan from "./plan/page";
 import { useEffect, useState } from "react";
 
 type RoutineItemNoId = | { label: string; type: "done"; id?: string } | { label: string; type: "sets"; sets: number; record?: number; id?: string } | { label: string; type: "time"; value: string; id?: string } | { label: string; type: "options"; options: string[]; id?: string } | { label: string; type: "count"; unit: string; id?: string };
@@ -451,7 +452,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
     //==============
     //==============
     {
-        section: "Amethyst",
+        section: "#Amethyst",
         items: [
             { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 12 AM to 8 AM)", type: "done" },
             { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 12 AM to 8 AM)", type: "done" },
@@ -465,20 +466,54 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Unproductive",
+        section: "#Breathing and Posture",
         items: [
-            { label: "Do not be unproductive for 12 AM to 2 AM", type: "done" },
-            { label: "Do not be unproductive for 2 AM to 4 AM", type: "done" },
-            { label: "Do not be unproductive for 4 AM to 6 AM", type: "done" },
-            { label: "Do not be unproductive for 6 AM to 8 AM", type: "done" },
-            { label: "Do not be unproductive for 8 AM to 10 AM", type: "done" },
-            { label: "Do not be unproductive for 10 AM to 12 PM", type: "done" },
-            { label: "Do not be unproductive for 12 PM to 2 PM", type: "done" },
-            { label: "Do not be unproductive for 2 PM to 4 PM", type: "done" },
-            { label: "Do not be unproductive for 4 PM to 6 PM", type: "done" },
-            { label: "Do not be unproductive for 6 PM to 8 PM", type: "done" },
-            { label: "Do not be unproductive for 8 PM to 10 PM", type: "done" },
-            { label: "Do not be unproductive for 10 PM to 12 AM", type: "done" },
+            { label: "for 12 AM to 2 AM", type: "done" },
+            { label: "for 2 AM to 4 AM", type: "done" },
+            { label: "for 4 AM to 6 AM", type: "done" },
+            { label: "for 6 AM to 8 AM", type: "done" },
+            { label: "for 8 AM to 10 AM", type: "done" },
+            { label: "for 10 AM to 12 PM", type: "done" },
+            { label: "for 12 PM to 2 PM", type: "done" },
+            { label: "for 2 PM to 4 PM", type: "done" },
+            { label: "for 4 PM to 6 PM", type: "done" },
+            { label: "for 6 PM to 8 PM", type: "done" },
+            { label: "for 8 PM to 10 PM", type: "done" },
+            { label: "for 10 PM to 12 AM", type: "done" },
+        ],
+    },
+    {
+        section: "#Do Not Be Unproductive",
+        items: [
+            { label: "for 12 AM to 2 AM", type: "done" },
+            { label: "for 2 AM to 4 AM", type: "done" },
+            { label: "for 4 AM to 6 AM", type: "done" },
+            { label: "for 6 AM to 8 AM", type: "done" },
+            { label: "for 8 AM to 10 AM", type: "done" },
+            { label: "for 10 AM to 12 PM", type: "done" },
+            { label: "for 12 PM to 2 PM", type: "done" },
+            { label: "for 2 PM to 4 PM", type: "done" },
+            { label: "for 4 PM to 6 PM", type: "done" },
+            { label: "for 6 PM to 8 PM", type: "done" },
+            { label: "for 8 PM to 10 PM", type: "done" },
+            { label: "for 10 PM to 12 AM", type: "done" },
+        ],
+    },
+    {
+        section: "#Do Not Eat Oily or Sugary or Unhealthy Food",
+        items: [
+            { label: "for 12 AM to 2 AM", type: "done" },
+            { label: "for 2 AM to 4 AM", type: "done" },
+            { label: "for 4 AM to 6 AM", type: "done" },
+            { label: "for 6 AM to 8 AM", type: "done" },
+            { label: "for 8 AM to 10 AM", type: "done" },
+            { label: "for 10 AM to 12 PM", type: "done" },
+            { label: "for 12 PM to 2 PM", type: "done" },
+            { label: "for 2 PM to 4 PM", type: "done" },
+            { label: "for 4 PM to 6 PM", type: "done" },
+            { label: "for 6 PM to 8 PM", type: "done" },
+            { label: "for 8 PM to 10 PM", type: "done" },
+            { label: "for 10 PM to 12 AM", type: "done" },
         ],
     },
 ];
@@ -502,7 +537,8 @@ export default function DailyRoutine() {
     const [pastSkippedState, setPastSkippedState] = useState<Record<string, boolean>>({});
     const [tab, setTab] = useState<"todo" | "done" | "skipped" | "nottodo" | "plan">("todo");
     const [streak, setStreak] = useState<number>(0);
-
+    
+    const [showPlan, setShowPlan] = useState<boolean>(true);
     //For visible section
     const [openSection, setOpenSection] = useState<string>("Sleep");
 
@@ -917,7 +953,7 @@ export default function DailyRoutine() {
         </div>
 
         {
-        routineData.map((section: RoutineSection) => {
+        routineData.map((section: RoutineSection, index, array) => {
             const getSectionProgress = (section: RoutineSection) => {
                 const total = section.items.length;
                 const done = section.items.filter(i => state[i.id]).length;
@@ -965,7 +1001,7 @@ export default function DailyRoutine() {
             const progress = getSectionProgress(section);
             if (progress.percent === 100 && tab === "todo") return;
             if (tab === "todo" || tab === "done" || tab === "skipped") {
-                if(tab === "todo" && (section.section === "Amethyst" || section.section === "Unproductive")) return;
+                if(tab === "todo" && section.section.charAt(0) === '#') return;
                 return (
                     <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
                         marginBottom: "7vw",
@@ -1065,7 +1101,7 @@ export default function DailyRoutine() {
                     </div>
                 );
             } else if (tab === "nottodo") {
-                if(section.section !== "Amethyst" && section.section !== "Unproductive") return;
+                if(section.section.charAt(0) !== '#') return;
                 return (
                     <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
                         marginBottom: "7vw",
@@ -1165,6 +1201,8 @@ export default function DailyRoutine() {
                     })}
                     </div>
                 );
+            } else if (tab === "plan" && index === 0) {
+                window.location.href = "plan";
             } else {
                 return;
             }
