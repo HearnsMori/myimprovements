@@ -57,6 +57,12 @@ const rankingData = [
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
+        section: "$To Be Corrected State",
+        items: [
+            { label: "Operation", type: "done" },
+        ],
+    },
+    {
         section: "Total Sleep",
         items: [
             //============
@@ -127,11 +133,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Guitar Routine",
+        section: "Hobby Routine",
         items: [
             //Hobby
-            { label: "Play Guitar for 15mins", type: "done" },
-            { label: "Play Guitar for 15mins", type: "done" },
+            { label: "Play Chess/Music for 15mins", type: "done" },
+            { label: "Play Chess/Music for 15mins", type: "done" },
         ],
     },
     {
@@ -142,11 +148,11 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Guitar Routine 2",
+        section: "Hobby Routine 2",
         items: [
             //Hobby
-            { label: "Play Music for 15mins", type: "done" },
-            { label: "Play Music for 15mins", type: "done" },
+            { label: "Play Chess/Music for 15mins", type: "done" },
+            { label: "Play Chess/Music for 15mins", type: "done" },
         ],
     },
     {
@@ -516,6 +522,12 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "for 10 PM to 12 AM", type: "done" },
         ],
     },
+    //==============
+    //==============
+    //The Only One
+    //==============
+    //==============
+
 ];
 
 function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
@@ -537,7 +549,20 @@ export default function DailyRoutine() {
     const [pastSkippedState, setPastSkippedState] = useState<Record<string, boolean>>({});
     const [tab, setTab] = useState<"todo" | "done" | "skipped" | "nottodo" | "plan">("todo");
     const [streak, setStreak] = useState<number>(0);
-    
+    const [correct, setCorrect] = useState<number>(0);
+    useEffect(()=>{
+        const saved = Number(localStorage.getItem("correct"));
+        if (saved && correct === 0) {
+            setCorrect(saved);
+        } else if (saved && correct !== 0) {
+            localStorage.setItem("correct", String(correct));
+            setCorrect(correct);
+        } else {
+            localStorage.setItem("correct", String(correct));
+            setCorrect(correct);
+        }
+        //localStorage.clear();
+    }, [correct]);
     const [showPlan, setShowPlan] = useState<boolean>(true);
     //For visible section
     const [openSection, setOpenSection] = useState<string>("Sleep");
@@ -567,12 +592,12 @@ export default function DailyRoutine() {
     
     // Calculate progress
     const totalTasks = routineData.reduce((sum: number, section: RoutineSection) => sum + section.items.length, 0);
-    const completedTasks = Object.values(state).filter(Boolean).length;
+    const dsTasks = correct + Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2);
     const MAX_LEVEL = 24;
     const MAX_PER_SEC = 500000;
     const maxLevel = 100/MAX_LEVEL;
     const exponent = 0.48;
-    const progressPercent = 100 * Math.pow(completedTasks / totalTasks, exponent);
+    const progressPercent = 100 * Math.pow(dsTasks / totalTasks, exponent);
 
     // level
     const level = Math.min(
@@ -683,7 +708,6 @@ export default function DailyRoutine() {
         setState((prev) => ({ ...prev, [key]: false }));
         setSkippedState((prev) => ({ ...prev, [key]: !prev[key] }));
     };
-
 
     const levelToHourlySalary = (clevel: number) => {
         if (clevel === 1) return 0.000000025*60*60*24;
@@ -810,8 +834,8 @@ export default function DailyRoutine() {
                 }
 
                 if (challengeStep === 1) {
-                    // ✅ UNLOCK TASK
-                    toggle(challengeTaskId);
+                    // UNLOCK TASK
+                    skip(challengeTaskId);
                     setChallengeTaskId(null);
                     return;
                 }
@@ -924,6 +948,8 @@ export default function DailyRoutine() {
         <br/>
         Status Rarity: {leveledUpRank?.name}
         <br/>
+        Total Corrected: {correct}
+        <br/>
         {/*Income per hour: {hourlySalary} Php*/}
         {/* Progress Bar */}
         <div style={styles.progressContainer}>
@@ -950,17 +976,19 @@ export default function DailyRoutine() {
         <div style={styles.tabs}>
         <button style={styles.tab(tab === "nottodo")} onClick={() => setTab("nottodo")}>Not To Do</button>
         <button style={styles.tab(tab === "plan")} onClick={() => setTab("plan")}>Plan</button>
-        </div>
+        </div> 
+
 
         {
         routineData.map((section: RoutineSection, index, array) => {
             const getSectionProgress = (section: RoutineSection) => {
                 const total = section.items.length;
                 const done = section.items.filter(i => state[i.id]).length;
+                const skip = section.items.filter(i => skippedState[i.id]).length;
                 return {
                     total,
                     done,
-                    percent: total === 0 ? 0 : Math.round((done / total) * 100),
+                    percent: total === 0 ? 0 : Math.round(((done+skip/2) / total) * 100),
                     completed: done === total && total > 0,
                 };
             };
@@ -1053,7 +1081,47 @@ export default function DailyRoutine() {
                             </div>
 
                             <div style={styles.buttonGroup}>
-                            {tab && (
+                            
+
+                            {tab && section.section.charAt(0) !== '$' && (
+                                <button
+                                onClick={() => {
+                                    toggle(key);
+                                }}
+                                style={{
+                                    padding: "8px 14px",
+                                    borderRadius: 8,
+                                    border: "none",
+                                    backgroundColor: "#16a34a",
+                                    color: "#fff",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                }}
+                                >
+                                {tab === "done" ? "Undo" : "Done"}
+                                </button>
+                            )}
+                            {tab && section.section.charAt(0) === '$' && (
+                                <button
+                                onClick={() => {
+                                    setCorrect(i=>i+1);
+                                }}
+                                style={{
+                                    padding: "8px 14px",
+                                    borderRadius: 8,
+                                    border: "none",
+                                    backgroundColor: "#16a34a",
+                                    color: "#fff",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                }}
+                                >
+                                +
+                                </button>
+                            )}
+
+                            
+                            {tab !== "done"  && section.section.charAt(0) !== '$' && (
                                 <button
                                 onClick={() => {
                                     setChallengeTaskId(key);
@@ -1069,18 +1137,20 @@ export default function DailyRoutine() {
                                     padding: "8px 14px",
                                     borderRadius: 8,
                                     border: "none",
-                                    backgroundColor: "#16a34a",
+                                    backgroundColor: "#f59e0b",
                                     color: "#fff",
                                     fontWeight: 600,
                                     cursor: "pointer",
                                 }}
                                 >
-                                {tab === "done" ? "Undo" : "Done"}
+                                {skippedState[key] ? "Undo Skip" : "Skip"}
                                 </button>
                             )}
-                            {tab !== "done" && (
+                            {tab !== "done"  && section.section.charAt(0) === '$' && (
                                 <button
-                                onClick={() => skip(key)}
+                                onClick={() => {
+                                    setCorrect(i=>i-1);
+                                }}
                                 style={{
                                     padding: "8px 14px",
                                     borderRadius: 8,
@@ -1091,9 +1161,11 @@ export default function DailyRoutine() {
                                     cursor: "pointer",
                                 }}
                                 >
-                                {skippedState[key] ? "Undo Skip" : "Skip"}
+                                -
                                 </button>
                             )}
+
+
                             </div>
                             </div>
                         );
