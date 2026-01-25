@@ -1229,14 +1229,7 @@ export default function DailyRoutine() {
                             {tab && (
                                 <button
                                 onClick={() => {
-                                    setChallengeTaskId(key);
-                                    setChallengeA(randomDigit(10,99));
-                                    setChallengeB(randomDigit(10,99));
-                                    setChallengeC(randomDigit(0,198));
-                                    setChallengeD(randomDigit(0,99));
-                                    setChallengeAnswer("");
-                                    setChallengeStep(1);
-                                    setChallengeError(null);
+                                    toggle(key);
                                 }}
                                 style={{
                                     padding: "8px 14px",
@@ -1253,7 +1246,16 @@ export default function DailyRoutine() {
                             )}
                         
                                 <button
-                                onClick={() => skip(key)}
+                                onClick={() => {
+                                    setChallengeTaskId(key);
+                                    setChallengeA(randomDigit(10,99));
+                                    setChallengeB(randomDigit(10,99));
+                                    setChallengeC(randomDigit(0,198));
+                                    setChallengeD(randomDigit(0,99));
+                                    setChallengeAnswer("");
+                                    setChallengeStep(1);
+                                    setChallengeError(null);
+                                }}
                                 style={{
                                     padding: "8px 14px",
                                     borderRadius: 8,
