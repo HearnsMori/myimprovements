@@ -59,9 +59,36 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "!Mandatory: The 4 Hrs Morning Deep Work",
         items: [
+            { label: "for 0.5 hr", type: "done" },
+            { label: "for 0.5 hr", type: "done" },
+            { label: "for 0.5 hr", type: "done" },
+
             { label: "for 1 hr", type: "done" },
+            { label: "for 1 hr", type: "done" },
+            { label: "for 1 hr", type: "done" },
+
+            { label: "for 1.5 hr", type: "done" },
+            { label: "for 1.5 hr", type: "done" },
+            { label: "for 1.5 hr", type: "done" },
+
             { label: "for 2 hrs", type: "done" },
+            { label: "for 2 hrs", type: "done" },
+            { label: "for 2 hrs", type: "done" },
+
+            { label: "for 2.5 hr", type: "done" },
+            { label: "for 2.5 hr", type: "done" },
+            { label: "for 2.5 hr", type: "done" },
+
             { label: "for 3 hrs", type: "done" },
+            { label: "for 3 hrs", type: "done" },
+            { label: "for 3 hrs", type: "done" },
+
+            { label: "for 3.5 hr", type: "done" },
+            { label: "for 3.5 hr", type: "done" },
+            { label: "for 3.5 hr", type: "done" },
+
+            { label: "for 4 hrs", type: "done" },
+            { label: "for 4 hrs", type: "done" },
             { label: "for 4 hrs", type: "done" },
         ],
     },
