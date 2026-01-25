@@ -57,6 +57,16 @@ const rankingData = [
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
+        section: "!Mandatory: The 4 Hrs Morning Deep Work",
+        items: [
+            { label: "for 1 hr", type: "done" },
+            { label: "for 2 hrs", type: "done" },
+            { label: "for 3 hrs", type: "done" },
+            { label: "for 4 hrs", type: "done" },
+        ],
+        info: "Focus through all your senses and No Task Switch"
+    },
+    {
         section: "$To Be Corrected State",
         items: [
             { label: "Operation", type: "done" },
@@ -101,7 +111,9 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Drink 1 Glass", type: "count", unit: "glass" },
 
             //Getting ready
-            { label: "Warm-up 7mins", type: "done" },
+            { label: "Jumping jack 3mins", type: "done" },
+            { label: "Rotate joint 2mins", type: "done" },
+            { label: "Dynamic stretch 2mins", type: "done" },
             { label: "Expose to Light (Indirect: Open Window)", type: "done" },
         ],
     },
@@ -241,8 +253,9 @@ const routineDataNoId: RoutineSectionNoId[] = [
         section: "Exercise Routine",
         items: [
             //Warm-up
-            { label: "Increase Heart Rate for 3m", type: "time", value: "3 mins" },
-            { label: "Dynamic Mobility for 7m", type: "time", value: "7 mins" },
+            { label: "Jumping jack 3mins", type: "done" },
+            { label: "Rotate joint 2mins", type: "done" },
+            { label: "Dynamic stretch 2mins", type: "done" },
             { label: "Drink 1/8 Glass", type: "count", unit: "glass" },
 
             //Exercise
@@ -522,12 +535,6 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "for 10 PM to 12 AM", type: "done" },
         ],
     },
-    //==============
-    //==============
-    //The Only One
-    //==============
-    //==============
-
 ];
 
 function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
@@ -655,6 +662,7 @@ export default function DailyRoutine() {
             if (a) localStorage.setItem(STORAGE_KEY_PAST, a);
             if (b) localStorage.setItem(SKIPPED_KEY_PAST, b);
 
+            localStorage.removeItem("correct");
             localStorage.removeItem(STORAGE_KEY);
             localStorage.removeItem(SKIPPED_KEY);
             localStorage.setItem(DATE_KEY, today);
