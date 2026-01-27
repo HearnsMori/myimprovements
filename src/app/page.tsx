@@ -1189,7 +1189,9 @@ export default function DailyRoutine() {
                                 {tab && section.section.charAt(0) === '!' && (
                                     <button
                                     onClick={() => {
-                                        if(count) setCount(i=>i+15);
+                                        setCount(i=>{
+                                            if (i) return (i+15);
+                                        });
                                     }}
                                     style={{
                                         padding: "8px 14px",
