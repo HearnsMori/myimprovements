@@ -1191,6 +1191,7 @@ export default function DailyRoutine() {
                                     onClick={() => {
                                         setCount(i=>{
                                             if (i) return (i+15);
+                                            return i;
                                         });
                                     }}
                                     style={{
