@@ -569,7 +569,7 @@ export default function DailyRoutine() {
                 setCount(0);
             }
         } else {
-            localStorage.setItem("free", count);
+            localStorage.setItem("free", String(count));
         }
         const now = Date.now();
         const saved = localStorage.getItem("Count");
