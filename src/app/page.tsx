@@ -57,39 +57,9 @@ const rankingData = [
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
-        section: "!Mandatory: The 4 Hrs Morning Deep Work",
+        section: "!Condensly Touch it with all your soul and every self",
         items: [
-            { label: "for 0.5 hr", type: "done" },
-            { label: "for 0.5 hr", type: "done" },
-            { label: "for 0.5 hr", type: "done" },
-
-            { label: "for 1 hr", type: "done" },
-            { label: "for 1 hr", type: "done" },
-            { label: "for 1 hr", type: "done" },
-
-            { label: "for 1.5 hr", type: "done" },
-            { label: "for 1.5 hr", type: "done" },
-            { label: "for 1.5 hr", type: "done" },
-
-            { label: "for 2 hrs", type: "done" },
-            { label: "for 2 hrs", type: "done" },
-            { label: "for 2 hrs", type: "done" },
-
-            { label: "for 2.5 hr", type: "done" },
-            { label: "for 2.5 hr", type: "done" },
-            { label: "for 2.5 hr", type: "done" },
-
-            { label: "for 3 hrs", type: "done" },
-            { label: "for 3 hrs", type: "done" },
-            { label: "for 3 hrs", type: "done" },
-
-            { label: "for 3.5 hr", type: "done" },
-            { label: "for 3.5 hr", type: "done" },
-            { label: "for 3.5 hr", type: "done" },
-
-            { label: "for 4 hrs", type: "done" },
-            { label: "for 4 hrs", type: "done" },
-            { label: "for 4 hrs", type: "done" },
+            { label: "for 5 mins", type: "done" },
         ],
     },
     {
@@ -575,6 +545,11 @@ function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
 
 const routineData: RoutineSection[] = addUniqueIdsToRoutine(routineDataNoId);
 
+type CounterData = {
+  value: number;
+  lastUpdated: number; // timestamp in ms
+};
+
 export default function DailyRoutine() {
     const [state, setState] = useState<Record<string, boolean>>({});
     const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
@@ -583,6 +558,59 @@ export default function DailyRoutine() {
     const [tab, setTab] = useState<"todo" | "done" | "skipped" | "nottodo" | "plan">("todo");
     const [streak, setStreak] = useState<number>(0);
     const [correct, setCorrect] = useState<number>(0);
+    
+    const [count, setCount] = useState<number | null>(null);
+    useEffect(() => {
+        const savedCount = Number(localStorage.getItem("free"));
+        if(count === null) {
+            if(savedCount) {
+                setCount(savedCount);
+            } else {
+                setCount(0);
+            }
+        } else {
+            localStorage.setItem("free", count);
+        }
+        const now = Date.now();
+        const saved = localStorage.getItem("Count");
+        if (!count) return;
+        if (saved) {
+            const data: CounterData = JSON.parse(saved);
+
+            // how many full minutes passed
+            const minutesPassed = Math.floor(
+                (now - data.lastUpdated) / (60 * 1000)
+            );
+
+            const newValue = count - minutesPassed;
+            if (newValue < 0) {
+                setCount(0); 
+            } else {
+                setCount(newValue);
+            }
+            // save updated state
+            localStorage.setItem(
+                "Count",
+                JSON.stringify({
+                    value: newValue,
+                    lastUpdated: now,
+                })
+            );
+        } else {
+            // initial value
+            const initialValue = count;
+
+            localStorage.setItem(
+                "Count",
+                JSON.stringify({
+                    value: initialValue,
+                    lastUpdated: now,
+                })
+            );
+        }
+    }, [count]);
+
+
     useEffect(()=>{
         const saved = Number(localStorage.getItem("correct"));
         if (saved && correct === 0) {
@@ -618,11 +646,11 @@ export default function DailyRoutine() {
     const [challengeAnswer, setChallengeAnswer] = useState<string>("");
     const [challengeStep, setChallengeStep] = useState<number>(0);
     const [challengeError, setChallengeError] = useState<string | null>(null);
-    
+
     const [randomPercent, setRandomPercent] = useState<number>(0);
 
     const randomDigit = (min: number, max: number) => Math.floor(min/*Minimum*/ + Math.random() * (max-min));
-    
+
     // Calculate progress
     const totalTasks = routineData.reduce((sum: number, section: RoutineSection) => sum + section.items.length, 0);
     const dsTasks = correct + Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2);
@@ -680,7 +708,7 @@ export default function DailyRoutine() {
         setStreak(newStreak);
 
         if (savedDate !== today) {
-                
+
 
             const a = localStorage.getItem(STORAGE_KEY);
             const b = localStorage.getItem(SKIPPED_KEY);
@@ -783,6 +811,11 @@ export default function DailyRoutine() {
             setShowLevelUp(true);
         }
     }, [level]);
+
+    function openTermux() {
+        // This URI scheme attempts to launch Termux
+        window.location.href = 'termux://';
+    }
 
 
     const styles = {
@@ -974,7 +1007,7 @@ export default function DailyRoutine() {
             </div>
             </div>
         )}
-        <h1>Daily Routine</h1>
+        <h1>Daily Routine: {count} free mins</h1>
         Day Streak: {streak}
         <br/>
         <br/>
@@ -1014,148 +1047,289 @@ export default function DailyRoutine() {
 
 
         {
-        routineData.map((section: RoutineSection, index, array) => {
-            const getSectionProgress = (section: RoutineSection) => {
-                const total = section.items.length;
-                const done = section.items.filter(i => state[i.id]).length;
-                const skip = section.items.filter(i => skippedState[i.id]).length;
-                return {
-                    total,
-                    done,
-                    percent: total === 0 ? 0 : Math.round(((done+skip/2) / total) * 100),
-                    completed: done === total && total > 0,
+            routineData.map((section: RoutineSection, index, array) => {
+                const getSectionProgress = (section: RoutineSection) => {
+                    const total = section.items.length;
+                    const done = section.items.filter(i => state[i.id]).length;
+                    const skip = section.items.filter(i => skippedState[i.id]).length;
+                    return {
+                        total,
+                        done,
+                        percent: total === 0 ? 0 : Math.round(((done+skip/2) / total) * 100),
+                        completed: done === total && total > 0,
+                    };
                 };
-            };
 
 
-            function CircleProgress({ percent }: { percent: number }) {
-                return (
-                    <div
-                    style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: "50%",
-                        background: `conic-gradient(#16a34a ${percent * 3.6}deg, #27272a 0deg)`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 12,
-                        fontWeight: 700,
-                        color: "#fff",
-                    }}
-                    >
-                    {percent}%
-                    </div>
-                );
-            }
-
-            // Filter items based on tab
-            const filteredItems = section.items.filter((item) => {
-                if (tab === "todo") return !state[item.id] && !skippedState[item.id];
-                if (tab === "nottodo") return !state[item.id] && !skippedState[item.id];
-                if (tab === "done") return state[item.id];
-                if (tab === "skipped") return skippedState[item.id];
-                return false;
-            });
-
-            // If "todo", only take first 3
-            const visibleItems = (tab === "todo" || tab === "nottodo") ? filteredItems.slice(0, 3) : filteredItems;
-            const progress = getSectionProgress(section);
-            if (progress.percent === 100 && tab === "todo") return;
-            if (tab === "todo" || tab === "done" || tab === "skipped") {
-                if(tab === "todo" && section.section.charAt(0) === '#') return;
-                return (
-                    <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
-                        marginBottom: "7vw",
-                    }}>
-                    <div>
-                    <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        marginBottom: 8,
-                        position: "relative",
-                    }}
-                    >
-                    <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
-                    {section.section}
-                    </div>
-
-                    <CircleProgress percent={progress.percent} />
-
-                    {progress.completed && (
+                function CircleProgress({ percent }: { percent: number }) {
+                    return (
                         <div
                         style={{
-                            position: "absolute",
-                            left: 0,
-                            right: 0,
-                            top: "50%",
-                            height: 2,
-                            backgroundColor: "#16a34a",
-                            opacity: 0.6,
+                            width: 44,
+                            height: 44,
+                            borderRadius: "50%",
+                            background: `conic-gradient(#16a34a ${percent * 3.6}deg, #27272a 0deg)`,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 12,
+                            fontWeight: 700,
+                            color: "#fff",
                         }}
-                        />
-                    )}
-                    </div>
-                    </div>
+                        >
+                        {percent}%
+                        </div>
+                    );
+                }
+
+                // Filter items based on tab
+                const filteredItems = section.items.filter((item) => {
+                    if (tab === "todo") return !state[item.id] && !skippedState[item.id];
+                    if (tab === "nottodo") return !state[item.id] && !skippedState[item.id];
+                    if (tab === "done") return state[item.id];
+                    if (tab === "skipped") return skippedState[item.id];
+                    return false;
+                });
+
+                // If "todo", only take first 3
+                const visibleItems = (tab === "todo" || tab === "nottodo") ? filteredItems.slice(0, 3) : filteredItems;
+                const progress = getSectionProgress(section);
+                if (progress.percent === 100 && tab === "todo") return;
+                if (tab === "todo" || tab === "done" || tab === "skipped") {
+                    if(tab === "todo" && section.section.charAt(0) === '#') return;
+                    return (
+                        <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
+                            marginBottom: "7vw",
+                        }}>
+                        <div>
+                        <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            marginBottom: 8,
+                            position: "relative",
+                        }}
+                        >
+                        <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
+                        {section.section}
+                        </div>
+
+                        <CircleProgress percent={progress.percent} />
+
+                        {progress.completed && (
+                            <div
+                            style={{
+                                position: "absolute",
+                                left: 0,
+                                right: 0,
+                                top: "50%",
+                                height: 2,
+                                backgroundColor: "#16a34a",
+                                opacity: 0.6,
+                            }}
+                            />
+                        )}
+                        </div>
+                        </div>
 
 
-                    {visibleItems.map((item, index) => {
-                        if(section.section !== openSection) {
-                            return;
-                        }
-                        const key = item.id;
+                        {visibleItems.map((item, index) => {
+                            if(section.section !== openSection) {
+                                return;
+                            }
+                            const key = item.id;
 
-                        return (
-                            <div key={key} style={styles.card}>
-                            <div>
-                            <div>{item.label}</div>
-                            {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
-                            </div>
+                            return (
+                                <div key={key} style={styles.card}>
+                                <div>
+                                <div>{item.label}</div>
+                                {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
+                                </div>
 
-                            <div style={styles.buttonGroup}>
-                            
+                                <div style={styles.buttonGroup}>
 
-                            {tab && section.section.charAt(0) !== '$' && (
-                                <button
-                                onClick={() => {
-                                    toggle(key);
-                                }}
-                                style={{
-                                    padding: "8px 14px",
-                                    borderRadius: 8,
-                                    border: "none",
-                                    backgroundColor: "#16a34a",
-                                    color: "#fff",
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                }}
-                                >
-                                {tab === "done" ? "Undo" : "Done"}
-                                </button>
-                            )}
-                            {tab && section.section.charAt(0) === '$' && (
-                                <button
-                                onClick={() => {
-                                    setCorrect(i=>i+1);
-                                }}
-                                style={{
-                                    padding: "8px 14px",
-                                    borderRadius: 8,
-                                    border: "none",
-                                    backgroundColor: "#16a34a",
-                                    color: "#fff",
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                }}
-                                >
-                                +
-                                </button>
-                            )}
 
-                            
-                            {tab !== "done"  && section.section.charAt(0) !== '$' && (
+                                {tab && section.section.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
+                                    <button
+                                    onClick={() => {
+                                        toggle(key);
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#16a34a",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    {tab === "done" ? "Undo" : "Done"}
+                                    </button>
+                                )}
+                                {tab && section.section.charAt(0) === '$' && (
+                                    <button
+                                    onClick={() => {
+                                        setCorrect(i=>i+1);
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#16a34a",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    +
+                                        </button>
+                                )}
+                                {tab && section.section.charAt(0) === '!' && (
+                                    <button
+                                    onClick={() => {
+                                        setCount(i=>i+15);
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#16a34a",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    done
+                                    </button>
+                                )}
+
+
+                                {tab !== "done"  && section.section.charAt(0) !== '$' &&  section.section.charAt(0) !== '!' && (
+                                    <button
+                                    onClick={() => {
+                                        setChallengeTaskId(key);
+                                        setChallengeA(randomDigit(10,99));
+                                        setChallengeB(randomDigit(10,99));
+                                        setChallengeC(randomDigit(0,198));
+                                        setChallengeD(randomDigit(0,99));
+                                        setChallengeAnswer("");
+                                        setChallengeStep(1);
+                                        setChallengeError(null);
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#f59e0b",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    {skippedState[key] ? "Undo Skip" : "Skip"}
+                                    </button>
+                                )}
+                                {tab !== "done"  && section.section.charAt(0) === '$' && (
+                                    <button
+                                    onClick={() => {
+                                        setCorrect(i=>i-1);
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#f59e0b",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    -
+                                        </button>
+                                )}
+
+
+                                </div>
+                                </div>
+                            );
+                        })}
+                        </div>
+                    );
+                } else if (tab === "nottodo") {
+                    if(section.section.charAt(0) !== '#') return;
+                    return (
+                        <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
+                            marginBottom: "7vw",
+                        }}>
+                        <div>
+                        <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            marginBottom: 8,
+                            position: "relative",
+                        }}
+                        >
+                        <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
+                        {section.section}
+                        </div>
+
+                        <CircleProgress percent={progress.percent} />
+
+                        {progress.completed && (
+                            <div
+                            style={{
+                                position: "absolute",
+                                left: 0,
+                                right: 0,
+                                top: "50%",
+                                height: 2,
+                                backgroundColor: "#16a34a",
+                                opacity: 0.6,
+                            }}
+                            />
+                        )}
+                        </div>
+                        </div>
+
+
+                        {visibleItems.map((item, index) => {
+                            if(section.section !== openSection) {
+                                //alert("hi");
+                                return;
+                            }
+                            const key = item.id;
+
+                            return (
+                                <div key={key} style={styles.card}>
+                                <div>
+                                <div>{item.label}</div>
+                                {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
+                                </div>
+
+                                <div style={styles.buttonGroup}>
+                                {tab && (
+                                    <button
+                                    onClick={() => {
+                                        toggle(key);
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#16a34a",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    Done
+                                    </button>
+                                )}
+
                                 <button
                                 onClick={() => {
                                     setChallengeTaskId(key);
@@ -1179,142 +1353,21 @@ export default function DailyRoutine() {
                                 >
                                 {skippedState[key] ? "Undo Skip" : "Skip"}
                                 </button>
-                            )}
-                            {tab !== "done"  && section.section.charAt(0) === '$' && (
-                                <button
-                                onClick={() => {
-                                    setCorrect(i=>i-1);
-                                }}
-                                style={{
-                                    padding: "8px 14px",
-                                    borderRadius: 8,
-                                    border: "none",
-                                    backgroundColor: "#f59e0b",
-                                    color: "#fff",
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                }}
-                                >
-                                -
-                                </button>
-                            )}
 
-
-                            </div>
-                            </div>
-                        );
-                    })}
-                    </div>
-                );
-            } else if (tab === "nottodo") {
-                if(section.section.charAt(0) !== '#') return;
-                return (
-                    <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
-                        marginBottom: "7vw",
-                    }}>
-                    <div>
-                    <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        marginBottom: 8,
-                        position: "relative",
-                    }}
-                    >
-                    <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
-                    {section.section}
-                    </div>
-
-                    <CircleProgress percent={progress.percent} />
-
-                    {progress.completed && (
-                        <div
-                        style={{
-                            position: "absolute",
-                            left: 0,
-                            right: 0,
-                            top: "50%",
-                            height: 2,
-                            backgroundColor: "#16a34a",
-                            opacity: 0.6,
-                        }}
-                        />
-                    )}
-                    </div>
-                    </div>
-
-
-                    {visibleItems.map((item, index) => {
-                        if(section.section !== openSection) {
-                            //alert("hi");
-                            return;
-                        }
-                        const key = item.id;
-
-                        return (
-                            <div key={key} style={styles.card}>
-                            <div>
-                            <div>{item.label}</div>
-                            {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
-                            </div>
-
-                            <div style={styles.buttonGroup}>
-                            {tab && (
-                                <button
-                                onClick={() => {
-                                    toggle(key);
-                                }}
-                                style={{
-                                    padding: "8px 14px",
-                                    borderRadius: 8,
-                                    border: "none",
-                                    backgroundColor: "#16a34a",
-                                    color: "#fff",
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                }}
-                                >
-                                Done
-                                </button>
-                            )}
-                        
-                                <button
-                                onClick={() => {
-                                    setChallengeTaskId(key);
-                                    setChallengeA(randomDigit(10,99));
-                                    setChallengeB(randomDigit(10,99));
-                                    setChallengeC(randomDigit(0,198));
-                                    setChallengeD(randomDigit(0,99));
-                                    setChallengeAnswer("");
-                                    setChallengeStep(1);
-                                    setChallengeError(null);
-                                }}
-                                style={{
-                                    padding: "8px 14px",
-                                    borderRadius: 8,
-                                    border: "none",
-                                    backgroundColor: "#f59e0b",
-                                    color: "#fff",
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                }}
-                                >
-                                {skippedState[key] ? "Undo Skip" : "Skip"}
-                                </button>
-                            
-                            </div>
-                            </div>
-                        );
-                    })}
-                    </div>
-                );
-            } else if (tab === "plan" && index === 0) {
-                window.location.href = "plan";
-            } else {
-                return;
-            }
-        })}
-        </div>
+                                </div>
+                                </div>
+                            );
+                        })}
+                        </div>
+                    );
+                } else if (tab === "plan" && index === 0) {
+                    window.location.href = "plan";
+                } else {
+                    return;
+                }
+            })}
+            </div>
     );
 }
+
+
