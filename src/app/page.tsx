@@ -57,7 +57,7 @@ const rankingData = [
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
-        section: "!Condensly Touch it with all your soul and every self",
+        section: "!Touch CS with all your soul and every self",
         items: [
             { label: "for 5 mins", type: "done" },
         ],
