@@ -1190,7 +1190,7 @@ export default function DailyRoutine() {
                                     <button
                                     onClick={() => {
                                         setCount(i=>{
-                                            if (i !== null) return (i+15);
+                                            if (i !== null) return (i+20);
                                             return i;
                                         });
                                     }}
