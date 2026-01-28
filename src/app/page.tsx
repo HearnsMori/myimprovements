@@ -1007,7 +1007,7 @@ export default function DailyRoutine() {
             </div>
             </div>
         )}
-        <h1>Daily Routine: {count} free mins</h1>
+        <h1>Daily Routine: {count}m Free Time</h1>
         Day Streak: {streak}
         <br/>
         <br/>
@@ -1094,7 +1094,6 @@ export default function DailyRoutine() {
                 // If "todo", only take first 3
                 const visibleItems = (tab === "todo" || tab === "nottodo") ? filteredItems.slice(0, 3) : filteredItems;
                 const progress = getSectionProgress(section);
-                if (progress.percent === 100 && tab === "todo") return;
                 if (tab === "todo" || tab === "done" || tab === "skipped") {
                     if(tab === "todo" && section.section.charAt(0) === '#') return;
                     return (
