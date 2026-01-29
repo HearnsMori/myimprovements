@@ -189,7 +189,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Nerve&Mind&Muscle Consumeable",
         items: [
-            { label: "$1hr Sleep", type: "done" },
+            { label: "$15m Sleep", type: "done" },
             { label: "$15m Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk", type: "done" },
             
             { label: "Wake: Jumping jack 3mins", type: "done" },
