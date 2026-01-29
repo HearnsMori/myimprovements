@@ -210,7 +210,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "@Neck,Tongue,Lips Posture + Diaphragm Breathing + Positive Emotion",
+        section: "@Neck,Tongue,Lips Posture + Diaphragm Breathing + Positive Emotion + Light Walk",
         items: [
             { label: "15 mins", type: "done" },
             { label: "15 mins", type: "done" },
@@ -219,6 +219,9 @@ const routineDataNoId: RoutineSectionNoId[] = [
 
             { label: "15 mins", type: "done" },
             { label: "15 mins", type: "done" },
+            { label: "15 mins", type: "done" },
+            { label: "15 mins", type: "done" },
+            
             { label: "15 mins", type: "done" },
             { label: "15 mins", type: "done" },
         ],
@@ -1012,7 +1015,7 @@ export default function DailyRoutine() {
                             position: "relative",
                         }}
                         >
-                        <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
+                        <div style={{ maxWidth: "73vw", fontSize: 16, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
                         {section.section}
                         </div>
 
@@ -1177,7 +1180,7 @@ export default function DailyRoutine() {
                             position: "relative",
                         }}
                         >
-                        <div style={{ fontSize: 18, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
+                        <div style={{ maxWidth: "73vw", fontSize: 16, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
                         {section.section}
                         </div>
 
