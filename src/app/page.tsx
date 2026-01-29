@@ -106,115 +106,121 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "@Nutrients",
         items: [
-            { label: "1/8 Glass", type: "done" }
+            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
+            { label: "Centrum Supplements", type: "done" },
+            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
+            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
+            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
+            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
+            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
         ],
     },
     {
         section: "@Hydration",
         items: [
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
             { label: "1/8 Glass", type: "done" }
 
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
 
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
 
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
 
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
 
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
 
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
-            { label: "1/8 Glass", type: "done" }
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
+            { label: "1/8 Glass", type: "done" },
         ],
     },
     {
         section: "@Neck,Tongue,Lips Posture + Diaphragm Breathing + Positive Emotion",
         items: [
-            { label: "15 mins", type: "done" }
-            { label: "15 mins", type: "done" }
-            { label: "15 mins", type: "done" }
-            { label: "15 mins", type: "done" }
+            { label: "15 mins", type: "done" },
+            { label: "15 mins", type: "done" },
+            { label: "15 mins", type: "done" },
+            { label: "15 mins", type: "done" },
 
-            { label: "15 mins", type: "done" }
-            { label: "15 mins", type: "done" }
-            { label: "15 mins", type: "done" }
-            { label: "15 mins", type: "done" }
+            { label: "15 mins", type: "done" },
+            { label: "15 mins", type: "done" },
+            { label: "15 mins", type: "done" },
+            { label: "15 mins", type: "done" },
         ],
     },
     {
