@@ -1,3 +1,10 @@
+//Variables
+//Free Time
+//Energy Level
+//Hydration Level
+//Morning Routine
+//Night Routine
+
 "use client";
 import Plan from "./plan/page";
 import { useEffect, useState } from "react";
@@ -74,163 +81,112 @@ disrupting breathing nor shaking stomach
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
-        section: "!Touch CS with all your soul and every self",
+        section: "!Touch CS with all your soul and self",
         items: [
-            { label: "for 5 mins", type: "done" },
+            { label: "For 5 mins", type: "done" },
         ],
     },
     {
-        section: "$To Be Corrected State",
+        section: "Make Amethyst Feels Good",
         items: [
-            { label: "Operation", type: "done" },
+            { label: "Do Gratitude and Transparency Morning", type: "done" },
+            { label: "Show Progress and Perplan Afternoon", type: "done" },
+            { label: "Give Emotional Security and Safety Unknow Night", type: "done" },
         ],
     },
     {
-        section: "@Hygiene",
+        section: "Mouth&Nose Consumeable",
         items: [
-            //Hygiene + Food
+            { label: "Brush Teeth then 30m No Eat", type: "done" },
+            
+            { label: "Drink Probiotics", type: "count", unit: "glass" },
+
+            { label: "Do HIT", type: "done" },
+            { label: "Healthy Plate(50% fruits/veggies, 25% whole grains, 25% proteins) Meal", type: "done" },
+            { label: "30m High No Heavy Breath / Stomach Shake Movement", type: "done" },
+
+            { label: "Light Snack (A piece of fruit/veggies like banana or apple)->High No HeavyBreath/StomachShake Movement", type: "done" },
+            { label: "15m High No Heavy Breath / Stomach Shake Movement", type: "done" },
+
+            { label: "Do HIT", type: "done" },
+            { label: "Healthy Plate(50% fruits/veggies, 25% whole grains, 25% proteins) Meal", type: "done" },
+            { label: "30m High No Heavy Breath / Stomach Shake Movement", type: "done" },
+
+            { label: "Light Snack (A piece of fruit/veggies like banana or apple)->High No HeavyBreath/StomachShake Movement", type: "done" },
+            { label: "15m High No Heavy Breath / Stomach Shake Movement", type: "done" },
+
+            { label: "Do HIT", type: "done" },
+            { label: "Healthy Plate(50% fruits/veggies, 25% whole grains, 25% proteins) Meal", type: "done" },
+            { label: "30m High No Heavy Breath / Stomach Shake Movement", type: "done" },
+
+            { label: "Light Snack (A piece of fruit/veggies like banana or apple)->High No HeavyBreath/StomachShake Movement", type: "done" },
+            { label: "15m High No Heavy Breath / Stomach Shake Movement", type: "done" },
+            
+            { label: "Brush Teeth", type: "done" },
+
+            { label: "$Drink 1/8 Glass", type: "done" },
+            { label: "$Diaphragmatic Breathing", type: "done" },
+        ],
+    },
+    {
+        section: "Skin Consumeable",
+        items: [
             { label: "Clean Environment", type: "done" },
-            { label: "Take Shower", type: "done" },
-            { label: "Apply Shampoo and Conditioner every other 2 days", type: "done" },
-            { label: "Apply Soap", type: "done" },
-            { label: "Exercise Chick Lifter Focus on Resistance", type: "done" },
-            { label: "Exercise Eyebrow Lifter Focus on Resistance", type: "done" },
-            { label: "Exercise Chick Lifter Focus on Resistance", type: "done" },
-            { label: "Exercise Eyebrow Lifter Focus on Resistance", type: "done" },
-            { label: "Exercise Chick Lifter Focus on Resistance", type: "done" },
-            { label: "Exercise Eyebrow Lifter Focus on Resistance", type: "done" },
-            { label: "Apply Jojoba Oil and Use Gua Sha Very Lightly for 10min", type: "done" },
-            { label: "Trim Nails/Eyebrows", type: "done" },
-        ],
-    },
-    {
-        section: "@Nutrients",
-        items: [
-            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
-            { label: "Centrum Supplements", type: "done" },
-            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
-            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
-            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
-            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
-            { label: "50% Fruits/Veggies, 25% Protein, 25% Whole Grain Smaller Meal", type: "done" },
-        ],
-    },
-    {
-        section: "@Hydration",
-        items: [
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
             
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" },
-        ],
-    },
-    {
-        section: "@Neck,Tongue,Lips Posture + Diaphragm Breathing + Positive Emotion + Light Walk",
-        items: [
-            { label: "15 mins", type: "done" },
-            { label: "15 mins", type: "done" },
-            { label: "15 mins", type: "done" },
-            { label: "15 mins", type: "done" },
-
-            { label: "15 mins", type: "done" },
-            { label: "15 mins", type: "done" },
-            { label: "15 mins", type: "done" },
-            { label: "15 mins", type: "done" },
+            { label: "Wash Face", type: "done" },
+            { label: "Use Facial Cleanser", type: "done" },
+            { label: "Apply Vitamin C Serum", type: "done" },
+            { label: "Use Moisturizer", type: "done" },
+            { label: "Apply Sunscreen", type: "done" },
             
-            { label: "15 mins", type: "done" },
-            { label: "15 mins", type: "done" },
+            { label: "Clean Environment", type: "done" },
+            
+            { label: "Wash Face", type: "done" },
+            { label: "Use Facial Cleanser", type: "done" },
+            { label: "Use Moisturizer", type: "done" },
+            { label: "Retinoids", type: "done" },
+            { label: "Apply Sunscreen", type: "done" },
+            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
+            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
         ],
     },
     {
-        section: "@Exercise",
+        section: "Eyes&Ears Consumeable",
         items: [
-            //Warm-up
+            { label: "$5m Observe and Get Correct (Learn) from Useful Things/Information", type: "done" },
+        ],
+    },
+    {
+        section: "Nerve&Mind&Muscle Consumeable",
+        items: [
+            { label: "$15m Sleep", type: "done" },
+            { label: "$Neck,Tongue,Lips Posture + Diaphragm Breathing + Positive Emotion + Light Walk", type: "done" },
+            
             { label: "Jumping jack 3mins", type: "done" },
+            { label: "Rotate joint 2mins", type: "done" },
+            { label: "Dynamic stretch 2mins", type: "done" },
+            { label: "Expose to Light (Indirect: Open Window)", type: "done" },
+            
+
+            { label: "After eating 30m ago, Warm-up Neck 2mins", type: "done" },
+
+            { label: "Neck Curl Hand Resistance", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Curl Hand Resistance", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Curl Hand Resistance", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Tuck", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Tuck", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            { label: "Neck Tuck", type: "done" },
+            { label: "4-4-8 Breathing 1min", type: "done" },
+            
+            { label: "Breakdown & Plan Work into 30m Block and SMART Task Prioritization for 15m", type: "done" },
+
+            //Warm-up
+            { label: "After eating 2hr ago, Jumping jack 3mins", type: "done" },
             { label: "Rotate joint 2mins", type: "done" },
             { label: "Dynamic stretch 2mins", type: "done" },
 
@@ -241,7 +197,6 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Max Effort Pull", type: "done" },
             { label: "Max Effort Pull", type: "done" },
             { label: "Max Effort Pull", type: "done" },
-
             { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
             { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
             { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
@@ -249,124 +204,6 @@ const routineDataNoId: RoutineSectionNoId[] = [
             //Cooldown
             { label: "Slowly Decrease Heart Rate", type: "time", value: "3 mins" },
             { label: "Static Stretch", type: "time", value: "7 mins" },
-        ],
-    },
-    {
-        section: "@Total Sleep",
-        items: [
-            //============
-            //4hrs - 1
-            //============
-            { label: "Sleep Total 1hrs", type: "done" },
-            { label: "Sleep Total 2hrs", type: "done" },
-            { label: "Sleep Total 3hrs", type: "done" },
-            { label: "Sleep Total 4hrs", type: "done" },
-
-            //============
-            //4hrs - 2
-            //============
-            { label: "Sleep Total 5hrs", type: "done" },
-            { label: "Sleep Total 6hrs", type: "done" },
-            { label: "Sleep Total 7hrs", type: "done" },
-            { label: "Sleep Total 8hrs", type: "done" },
-            { label: "Sleep in Back (Did You?)", type: "done" },
-        ],
-    },
-    {
-        section: "After Sleep Routine",
-        items: [
-            //============
-            //4hrs - 3
-            //============
-            //First thing to do
-            { label: "Make Amethyst Morning Feels Good", type: "done" },
-            { label: "Express Gratitude to Amethyst through Transparency", type: "done" },
-
-            { label: "Clean-up the Bed", type: "done" },
-
-            //Getting ready
-            { label: "Jumping jack 3mins", type: "done" },
-            { label: "Rotate joint 2mins", type: "done" },
-            { label: "Dynamic stretch 2mins", type: "done" },
-            { label: "Expose to Light (Indirect: Open Window)", type: "done" },
-
-            //Hygiene
-            { label: "Brush Teeth", type: "done" },
-            { label: "Wash Face", type: "done" },
-            { label: "Use Facial Cleanser", type: "done" },
-            { label: "Apply Vitamin C Serum", type: "done" },
-            { label: "Use Moisturizer", type: "done" },
-            { label: "Apply Sunscreen", type: "done" },
-            
-            //Reflection
-            { label: "Correct the Daily Routine for 30m", type: "done" },
-            
-            //Gut Health
-            { label: "Drink Probiotics", type: "count", unit: "glass" },
-            
-            //Hobby
-            { label: "Play Chess/Music for 15mins", type: "done" },
-            { label: "Play Chess/Music for 15mins", type: "done" },
-            
-            //Snacks
-            { label: "Light Snack (A piece of fruit like banana or apple)", type: "done" },
-            
-            //Hobby
-            { label: "Play Chess/Music for 15mins", type: "done" },
-            { label: "Play Chess/Music for 15mins", type: "done" },
-            
-            //Facial Appearance + Bed Hygiene
-            { label: "Warm-up Neck 2mins", type: "done" },
-
-            { label: "Neck Curl Hand Resistance", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Curl Hand Resistance", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Curl Hand Resistance", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Tuck", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Tuck", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Tuck", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            
-            //Breakfast
-            { label: "Eat Healthy (Focus: Fiber, Antioxidants, Vitamin A, Potassium, Complex Carbs, Protein)", type: "done" },
-            { label: "Walk while Diaphragm Breathing", type: "done" },
-            
-            //Work plan
-            { label: "Breakdown & Plan Work into 30m Block and SMART Task Prioritization for 15m", type: "done" },
-        ],
-    },
-    {
-        section: "Before Sleep Routine",
-        items: [
-            //Her
-            { label: "Make Amethyst Afternoon Feels Good", type: "done" },
-            { label: "Show Progress to Amethyst through Preplan", type: "done" },
-
-            //Consume
-            { label: "Eat Healthy (Veggies)", type: "done" },
-            { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
-            
-            { label: "Clean Environment", type: "done" },
-            { label: "Brush Teeth", type: "done" },
-            { label: "Wash Face", type: "done" },
-            { label: "Use Facial Cleanser", type: "done" },
-            { label: "Use Moisturizer", type: "done" },
-            { label: "Retinoids", type: "done" },
-            { label: "Apply Sunscreen", type: "done" },
-            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
-            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
-            
-            //Her
-            { label: "Make Amethyst Night Feels Good", type: "done" },
-            { label: "Show Emotional Security to Amethyst but with Safe Unknown and Curiousity", type: "done" },
-            
-            { label: "Stretch + Diaphragm Breathing", type: "done" },
-            { label: "Read Books Until Sleepy", type: "done" },
-            { label: "Elevate Legs Until Sleepy", type: "done" },
         ],
     },
     //==============
@@ -380,64 +217,40 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 12 AM to 8 AM)", type: "done" },
             { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 12 AM to 8 AM)", type: "done" },
             { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 12 AM to 8 AM)", type: "done" },
+
             { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 8 AM to 4 PM)", type: "done" },
             { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 8 AM to 4 PM)", type: "done" },
             { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 8 AM to 4 PM)", type: "done" },
+
             { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 4 PM to 12 AM)", type: "done" },
             { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 4 PM to 12 AM)", type: "done" },
             { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 4 PM to 12 AM)", type: "done" },
         ],
     },
     {
-        section: "#Breathing and Posture",
+        section: "#Mouth&Nose Consumeable",
         items: [
-            { label: "for 12 AM to 2 AM", type: "done" },
-            { label: "for 2 AM to 4 AM", type: "done" },
-            { label: "for 4 AM to 6 AM", type: "done" },
-            { label: "for 6 AM to 8 AM", type: "done" },
-            { label: "for 8 AM to 10 AM", type: "done" },
-            { label: "for 10 AM to 12 PM", type: "done" },
-            { label: "for 12 PM to 2 PM", type: "done" },
-            { label: "for 2 PM to 4 PM", type: "done" },
-            { label: "for 4 PM to 6 PM", type: "done" },
-            { label: "for 6 PM to 8 PM", type: "done" },
-            { label: "for 8 PM to 10 PM", type: "done" },
-            { label: "for 10 PM to 12 AM", type: "done" },
-        ],
+            { label: "Oily/Processed(such as Processed Sugar)/High Salt/Unhealthy Food", type: "done" },
+        ]
     },
     {
-        section: "#Do Not Be Unproductive",
+        section: "#Skin Consumeable",
         items: [
-            { label: "for 12 AM to 2 AM", type: "done" },
-            { label: "for 2 AM to 4 AM", type: "done" },
-            { label: "for 4 AM to 6 AM", type: "done" },
-            { label: "for 6 AM to 8 AM", type: "done" },
-            { label: "for 8 AM to 10 AM", type: "done" },
-            { label: "for 10 AM to 12 PM", type: "done" },
-            { label: "for 12 PM to 2 PM", type: "done" },
-            { label: "for 2 PM to 4 PM", type: "done" },
-            { label: "for 4 PM to 6 PM", type: "done" },
-            { label: "for 6 PM to 8 PM", type: "done" },
-            { label: "for 8 PM to 10 PM", type: "done" },
-            { label: "for 10 PM to 12 AM", type: "done" },
-        ],
+            { label: "Touching Skin by Self/Smoke/Environment", type: "done" },
+        ]
     },
     {
-        section: "#Do Not Eat Oily or Sugary or Unhealthy Food",
+        section: "#Eyes&Ears Consumeable",
         items: [
-            { label: "for 12 AM to 2 AM", type: "done" },
-            { label: "for 2 AM to 4 AM", type: "done" },
-            { label: "for 4 AM to 6 AM", type: "done" },
-            { label: "for 6 AM to 8 AM", type: "done" },
-            { label: "for 8 AM to 10 AM", type: "done" },
-            { label: "for 10 AM to 12 PM", type: "done" },
-            { label: "for 12 PM to 2 PM", type: "done" },
-            { label: "for 2 PM to 4 PM", type: "done" },
-            { label: "for 4 PM to 6 PM", type: "done" },
-            { label: "for 6 PM to 8 PM", type: "done" },
-            { label: "for 8 PM to 10 PM", type: "done" },
-            { label: "for 10 PM to 12 AM", type: "done" },
-        ],
+            { label: "Many Useless Information", type: "done" },
+        ]
+    },
+    {
+        section: "#Nerve&Mind&Muscle Consumeable",
+        items: [
+            { label: "Physical Harm", type: "done" },
+            { label: "Negetivity", type: "done" },
+        ]
     },
 ];
 
@@ -730,11 +543,11 @@ export default function DailyRoutine() {
         page: { minHeight: "100vh", backgroundColor: "#000", color: "#fff", padding: 16, fontFamily: "system-ui, sans-serif" },
         tabs: { display: "flex", gap: 8, marginBottom: 16, marginTop: '8px'},
         tab: (active: boolean) => ({ flex: 1, padding: 10, borderRadius: 10, backgroundColor: active ? "#16a34a" : "#27272a", border: "none", color: "#fff", fontWeight: 600 }),
-            card: { backgroundColor: "#18181b", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
+        card: { backgroundColor: "#18181b", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
         subtitle: { color: "#a1a1aa", fontSize: 13 },
         progressContainer: { backgroundColor: "#27272a", borderRadius: 10, overflow: "hidden", margin: "10px 0", height: 20 },
         progressBar: { height: "100%", backgroundColor: "#16a34a", transition: "width 0.3s" },
-        buttonGroup: { display: "flex", gap: 8 },
+        buttonGroup: { display: "flex", flexFlow: "column nowrap", gap: 15 },
     };
 
     return (
@@ -1000,12 +813,20 @@ export default function DailyRoutine() {
                 });
 
                 // If "todo", only take first 3
-                const visibleItems = (tab === "todo" || tab === "nottodo") ? filteredItems.slice(0, 3) : filteredItems;
+                const visibleItems = (tab === "todo" || tab === "nottodo") ? filteredItems : filteredItems;
                 const progress = getSectionProgress(section);
                 if (tab === "todo" || tab === "done" || tab === "skipped") {
                     if(tab === "todo" && section.section.charAt(0) === '#') return;
                     return (
-                        <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
+                        <div key={section.section}
+                        onClick={()=>{
+                            if (openSection === section.section) {
+                                setOpenSection("");
+                            } else {
+                                setOpenSection(section.section);
+                            }
+                        }}
+                        style={{
                             marginBottom: "7vw",
                         }}>
                         <div>
@@ -1057,7 +878,7 @@ export default function DailyRoutine() {
                                 <div style={styles.buttonGroup}>
 
 
-                                {tab && section.section.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
+                                {tab && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
                                     <button
                                     onClick={() => {
                                         toggle(key);
@@ -1075,7 +896,7 @@ export default function DailyRoutine() {
                                     {tab === "done" ? "Undo" : "Done"}
                                     </button>
                                 )}
-                                {tab && section.section.charAt(0) === '$' && (
+                                {tab && item.label.charAt(0) === '$' && (
                                     <button
                                     onClick={() => {
                                         setCorrect(i=>i+1);
@@ -1116,7 +937,7 @@ export default function DailyRoutine() {
                                 )}
 
 
-                                {tab !== "done"  && section.section.charAt(0) !== '$' &&  section.section.charAt(0) !== '!' && (
+                                {tab !== "done"  && item.label.charAt(0) !== '$' &&  section.section.charAt(0) !== '!' && (
                                     <button
                                     onClick={() => {
                                         setChallengeTaskId(key);
@@ -1141,7 +962,7 @@ export default function DailyRoutine() {
                                     {skippedState[key] ? "Undo Skip" : "Skip"}
                                     </button>
                                 )}
-                                {tab !== "done"  && section.section.charAt(0) === '$' && (
+                                {tab !== "done"  && item.label.charAt(0) === '$' && (
                                     <button
                                     onClick={() => {
                                         setCorrect(i=>i-1);
@@ -1170,7 +991,15 @@ export default function DailyRoutine() {
                 } else if (tab === "nottodo") {
                     if(section.section.charAt(0) !== '#') return;
                     return (
-                        <div key={section.section} onClick={()=>setOpenSection(section.section)} style={{
+                        <div key={section.section}
+                        onClick={()=>{
+                            if (openSection === section.section) {
+                                setOpenSection("");
+                            } else {
+                                setOpenSection(section.section);
+                            }
+                        }}
+                        style={{
                             marginBottom: "7vw",
                         }}>
                         <div>
