@@ -819,6 +819,11 @@ export default function DailyRoutine() {
                     if(tab === "todo" && section.section.charAt(0) === '#') return;
                     return (
                         <div key={section.section}
+                        style={{
+                            marginBottom: "7vw",
+                        }}>
+                        <div>
+                        <div
                         onClick={()=>{
                             if (openSection === section.section) {
                                 setOpenSection("");
@@ -826,11 +831,6 @@ export default function DailyRoutine() {
                                 setOpenSection(section.section);
                             }
                         }}
-                        style={{
-                            marginBottom: "7vw",
-                        }}>
-                        <div>
-                        <div
                         style={{
                             display: "flex",
                             alignItems: "center",
@@ -992,6 +992,11 @@ export default function DailyRoutine() {
                     if(section.section.charAt(0) !== '#') return;
                     return (
                         <div key={section.section}
+                        style={{
+                            marginBottom: "7vw",
+                        }}>
+                        <div>
+                        <div
                         onClick={()=>{
                             if (openSection === section.section) {
                                 setOpenSection("");
@@ -999,11 +1004,6 @@ export default function DailyRoutine() {
                                 setOpenSection(section.section);
                             }
                         }}
-                        style={{
-                            marginBottom: "7vw",
-                        }}>
-                        <div>
-                        <div
                         style={{
                             display: "flex",
                             alignItems: "center",
