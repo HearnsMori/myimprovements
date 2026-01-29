@@ -79,25 +79,58 @@ disrupting breathing nor shaking stomach
 7. Exercise
 */
 
+
+/*
+Effort Offered / Respect Autonomy (Her Ability to Choose)
+Emotional Security and Validation
+Identity Support even in just mid way
+During Hard Times Show Love Consistency
+Repair Problem Fast
+Transparency
+Love in a way she is capable of receiving (over than she can receive can sometimes feel guilt)
+Dont Make Her Feel Pressure for Regulating Her/My Self
+Unconditional Love
+Express Gratitude
+Show Progress6
+Reduce Decision
+Novelty
+Safe Unknown
+*/
+
 const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "!Touch CS with all your soul and self",
         items: [
-            { label: "For 5 mins", type: "done" },
+            { label: "+5 mins", type: "done" },
         ],
     },
     {
         section: "Make Amethyst Feels Good",
         items: [
-            { label: "Do Gratitude and Transparency Morning", type: "done" },
-            { label: "Show Progress and Perplan Afternoon", type: "done" },
-            { label: "Give Emotional Security and Safety Unknow Night", type: "done" },
+            { label: "Morning: Offer Effort (Respect Autonomy; Her capability to choose)", type: "done" },
+            { label: "Morning: Identity Support (even mid way)", type: "done" },
+            { label: "Morning: Reduce Decision", type: "done" },
+            { label: "Morning: Safe Unknown (Light Curiousity)", type: "done" },
+            { label: "Afternoon: Don\'t give responsibility (example to regulate my emotion)", type: "done" },
+            { label: "Afternoon: Love in the way she\'s capable of receiving", type: "done" },
+            { label: "Afternoon: Transparency", type: "done" },
+            { label: "Afternoon: During Hard Times: Show Love Consistency", type: "done" },
+            { label: "Evening: Emotional Security & Validation", type: "done" },
+            { label: "Evening: Unconditional Love", type: "done" },
+            { label: "Evening: Repair Problems Fast", type: "done" },
+            { label: "Evening: Express Gratitude", type: "done" },
+            { label: "Night: Show Progress", type: "done" },
+            { label: "Night: Novelty", type: "done" },
+            { label: "Night: Safe Unknown (Deeper than Morning)", type: "done" },
         ],
     },
     {
         section: "Mouth&Nose Consumeable",
         items: [
-            { label: "Brush Teeth then 30m No Eat", type: "done" },
+            { label: "$Drink 1/8 Glass", type: "done" },
+            { label: "$15m Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk", type: "done" },
+            
+            { label: "Brush Teeth, then 30m No Eat", type: "done" },
             
             { label: "Drink Probiotics", type: "count", unit: "glass" },
 
@@ -123,9 +156,6 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "15m High No Heavy Breath / Stomach Shake Movement", type: "done" },
             
             { label: "Brush Teeth", type: "done" },
-
-            { label: "$Drink 1/8 Glass", type: "done" },
-            { label: "$Diaphragmatic Breathing", type: "done" },
         ],
     },
     {
@@ -153,21 +183,20 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Eyes&Ears Consumeable",
         items: [
-            { label: "$5m Observe and Get Correct (Learn) from Useful Things/Information", type: "done" },
+            { label: "$15m Observe and Get Correct (Learn) from Useful Things/Information", type: "done" },
         ],
     },
     {
         section: "Nerve&Mind&Muscle Consumeable",
         items: [
-            { label: "$15m Sleep", type: "done" },
-            { label: "$Neck,Tongue,Lips Posture + Diaphragm Breathing + Positive Emotion + Light Walk", type: "done" },
+            { label: "$1hr Sleep", type: "done" },
+            { label: "$15m Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk", type: "done" },
             
-            { label: "Jumping jack 3mins", type: "done" },
-            { label: "Rotate joint 2mins", type: "done" },
-            { label: "Dynamic stretch 2mins", type: "done" },
-            { label: "Expose to Light (Indirect: Open Window)", type: "done" },
+            { label: "Wake: Jumping jack 3mins", type: "done" },
+            { label: "Wake: Rotate joint 2mins", type: "done" },
+            { label: "Wake: Dynamic stretch 2mins", type: "done" },
+            { label: "Wake: Expose to Light (Indirect: Open Window)", type: "done" },
             
-
             { label: "After eating 30m ago, Warm-up Neck 2mins", type: "done" },
 
             { label: "Neck Curl Hand Resistance", type: "done" },
@@ -212,44 +241,28 @@ const routineDataNoId: RoutineSectionNoId[] = [
     //==============
     //==============
     {
-        section: "#Amethyst",
-        items: [
-            { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 12 AM to 8 AM)", type: "done" },
-            { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 12 AM to 8 AM)", type: "done" },
-            { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 12 AM to 8 AM)", type: "done" },
-
-            { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 8 AM to 4 PM)", type: "done" },
-            { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 8 AM to 4 PM)", type: "done" },
-            { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 8 AM to 4 PM)", type: "done" },
-
-            { label: "Do not cause her emotional harm or introduce negativity through my actions or words (for 4 PM to 12 AM)", type: "done" },
-            { label: "Do not hide, distort, or lie about anything even small thoughts, feelings, or details (for 4 PM to 12 AM)", type: "done" },
-            { label: "Do not run from, avoid, or suppress obstacles; face them directly and honestly (for 4 PM to 12 AM)", type: "done" },
-        ],
-    },
-    {
         section: "#Mouth&Nose Consumeable",
         items: [
-            { label: "Oily/Processed(such as Processed Sugar)/High Salt/Unhealthy Food", type: "done" },
+            { label: "$Oily/Processed(such as Processed Sugar)/High Salt/Unhealthy Food", type: "done" },
         ]
     },
     {
         section: "#Skin Consumeable",
         items: [
-            { label: "Touching Skin by Self/Smoke/Environment", type: "done" },
+            { label: "$Touching Skin by Self/Smoke/Environment", type: "done" },
         ]
     },
     {
         section: "#Eyes&Ears Consumeable",
         items: [
-            { label: "Many Useless Information", type: "done" },
+            { label: "$Many Useless Information", type: "done" },
         ]
     },
     {
         section: "#Nerve&Mind&Muscle Consumeable",
         items: [
-            { label: "Physical Harm", type: "done" },
-            { label: "Negetivity", type: "done" },
+            { label: "$Physical Harm", type: "done" },
+            { label: "$Negetivity", type: "done" },
         ]
     },
 ];
@@ -736,7 +749,7 @@ export default function DailyRoutine() {
         <br/>
         Status Rarity: {leveledUpRank?.name}
         <br/>
-        Total Corrected: {correct}
+        Improvement: {correct}
         <br/>
         {/*Income per hour: {hourlySalary} Php*/}
         {/* Progress Bar */}
@@ -1050,7 +1063,7 @@ export default function DailyRoutine() {
                                 </div>
 
                                 <div style={styles.buttonGroup}>
-                                {tab && (
+                                {tab && item.label.charAt(0) !== '$' && (
                                     <button
                                     onClick={() => {
                                         toggle(key);
@@ -1068,30 +1081,24 @@ export default function DailyRoutine() {
                                     Done
                                     </button>
                                 )}
-
-                                <button
-                                onClick={() => {
-                                    setChallengeTaskId(key);
-                                    setChallengeA(randomDigit(10,99));
-                                    setChallengeB(randomDigit(10,99));
-                                    setChallengeC(randomDigit(0,198));
-                                    setChallengeD(randomDigit(0,99));
-                                    setChallengeAnswer("");
-                                    setChallengeStep(1);
-                                    setChallengeError(null);
-                                }}
-                                style={{
-                                    padding: "8px 14px",
-                                    borderRadius: 8,
-                                    border: "none",
-                                    backgroundColor: "#f59e0b",
-                                    color: "#fff",
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                }}
-                                >
-                                {skippedState[key] ? "Undo Skip" : "Skip"}
-                                </button>
+                                {item.label.charAt(0) === '$' && (
+                                    <button
+                                    onClick={() => {
+                                        setCorrect(i=>(i-1));
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#16a34a",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    +
+                                    </button>
+                                )}
 
                                 </div>
                                 </div>
