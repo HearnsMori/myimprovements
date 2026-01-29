@@ -302,7 +302,6 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Correct the Daily Routine for 30m", type: "done" },
             
             //Gut Health
-            { label: "Drink 1 Glass", type: "count", unit: "glass" },
             { label: "Drink Probiotics", type: "count", unit: "glass" },
             
             //Hobby
@@ -343,6 +342,10 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Before Sleep Routine",
         items: [
+            //Her
+            { label: "Make Amethyst Afternoon Feels Good", type: "done" },
+            { label: "Show Progress to Amethyst through Preplan", type: "done" },
+
             //Consume
             { label: "Eat Healthy (Veggies)", type: "done" },
             { label: "Walk while Diaphragm Breathing for 10m", type: "done" },
