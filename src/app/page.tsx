@@ -143,7 +143,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "1/8 Glass", type: "done" },
             { label: "1/8 Glass", type: "done" },
             { label: "1/8 Glass", type: "done" },
-            { label: "1/8 Glass", type: "done" }
+            { label: "1/8 Glass", type: "done" },
 
             { label: "1/8 Glass", type: "done" },
             { label: "1/8 Glass", type: "done" },
