@@ -279,23 +279,28 @@ export default function DailyRoutine() {
     }, []);
     // Function to add a new JSON object to the array
     const addVaren = useCallback((name: string, initialTime: number) => {
-        let obj = varen.filter(item => item.name === name);
-        if(obj.length !== 0) {
-                    //alert(JSON.stringify(varen));
-            setVaren((prev) => 
-                     prev.map((item)=>{
-                         if(item.name === name) {
-                             return ({ ...item, time: item.time+initialTime});
-                         }
-                         return item;
-                     }) 
-                    );
-                    //alert(JSON.stringify(varen));
-        } else {
-            //alert(JSON.stringify(varen));
-            setVaren([...varen, {name, id: String(Math.round(Math.random()*10000)), time: initialTime}]);
-            //alert(JSON.stringify(varen));
-        }
+        //alert(JSON.stringify(varen));
+        setVaren(prev => {
+            let found = false;
+            const updated = prev.map(item => {
+                if (item.name === name) {
+                    found = true;
+                    return { ...item, time: item.time + initialTime };
+                }
+                return item;
+            });
+            if (!found) {
+                return [
+                    ...updated,
+                    {
+                        name,
+                        id: crypto.randomUUID(), // better than Math.random
+                        time: initialTime
+                    }
+                ];
+            }
+            return updated;
+        });
     }, []);
 
 
@@ -454,6 +459,7 @@ export default function DailyRoutine() {
             if (b) localStorage.setItem(SKIPPED_KEY_PAST, b);
 
             localStorage.removeItem("correct");
+            setVaren([]);
             localStorage.removeItem(STORAGE_KEY);
             localStorage.removeItem(SKIPPED_KEY);
             localStorage.setItem(DATE_KEY, today);
@@ -751,7 +757,7 @@ export default function DailyRoutine() {
                 <h2 style={{
                     color: (varenItem.time === 0) ? "red" : "green",
                 }} key={varenItem.id}>
-                    {varenItem.name}: {varenItem.time}m
+                {varenItem.name}: {varenItem.time}m
                 </h2>
             );
         })}
