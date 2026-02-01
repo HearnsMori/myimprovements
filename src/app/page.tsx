@@ -307,7 +307,6 @@ export default function DailyRoutine() {
         });
     }, []);
 
-
     const [count, setCount] = useState<number | null>(null);
     useEffect(() => {
         const savedCount = Number(localStorage.getItem("free"));
@@ -403,14 +402,17 @@ export default function DailyRoutine() {
 
     // Calculate progress
     const totalTasks = routineData.reduce((sum: number, section: RoutineSection) => sum + section.items.length, 0);
-    const dsTasks = Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2) - correct;
+    const dsTasks = Math.max(
+        0,
+        Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2) - correct
+    );
     const MAX_LEVEL = 24;
     const MAX_PER_SEC = 500000;
     const maxLevel = 100/MAX_LEVEL;
     const exponent = 0.48;
     const progressPercent = 100 * Math.pow(dsTasks / totalTasks, exponent);
-
-    // level
+    
+    // Level
     const level = Math.min(
         MAX_LEVEL,
         Math.max(0, Math.floor(progressPercent / maxLevel))
@@ -557,12 +559,6 @@ export default function DailyRoutine() {
             setShowLevelUp(true);
         }
     }, [level]);
-
-    function openTermux() {
-        // This URI scheme attempts to launch Termux
-        window.location.href = 'termux://';
-    }
-
 
     const styles = {
         page: { minHeight: "100vh", backgroundColor: "#000", color: "#fff", padding: 16, fontFamily: "system-ui, sans-serif" },
