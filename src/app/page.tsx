@@ -296,7 +296,7 @@ export default function DailyRoutine() {
             setVaren([...varen, {name, id: String(Math.round(Math.random()*10000)), time: initialTime}]);
             //alert(JSON.stringify(varen));
         }
-    });
+    }, []);
 
 
     const [count, setCount] = useState<number | null>(null);
