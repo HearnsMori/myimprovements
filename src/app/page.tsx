@@ -273,13 +273,14 @@ export default function DailyRoutine() {
         if (minutesPassed <= 0) return;
         setVaren(prevItems => {
             return prevItems.map(item => ({
-                     ...item,
-                     time: Math.max(0, item.time - minutesPassed),
+                ...item,
+                time: Math.max(0, item.time - minutesPassed),
             }));
         });
 
         localStorage.setItem(LOCAL_LAST_TIME, String(now));
     }, []);
+
     // Function to add a new JSON object to the array
     const addVaren = useCallback((name: string, initialTime: number) => {
         //alert(JSON.stringify(varen));
@@ -356,7 +357,7 @@ export default function DailyRoutine() {
                 })
             );
         }
-    }, [count, varen]);
+    }, [count]);
 
 
     useEffect(()=>{
@@ -372,6 +373,7 @@ export default function DailyRoutine() {
         }
         //localStorage.clear();
     }, [correct]);
+
     const [showPlan, setShowPlan] = useState<boolean>(true);
     //For visible section
     const [openSection, setOpenSection] = useState<string>("Sleep");
@@ -401,7 +403,7 @@ export default function DailyRoutine() {
 
     // Calculate progress
     const totalTasks = routineData.reduce((sum: number, section: RoutineSection) => sum + section.items.length, 0);
-    const dsTasks = -1*correct + Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2);
+    const dsTasks = Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2) - correct;
     const MAX_LEVEL = 24;
     const MAX_PER_SEC = 500000;
     const maxLevel = 100/MAX_LEVEL;
