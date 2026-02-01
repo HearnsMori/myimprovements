@@ -266,9 +266,17 @@ export default function DailyRoutine() {
     // Effect to decrase the time by 1 every minute
     useEffect(() => {
         const now = Date.now();
-        const lastUpdate = Number(localStorage.getItem(LOCAL_LAST_TIME)) || now;
+        const stored = localStorage.getItem(LOCAL_LAST_TIME);
+
+        // First ever run initialize and exit
+        if (!stored) {
+            localStorage.setItem(LOCAL_LAST_TIME, String(now));
+            return;
+        }
+
+        const lastUpdate = Number(stored) || now;
+
         const minutesPassed = Math.floor((now - lastUpdate) / 60000);
-        alert(minutesPassed);
         if (minutesPassed <= 0) return;
         setVaren(prevItems => {
             return prevItems.map(item => ({
@@ -410,7 +418,7 @@ export default function DailyRoutine() {
     const maxLevel = 100/MAX_LEVEL;
     const exponent = 0.48;
     const progressPercent = 100 * Math.pow(dsTasks / totalTasks, exponent);
-    
+
     // Level
     const level = Math.min(
         MAX_LEVEL,
