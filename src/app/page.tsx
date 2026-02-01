@@ -143,7 +143,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         section: "Mouth&Nose Consumeable",
         items: [
             { label: "Drink 1/8 Glass", type: "energy", name: "Hydration", time: 15 },
-            { label: "Neck,Tongue,Lips Posture + Diaphragm Breathing + Positive Emotion + Light Walk: +5m", type: "energy", name: "Rest", time: 30 },
+            { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation: +5m", type: "energy", name: "Rest", time: 30 },
             
             { label: "Brush Teeth Routine", type: "energy", name: "Tooth Hygiene", time: 12*60 },
             { label: "Probiotics", type: "done" },
@@ -155,6 +155,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         items: [
             { label: "Clean Environment", type: "energy", name: "Environment hygiene", time: 12*60 },
             { label: "Mori Facial Skin Routine", type: "energy", name: "Face hygiene", time: 12*60 },
+            { label: "Mori Shower Routine", type: "energy", name: "Shower hygiene", time: 12*60 },
             /*
             { label: "Wash Face", type: "done" },
             { label: "Use Facial Cleanser", type: "done" },
@@ -170,7 +171,8 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Retinoids", type: "done" },
             { label: "Apply Sunscreen", type: "done" },
             { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
-            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },*/
+            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
+            */
         ],
     },
     {
@@ -182,10 +184,10 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Nerve&Mind&Muscle Consumeable",
         items: [
-            { label: "Mori Sleep Routine: +5m", type: "energy", name: "Sleep hygiene", time: 15},
-            { label: "Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk: +5m", type: "energy", name: "Rest", time: 30  },
+            { label: "Mori Sleep Routine: +30m", type: "energy", name: "Sleep hygiene", time: 60},
+            { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation Routine: +5m", type: "energy", name: "Rest", time: 30 },
             
-            { label: "Mori Exercise Routine: +5m", type: "energy", name: "Exercise", time: 12*60},
+            { label: "Mori Exercise Routine", type: "energy", name: "Exercise", time: 12*60},
         ],
     },
     //==============
