@@ -183,7 +183,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         section: "Nerve&Mind&Muscle Consumeable",
         items: [
             { label: "Mori Sleep Routine: +5m", type: "energy", name: "Sleep hygiene", time: 15},
-            { label: "Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk: +5m", type: "energy", name: "Rest", type: 30  },
+            { label: "Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk: +5m", type: "energy", name: "Rest", time: 30  },
             
             { label: "Mori Exercise Routine: +5m", type: "energy", name: "Exercise", time: 12*60},
         ],
