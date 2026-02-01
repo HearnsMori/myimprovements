@@ -954,7 +954,6 @@ export default function DailyRoutine() {
                                 <div key={key} style={styles.card}>
                                 <div>
                                 <div>{item.label}</div>
-                                {item.type === "time" && <div style={styles.subtitle}>{item.value}</div>}
                                 </div>
 
                                 <div style={styles.buttonGroup}>
