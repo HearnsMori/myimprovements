@@ -18,7 +18,7 @@ import { useEffect, useState, useCallback} from "react";
 //Trimming routine
 //Daily Probiotics
 
-type RoutineItemNoId = | { label: string; type: "done"; id?: string } | {label: string; type: "energy"; id?:  string; name: string; time: number };
+type RoutineItemNoId = | { label: string; type: "done"; id?: string } | {label: string; type: "energy"; id?: string; name: string; time: number };
 type RoutineItem = | { label: string; type: "done"; id: string } | { label: string; type: "energy"; id: string; name: string; time: number };
 type RoutineSectionNoId = {
     section: string;
@@ -32,6 +32,7 @@ type RoutineSection = {
 
 interface Varen {
     name: string;
+    id: string;
     time: number; // Time in minutes or seconds, based on your requirement
 };
 
@@ -113,9 +114,9 @@ Safe Unknown
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
-        section: "!Touch CS with all your soul and self",
+        section: "Identity",
         items: [
-            { label: "+5 mins", type: "energy", name: "Free time", time: 20 },
+            { label: "Mori Computer Science Routine: +5 mins", type: "energy", name: "Free time", time: 20},
         ],
     },
     {
@@ -141,42 +142,20 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Mouth&Nose Consumeable",
         items: [
-            { label: "$Drink 1/8 Glass", type: "done" },
-            { label: "$15m Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk", type: "done" },
+            { label: "Drink 1/8 Glass", type: "energy", name: "Hydration", time: 15 },
+            { label: "Neck,Tongue,Lips Posture + Diaphragm Breathing + Positive Emotion + Light Walk: +5m", type: "energy", name: "Rest", time: 30 },
             
-            { label: "Brush Teeth, then 30m No Eat", type: "done" },
-            
-            { label: "Drink Probiotics", type: "done" },
+            { label: "Brush Teeth Routine", type: "energy", name: "Tooth Hygiene", time: 12*60 },
+            { label: "Probiotics", type: "done" },
 
-            { label: "Do HIT", type: "done" },
-            { label: "Healthy Plate(50% fruits/veggies, 25% whole grains, 25% proteins) Meal", type: "done" },
-            { label: "30m High No Heavy Breath / Stomach Shake Movement", type: "done" },
-
-            { label: "Light Snack (A piece of fruit/veggies like banana or apple)->High No HeavyBreath/StomachShake Movement", type: "done" },
-            { label: "15m High No Heavy Breath / Stomach Shake Movement", type: "done" },
-
-            { label: "Do HIT", type: "done" },
-            { label: "Healthy Plate(50% fruits/veggies, 25% whole grains, 25% proteins) Meal", type: "done" },
-            { label: "30m High No Heavy Breath / Stomach Shake Movement", type: "done" },
-
-            { label: "Light Snack (A piece of fruit/veggies like banana or apple)->High No HeavyBreath/StomachShake Movement", type: "done" },
-            { label: "15m High No Heavy Breath / Stomach Shake Movement", type: "done" },
-
-            { label: "Do HIT", type: "done" },
-            { label: "Healthy Plate(50% fruits/veggies, 25% whole grains, 25% proteins) Meal", type: "done" },
-            { label: "30m High No Heavy Breath / Stomach Shake Movement", type: "done" },
-
-            { label: "Light Snack (A piece of fruit/veggies like banana or apple)->High No HeavyBreath/StomachShake Movement", type: "done" },
-            { label: "15m High No Heavy Breath / Stomach Shake Movement", type: "done" },
-            
-            { label: "Brush Teeth", type: "done" },
         ],
     },
     {
         section: "Skin Consumeable",
         items: [
-            { label: "Clean Environment", type: "done" },
-            
+            { label: "Clean Environment", type: "energy", name: "Environment hygiene", time: 12*60 },
+            { label: "Mori Facial Skin Routine", type: "energy", name: "Face hygiene", time: 12*60 },
+            /*
             { label: "Wash Face", type: "done" },
             { label: "Use Facial Cleanser", type: "done" },
             { label: "Apply Vitamin C Serum", type: "done" },
@@ -191,62 +170,22 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Retinoids", type: "done" },
             { label: "Apply Sunscreen", type: "done" },
             { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
-            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
+            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },*/
         ],
     },
     {
         section: "Eyes&Ears Consumeable",
         items: [
-            { label: "$15m Observe and Get Correct (Learn) from Useful Things/Information", type: "done" },
+            { label: "Mori E&E Learn Routine: +5m", type: "energy", name: "Knowledge", time: 3*60 },
         ],
     },
     {
         section: "Nerve&Mind&Muscle Consumeable",
         items: [
-            { label: "$15m Sleep", type: "done" },
-            { label: "$15m Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk", type: "done" },
+            { label: "Mori Sleep Routine: +5m", type: "energy", name: "Sleep hygiene", time: 15},
+            { label: "Neck,Tongue,Lips Posture + Diaphragm Breathing + Posditive Emotion + Light Walk: +5m", type: "energy", name: "Rest", type: 30  },
             
-            { label: "Wake: Jumping jack 3mins", type: "done" },
-            { label: "Wake: Rotate joint 2mins", type: "done" },
-            { label: "Wake: Dynamic stretch 2mins", type: "done" },
-            { label: "Wake: Expose to Light (Indirect: Open Window)", type: "done" },
-            
-            { label: "After eating 30m ago, Warm-up Neck 2mins", type: "done" },
-
-            { label: "Neck Curl Hand Resistance", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Curl Hand Resistance", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Curl Hand Resistance", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Tuck", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Tuck", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            { label: "Neck Tuck", type: "done" },
-            { label: "4-4-8 Breathing 1min", type: "done" },
-            
-            { label: "Breakdown & Plan Work into 30m Block and SMART Task Prioritization for 15m", type: "done" },
-
-            //Warm-up
-            { label: "After eating 2hr ago, Jumping jack 3mins", type: "done" },
-            { label: "Rotate joint 2mins", type: "done" },
-            { label: "Dynamic stretch 2mins", type: "done" },
-
-            //Exercise
-            { label: "Deep Squat", type: "done" },
-            { label: "Deep Squat", type: "done" },
-            { label: "Deep Squat", type: "done" },
-            { label: "Max Effort Pull", type: "done" },
-            { label: "Max Effort Pull", type: "done" },
-            { label: "Max Effort Pull", type: "done" },
-            { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
-            { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
-            { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
-
-            //Cooldown
-            { label: "Slowly Decrease Heart Rate", type: "done" },
-            { label: "Static Stretch", type: "done" },
+            { label: "Mori Exercise Routine: +5m", type: "energy", name: "Exercise", time: 12*60},
         ],
     },
     //==============
@@ -263,7 +202,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "#Skin Consumeable",
         items: [
-            { label: "$Touching Skin by Self/Smoke/Environment", type: "done" },
+            { label: "$Touching Skin by Self/Smoke/Sweats/Environment: +5m", type: "done" },
         ]
     },
     {
@@ -307,48 +246,57 @@ export default function DailyRoutine() {
     const [streak, setStreak] = useState<number>(0);
     const [correct, setCorrect] = useState<number>(0);
     const LOCAL_FOR_VAREN = "LOCAL_FOR_VAREN";
-    const [varen, setVaren] = useState<Varen[]>(() => {
-        // Check if we are in a browser environment
-        if (typeof window !== "undefined") {
-            const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-            return (savedItems && savedItems !== "undefined") ? JSON.parse(savedItems) : [
-            ];
-        }
-        return []; // Default value for server-side
-    });
+    const LOCAL_LAST_TIME = "LOCAL_LAST_TIME";
+    const [varen, setVaren] = useState<Varen[]>([]);
     // Effect to sync state to localStorage whenever the items array changes
+    useEffect(() => {
+        const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
+        if (varen.length === 0 && savedItems && savedItems !== "undefined") {
+            setVaren(JSON.parse(savedItems));
+        }
+    }, []);
     useEffect(() => {
         // localStorage only stores strings, so we use JSON.stringify()
         //alert(JSON.stringify(varen));
         localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
     }, [varen]); // This runs whenever 'items' is updated
-    // Effect to decrease the time by 1 every minute
+    // Effect to decrase the time by 1 every minute
     useEffect(() => {
-        const intervalId = setInterval(() => {
-        }, 60000); // 60000 milliseconds = 1 minute
-        // Cleanup function to clear the interval when the component unmounts or effect restarts
-        return () => clearInterval(intervalId);
-    }, []); // Empty dependency array ensures this runs only once on mount
-    
+        if (typeof window === "undefined") return;
+
+        const now = Date.now();
+        const lastUpdate = Number(localStorage.getItem(LOCAL_LAST_TIME)) || now;
+        const minutesPassed = Math.floor((now - lastUpdate) / 60000);
+        if (minutesPassed <= 0) return;
+        setVaren(prevItems => {
+            return prevItems.map(item => ({
+                     ...item,
+                     time: Math.max(0, item.time - minutesPassed),
+            }));
+        });
+
+        localStorage.setItem(LOCAL_LAST_TIME, String(now));
+    }, []);
     // Function to add a new JSON object to the array
     const addVaren = useCallback((name: string, initialTime: number) => {
-        const obj = varen.filter(item => item.name === name);
+        let obj = varen.filter(item => item.name === name);
         if(obj.length !== 0) {
+                    //alert(JSON.stringify(varen));
             setVaren((prev) => 
-                prev.map((item)=>{
-                    if(item.name === name) {
-                        return ({ ...item, time: item.time+initialTime});
-                    }
-                    return item;
-                }) 
-            );
-            //alert(JSON.stringify(varen));
+                     prev.map((item)=>{
+                         if(item.name === name) {
+                             return ({ ...item, time: item.time+initialTime});
+                         }
+                         return item;
+                     }) 
+                    );
+                    //alert(JSON.stringify(varen));
         } else {
-            setVaren([...varen, {name, time: initialTime}]);
+            //alert(JSON.stringify(varen));
+            setVaren([...varen, {name, id: String(Math.round(Math.random()*10000)), time: initialTime}]);
             //alert(JSON.stringify(varen));
         }
-    }, []);
-
+    });
 
 
     const [count, setCount] = useState<number | null>(null);
@@ -372,16 +320,6 @@ export default function DailyRoutine() {
             // how many full minutes passed
             const minutesPassed = Math.floor(
                 (now - data.lastUpdated) / (60 * 1000)
-            );
-            
-            //========
-            //for varen
-            // Use the functional update to get the latest state
-            setVaren(prevItems =>
-                   prevItems.map(item => ({
-                       ...item,
-                       time: Math.max(0, item.time - minutesPassed), // Decrease time, but not below 0
-                   }))
             );
 
             const newValue = count - minutesPassed;
@@ -410,7 +348,7 @@ export default function DailyRoutine() {
                 })
             );
         }
-    }, [count]);
+    }, [count, varen]);
 
 
     useEffect(()=>{
@@ -455,7 +393,7 @@ export default function DailyRoutine() {
 
     // Calculate progress
     const totalTasks = routineData.reduce((sum: number, section: RoutineSection) => sum + section.items.length, 0);
-    const dsTasks = correct + Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2);
+    const dsTasks = -1*correct + Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2);
     const MAX_LEVEL = 24;
     const MAX_PER_SEC = 500000;
     const maxLevel = 100/MAX_LEVEL;
@@ -804,22 +742,25 @@ export default function DailyRoutine() {
             </div>
             </div>
         )}
-        <h1>Daily Routine: {count}m Free Time</h1>
-        <h3> 
-        {Array.isArray(varen) && varen.map((varenItem) => {
-            if (!varenItem.name) return;
-            //alert(varenItem.name);
-            return <div key={varenItem.name+Math.round(Math.random()*9999)}> {varenItem.name}: {varenItem.time}m </div>;
+        <h1>Daily Routine v4</h1>
+        <div>
+        <h2>Day Streak: {streak}</h2>
+        {Array.isArray(varen) && varen.length > 0 && varen.map((varenItem) => {
+            if (!varenItem?.name) return null;
+            return (
+                <h2 style={{
+                    color: (varenItem.time === 0) ? "red" : "green",
+                }} key={varenItem.id}>
+                    {varenItem.name}: {varenItem.time}m
+                </h2>
+            );
         })}
-        </h3>
-        Day Streak: {streak}
-        <br/>
+        <h5>Wrong: {correct}</h5>
+        </div>
         <br/>
         Level: {`${level}`}
         <br/>
         Status Rarity: {leveledUpRank?.name}
-        <br/>
-        Improvement: {correct}
         <br/>
         {/*Income per hour: {hourlySalary} Php*/}
         {/* Progress Bar */}
@@ -976,7 +917,7 @@ export default function DailyRoutine() {
                                     }}
                                     >
                                     +
-                                    </button>
+                                        </button>
                                 )}
                                 {tab && item.type !== "energy" && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
                                     <button
@@ -997,8 +938,7 @@ export default function DailyRoutine() {
                                     </button>
                                 )}
 
-
-                                {tab !== "done"  && item.label.charAt(0) !== '$' &&  section.section.charAt(0) !== '!' && (
+                                {tab !== "done"  && item.type !== "energy" &&  item.label.charAt(0) !== '$' && (
                                     <button
                                     onClick={() => {
                                         setChallengeTaskId(key);
@@ -1039,7 +979,7 @@ export default function DailyRoutine() {
                                     }}
                                     >
                                     -
-                                    </button>
+                                        </button>
                                 )}
 
 
@@ -1131,7 +1071,7 @@ export default function DailyRoutine() {
                                 {item.label.charAt(0) === '$' && (
                                     <button
                                     onClick={() => {
-                                        setCorrect(i=>(i-1));
+                                        setCorrect(i=>(i+1));
                                     }}
                                     style={{
                                         padding: "8px 14px",
