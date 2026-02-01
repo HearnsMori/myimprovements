@@ -874,7 +874,7 @@ export default function DailyRoutine() {
                         {section.section}
                         </div>
 
-                        <CircleProgress percent={progress.percent} />
+                        {/*<CircleProgress percent={progress.percent} />*/}
 
                         {progress.completed && (
                             <div
