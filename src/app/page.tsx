@@ -1,15 +1,24 @@
-//Variables
-//Free Time
-//Energy Level
-//Hydration Level
-//Morning Routine
-//Night Routine
-
+//ToDo:
+//Fix Level System
+//Add More and Research More To Consumeable
+//
 "use client";
 import Plan from "./plan/page";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback} from "react";
 
-type RoutineItemNoId = | { label: string; type: "done"; id?: string } | { label: string; type: "sets"; sets: number; record?: number; id?: string } | { label: string; type: "time"; value: string; id?: string } | { label: string; type: "options"; options: string[]; id?: string } | { label: string; type: "count"; unit: string; id?: string };
+//Pattern for Improvements (Pattern When To Execute) (How)
+//5m work for 20m for free time
+//for every 3hrs, HIT before healthy plate meal/snacks then post-meal Exercise
+//Drink less than 1/4 water every 15m for hydration
+//Amethyst routine
+//Facial routine for morning and night
+//Environment cleaning routine
+//Shower routine
+//Brush teeth
+//Trimming routine
+//Daily Probiotics
+
+type RoutineItemNoId = | { label: string; type: "done"; id?: string } | {label: string; type: "energy"; id?:  string; name: number; time: string }
 type RoutineItem = | { label: string; type: "done"; id: string } | { label: string; type: "sets"; sets: number; record?: number; id: string } | { label: string; type: "time"; value: string; id: string } | { label: string; type: "options"; options: string[]; id: string } | { label: string; type: "count"; unit: string; id: string };
 type RoutineSectionNoId = {
     section: string;
@@ -19,6 +28,11 @@ type RoutineSectionNoId = {
 type RoutineSection = {
     section: string;
     items: RoutineItem[];
+};
+
+interface Varen {
+    name: string;
+    time: number; // Time in minutes or seconds, based on your requirement
 };
 
 const STORAGE_KEY = "daily-routine-progress";
@@ -101,7 +115,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "!Touch CS with all your soul and self",
         items: [
-            { label: "+5 mins", type: "done" },
+            { label: "+5 mins", type: "energy", name: "Free time", time: 20 },
         ],
     },
     {
@@ -231,8 +245,8 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Planche Pushup 1 to L Sit 5s to Handstand 10s Set 1", type: "done" },
 
             //Cooldown
-            { label: "Slowly Decrease Heart Rate", type: "time", value: "3 mins" },
-            { label: "Static Stretch", type: "time", value: "7 mins" },
+            { label: "Slowly Decrease Heart Rate", type: "done" },
+            { label: "Static Stretch", type: "done" },
         ],
     },
     //==============
@@ -292,7 +306,50 @@ export default function DailyRoutine() {
     const [tab, setTab] = useState<"todo" | "done" | "skipped" | "nottodo" | "plan">("todo");
     const [streak, setStreak] = useState<number>(0);
     const [correct, setCorrect] = useState<number>(0);
+    const LOCAL_FOR_VAREN = "LOCAL_FOR_VAREN";
+    const [varen, setVaren] = useState<Varen[]>(() => {
+        // Check if we are in a browser environment
+        if (typeof window !== "undefined") {
+            const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
+            return (savedItems && savedItems !== "undefined") ? JSON.parse(savedItems) : [
+            ];
+        }
+        return []; // Default value for server-side
+    });
+    // Effect to sync state to localStorage whenever the items array changes
+    useEffect(() => {
+        // localStorage only stores strings, so we use JSON.stringify()
+        //alert(JSON.stringify(varen));
+        localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
+    }, [varen]); // This runs whenever 'items' is updated
+    // Effect to decrease the time by 1 every minute
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+        }, 60000); // 60000 milliseconds = 1 minute
+        // Cleanup function to clear the interval when the component unmounts or effect restarts
+        return () => clearInterval(intervalId);
+    }, []); // Empty dependency array ensures this runs only once on mount
     
+    // Function to add a new JSON object to the array
+    const addVaren = useCallback((name: string, initialTime: number) => {
+        const obj = varen.filter(item => item.name === name);
+        if(obj.length !== 0) {
+            setVaren((prev) => 
+                prev.map((item)=>{
+                    if(item.name === name) {
+                        return ({ ...item, time: item.time+initialTime});
+                    }
+                }) 
+            );
+            //alert(JSON.stringify(varen));
+        } else {
+            setVaren([...varen, {name, time: initialTime}]);
+            //alert(JSON.stringify(varen));
+        }
+    }, []);
+
+
+
     const [count, setCount] = useState<number | null>(null);
     useEffect(() => {
         const savedCount = Number(localStorage.getItem("free"));
@@ -314,6 +371,16 @@ export default function DailyRoutine() {
             // how many full minutes passed
             const minutesPassed = Math.floor(
                 (now - data.lastUpdated) / (60 * 1000)
+            );
+            
+            //========
+            //for varen
+            // Use the functional update to get the latest state
+            setVaren(prevItems =>
+                   prevItems.map(item => ({
+                       ...item,
+                       time: Math.max(0, item.time - minutesPassed), // Decrease time, but not below 0
+                   }))
             );
 
             const newValue = count - minutesPassed;
@@ -438,12 +505,9 @@ export default function DailyRoutine() {
                 newStreak = savedStreak;
             }
         }
-
         setStreak(newStreak);
 
         if (savedDate !== today) {
-
-
             const a = localStorage.getItem(STORAGE_KEY);
             const b = localStorage.getItem(SKIPPED_KEY);
 
@@ -457,9 +521,7 @@ export default function DailyRoutine() {
             localStorage.setItem(STREAK_KEY, String(newStreak));
             setState({});
             setSkippedState({});
-
         } else {
-
             //Uncomment the two below when reset
             //localStorage.removeItem(STORAGE_KEY);
             //localStorage.removeItem(SKIPPED_KEY);
@@ -556,7 +618,7 @@ export default function DailyRoutine() {
         page: { minHeight: "100vh", backgroundColor: "#000", color: "#fff", padding: 16, fontFamily: "system-ui, sans-serif" },
         tabs: { display: "flex", gap: 8, marginBottom: 16, marginTop: '8px'},
         tab: (active: boolean) => ({ flex: 1, padding: 10, borderRadius: 10, backgroundColor: active ? "#16a34a" : "#27272a", border: "none", color: "#fff", fontWeight: 600 }),
-        card: { backgroundColor: "#18181b", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
+            card: { backgroundColor: "#18181b", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
         subtitle: { color: "#a1a1aa", fontSize: 13 },
         progressContainer: { backgroundColor: "#27272a", borderRadius: 10, overflow: "hidden", margin: "10px 0", height: 20 },
         progressBar: { height: "100%", backgroundColor: "#16a34a", transition: "width 0.3s" },
@@ -742,6 +804,13 @@ export default function DailyRoutine() {
             </div>
         )}
         <h1>Daily Routine: {count}m Free Time</h1>
+        <h3> 
+        {Array.isArray(varen) && varen.map((varenItem) => {
+            if (!varenItem.name) return;
+            //alert(varenItem.name);
+            return <div key={varenItem.name+Math.round(Math.random()*9999)}> {varenItem.name}: {varenItem.time}m </div>;
+        })}
+        </h3>
         Day Streak: {streak}
         <br/>
         <br/>
@@ -778,10 +847,9 @@ export default function DailyRoutine() {
         <button style={styles.tab(tab === "nottodo")} onClick={() => setTab("nottodo")}>Not To Do</button>
         <button style={styles.tab(tab === "plan")} onClick={() => setTab("plan")}>Plan</button>
         </div> 
-
-
         {
             routineData.map((section: RoutineSection, index, array) => {
+
                 const getSectionProgress = (section: RoutineSection) => {
                     const total = section.items.length;
                     const done = section.items.filter(i => state[i.id]).length;
@@ -890,8 +958,27 @@ export default function DailyRoutine() {
 
                                 <div style={styles.buttonGroup}>
 
-
-                                {tab && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
+                                {tab && item.type == "energy" && (
+                                    <button
+                                    onClick={() => {
+                                        // If the object is found, update its time property
+                                        addVaren(item.name, item.time);
+                                        //alert(item.name+item.time);
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#16a34a",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    +
+                                    </button>
+                                )}
+                                {tab && item.type !== "energy" && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
                                     <button
                                     onClick={() => {
                                         toggle(key);
@@ -907,45 +994,6 @@ export default function DailyRoutine() {
                                     }}
                                     >
                                     {tab === "done" ? "Undo" : "Done"}
-                                    </button>
-                                )}
-                                {tab && item.label.charAt(0) === '$' && (
-                                    <button
-                                    onClick={() => {
-                                        setCorrect(i=>i+1);
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#16a34a",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    +
-                                        </button>
-                                )}
-                                {tab && section.section.charAt(0) === '!' && (
-                                    <button
-                                    onClick={() => {
-                                        setCount(i=>{
-                                            if (i !== null) return (i+20);
-                                            return i;
-                                        });
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#16a34a",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    done
                                     </button>
                                 )}
 
@@ -975,10 +1023,10 @@ export default function DailyRoutine() {
                                     {skippedState[key] ? "Undo Skip" : "Skip"}
                                     </button>
                                 )}
-                                {tab !== "done"  && item.label.charAt(0) === '$' && (
+                                {tab !== "done"  && item.type === 'energy' && (
                                     <button
                                     onClick={() => {
-                                        setCorrect(i=>i-1);
+                                        addVaren(item.name, item.time*-1);
                                     }}
                                     style={{
                                         padding: "8px 14px",
@@ -991,7 +1039,7 @@ export default function DailyRoutine() {
                                     }}
                                     >
                                     -
-                                        </button>
+                                    </button>
                                 )}
 
 
@@ -1097,7 +1145,7 @@ export default function DailyRoutine() {
                                     }}
                                     >
                                     +
-                                    </button>
+                                        </button>
                                 )}
 
                                 </div>
@@ -1115,5 +1163,3 @@ export default function DailyRoutine() {
             </div>
     );
 }
-
-
