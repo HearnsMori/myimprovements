@@ -265,11 +265,10 @@ export default function DailyRoutine() {
     }, [varen]); // This runs whenever 'items' is updated
     // Effect to decrase the time by 1 every minute
     useEffect(() => {
-        if (typeof window === "undefined") return;
-
         const now = Date.now();
         const lastUpdate = Number(localStorage.getItem(LOCAL_LAST_TIME)) || now;
         const minutesPassed = Math.floor((now - lastUpdate) / 60000);
+        alert(minutesPassed);
         if (minutesPassed <= 0) return;
         setVaren(prevItems => {
             return prevItems.map(item => ({
