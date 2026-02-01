@@ -339,6 +339,7 @@ export default function DailyRoutine() {
                     if(item.name === name) {
                         return ({ ...item, time: item.time+initialTime});
                     }
+                    return item;
                 }) 
             );
             //alert(JSON.stringify(varen));
