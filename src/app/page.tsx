@@ -155,7 +155,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         items: [
             { label: "Clean Environment", type: "energy", name: "Environment hygiene", time: 12*60 },
             { label: "Mori Facial Skin Routine", type: "energy", name: "Face hygiene", time: 12*60 },
-            { label: "Mori Shower Routine", type: "energy", name: "Shower hygiene", time: 12*60 },
+            { label: "Mori Shower w/ FaceExer Routine", type: "energy", name: "Shower hygiene", time: 12*60 },
             /*
             { label: "Wash Face", type: "done" },
             { label: "Use Facial Cleanser", type: "done" },
@@ -188,6 +188,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation Routine: +5m", type: "energy", name: "Rest", time: 30 },
             
             { label: "Mori Exercise Routine", type: "energy", name: "Exercise", time: 12*60},
+            { label: "Mori Neck Exercise Routine", type: "energy", name: "Exercise", time: 12*60},
         ],
     },
     //==============
