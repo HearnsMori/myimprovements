@@ -18,8 +18,8 @@ import { useEffect, useState, useCallback} from "react";
 //Trimming routine
 //Daily Probiotics
 
-type RoutineItemNoId = | { label: string; type: "done"; id?: string } | {label: string; type: "energy"; id?:  string; name: string; time: number }
-type RoutineItem = | { label: string; type: "done"; id: string } | { label: string; type: "sets"; sets: number; record?: number; id: string } | { label: string; type: "time"; value: string; id: string } | { label: string; type: "options"; options: string[]; id: string } | { label: string; type: "count"; unit: string; id: string };
+type RoutineItemNoId = | { label: string; type: "done"; id?: string } | {label: string; type: "energy"; id?:  string; name: string; time: number };
+type RoutineItem = | { label: string; type: "done"; id: string } | { label: string; type: "energy"; id: string; name: string; time: number };
 type RoutineSectionNoId = {
     section: string;
     items: RoutineItemNoId[];
