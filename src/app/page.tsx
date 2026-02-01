@@ -146,7 +146,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
             
             { label: "Brush Teeth, then 30m No Eat", type: "done" },
             
-            { label: "Drink Probiotics", type: "count", unit: "glass" },
+            { label: "Drink Probiotics", type: "done" },
 
             { label: "Do HIT", type: "done" },
             { label: "Healthy Plate(50% fruits/veggies, 25% whole grains, 25% proteins) Meal", type: "done" },
