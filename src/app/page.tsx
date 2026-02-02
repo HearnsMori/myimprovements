@@ -328,7 +328,10 @@ export default function DailyRoutine() {
             }
             return updated;
         });
-
+        setVaren(prev => {
+            const sorted = [...prev].sort((a, b) => a.time - b.time);
+            return sorted;
+        });
     }, []);
     const [isMounted, setIsMounted] = useState(false);
 
@@ -341,21 +344,29 @@ export default function DailyRoutine() {
         }
     }, [varen]);
     // Effect to decrase the time by 1 every minute
-    useEffect(() => {
-        setIsMounted(true);
+    const addMissingVaren = async () => {
         const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
         if (savedItems && JSON.parse(savedItems).length > 10 && savedItems !== "undefined") {
             setVaren(JSON.parse(savedItems));
         } else {
-            routineData.forEach(section => {
-                section.items.forEach(item => {
+            await routineData.forEach(section => {
+                section.items.forEach(async (item) => {
                     if (item.type === "energy") {
                         addVaren(item.name, 0);
                     }
                 });
             });
         }
-
+        setVaren(prev => {
+            const sorted = [...prev].sort((a, b) => a.time - b.time);
+            return sorted;
+        });
+        alert(JSON.stringify(varen));
+    };
+    useEffect(() => {
+        setIsMounted(true);
+        addMissingVaren();            
+        //setVaren(newVaren);
         const now = Date.now();
         const stored = localStorage.getItem(LOCAL_LAST_TIME);
 
@@ -828,6 +839,7 @@ export default function DailyRoutine() {
         {Array.isArray(varen) && varen.length > 10 && varen.map((varenItem) => {
             if (!isMounted) return null; 
             if (!varenItem?.name) return null;
+
             // If not mounted, render a placeholder or null to match the server's initial output
             return (
                 <h3 style={{
