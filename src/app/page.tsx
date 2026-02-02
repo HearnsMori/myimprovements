@@ -305,7 +305,7 @@ export default function DailyRoutine() {
     // Effect to sync state to localStorage whenever the items array changes
     useEffect(() => {
         const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-        if (varen.length === 0 && savedItems && savedItems !== "undefined") {
+        if (savedItems && savedItems !== "undefined") {
             setVaren(JSON.parse(savedItems));
         }
     }, []);
@@ -314,7 +314,7 @@ export default function DailyRoutine() {
         //alert(JSON.stringify(varen));
         if (typeof window !== 'undefined') {
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
-            alert(localStorage.getItem(LOCAL_FOR_VAREN));
+            //alert(localStorage.getItem(LOCAL_FOR_VAREN));
         }
     }, [varen]); // This runs whenever 'items' is updated
     // Effect to decrase the time by 1 every minute
@@ -367,7 +367,7 @@ export default function DailyRoutine() {
             return updated;
         });
         if (typeof window !== 'undefined') {
-            alert(localStorage.getItem(LOCAL_FOR_VAREN));
+            //alert(localStorage.getItem(LOCAL_FOR_VAREN));
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
         }
     }, []);
