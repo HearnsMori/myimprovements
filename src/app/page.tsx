@@ -308,6 +308,7 @@ export default function DailyRoutine() {
         if (savedItems && savedItems !== "undefined") {
             setVaren(JSON.parse(savedItems));
         }
+        alert(savedItems);
     }, []);
     useEffect(() => {
         // localStorage only stores strings, so we use JSON.stringify()
