@@ -345,7 +345,6 @@ export default function DailyRoutine() {
         alert(savedItems);
         if (savedItems && JSON.parse(savedItems).length > 10 && savedItems !== "undefined") {
             setVaren(JSON.parse(savedItems));
-            alert(JSON.stringify(varen));
         } else {
             routineData.forEach(section => {
                 section.items.forEach(item => {
