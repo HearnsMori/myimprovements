@@ -302,19 +302,24 @@ export default function DailyRoutine() {
     const LOCAL_FOR_VAREN = "LOCAL_FOR_VAREN";
     const LOCAL_LAST_TIME = "LOCAL_LAST_TIME";
     const [varen, setVaren] = useState<Varen[]>([]);
+    const [isMounted, setIsMounted] = useState(false);
+
     // Effect to sync state to localStorage whenever the items array changes
     useEffect(() => {
         // localStorage only stores strings, so we use JSON.stringify()
         //alert(JSON.stringify(varen));
         if (typeof window !== 'undefined') {
-            const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-            if (savedItems && savedItems !== "undefined") {
-                setVaren(JSON.parse(savedItems));
-            }
+            localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
         }
-    }, []);
+    }, [varen]);
     // Effect to decrase the time by 1 every minute
     useEffect(() => {
+        setIsMounted(true);
+        const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
+        if (savedItems && savedItems !== "undefined") {
+            setVaren(JSON.parse(savedItems));
+        }
+
         const now = Date.now();
         const stored = localStorage.getItem(LOCAL_LAST_TIME);
 
@@ -362,10 +367,6 @@ export default function DailyRoutine() {
             }
             return updated;
         });
-        if (typeof window !== 'undefined') {
-            alert(localStorage.getItem(LOCAL_FOR_VAREN));
-            localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
-        }
     }, []);
 
     const [count, setCount] = useState<number | null>(null);
@@ -458,7 +459,7 @@ export default function DailyRoutine() {
     const [challengeError, setChallengeError] = useState<string | null>(null);
 
     const [randomPercent, setRandomPercent] = useState<number>(0);
-    
+
     const [routineInfoIndex, setRoutineInfoIndex] = useState<number>(0);
 
     const randomDigit = (min: number, max: number) => Math.floor(min/*Minimum*/ + Math.random() * (max-min));
@@ -816,13 +817,21 @@ export default function DailyRoutine() {
         <div>
         <h2>Day Streak: {streak}</h2>
         {Array.isArray(varen) && varen.length > 0 && varen.map((varenItem) => {
+            if (!isMounted) return null; 
             if (!varenItem?.name) return null;
+            // If not mounted, render a placeholder or null to match the server's initial output
             return (
                 <h2 style={{
-                    color: (varenItem.time === 0) ? "red" : "green",
-                }} key={varenItem.id}>
+                    color: varenItem.time === 0 ? "#FF0000" : "#FF8C00",
+                    textTransform: "uppercase",
+                    fontWeight: "900",
+                    letterSpacing: "1px",
+                    textShadow: "0 0 10px rgba(255, 62, 0, 0.3)" // Subtle "power" glow
+                }}
+                key={varenItem.id}>
                 {varenItem.name}: {varenItem.time}m
                 </h2>
+
             );
         })}
         <h5>Wrong: {correct}</h5>
@@ -861,13 +870,18 @@ export default function DailyRoutine() {
         </div> 
         {   
             routineData.map((section: RoutineSection, index, array) => {
-                
-                if (varen.length < totalEnergyItems) {
-                    section.items.map(item => {
-                        if(item.type === "energy") {
-                            addVaren(item.name, 0);
-                        }
-                    });
+
+                if (varen.length < totalEnergyItems && typeof window !== "undefined" ) {
+                    const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
+                    if (savedItems && savedItems !== "undefined") {
+                        setVaren(JSON.parse(savedItems));
+                    } else {
+                        section.items.map(item => {
+                            if(item.type === "energy") {
+                                addVaren(item.name, 0);
+                            }
+                        });
+                    }
                 }
 
                 const getSectionProgress = (section: RoutineSection) => {
@@ -1128,7 +1142,7 @@ export default function DailyRoutine() {
                                 </div>
 
                                 <div style={styles.buttonGroup}>
-                                
+
                                 {tab && item.type == "energy" && (
                                     <button
                                     onClick={() => {
@@ -1158,25 +1172,24 @@ export default function DailyRoutine() {
                     );
                 } else if (tab === "plan" && index === 0) {
                     return routineInfo.map((info, index2) => {
-
                         return (
-                        <div key={index2}>
-                        <h2
-                        onClick={(e) =>
-                            setRoutineInfoIndex(
-                                routineInfoIndex === index2 ? 0 : index2
-                            )
-                        }
-                        >
-                        {info.title}
-                        </h2>
+                            <div key={index2}>
+                            <h2
+                            onClick={(e) =>
+                                setRoutineInfoIndex(
+                                    routineInfoIndex === index2 ? 0 : index2
+                                )
+                            }
+                            >
+                            {info.title}
+                            </h2>
 
-                        {index2 === routineInfoIndex && (
-                            <p style={{ fontSize: 17 }}>
-                            {info.how}
-                            </p>
-                        )}
-                        </div>
+                            {index2 === routineInfoIndex && (
+                                <p style={{ fontSize: 17 }}>
+                                {info.how}
+                                </p>
+                            )}
+                            </div>
                         );
                     })
                 } else {
