@@ -1146,24 +1146,6 @@ export default function DailyRoutine() {
                                     +
                                         </button>
                                 )}
-                                {tab && item.type !== "energy" && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
-                                    <button
-                                    onClick={() => {
-                                        toggle(key);
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#16a34a",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    {tab === "done" ? "Undo" : "Done"}
-                                    </button>
-                                )}
 
                                 </div>
                                 </div>
