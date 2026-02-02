@@ -54,28 +54,59 @@ const STREAK_KEY = "daily-routine-streak";
 const routineInfo: RoutineInfo[] = [
     {
         title: "Amethyst Routine",
-        how:
-        `Be stomeone who is emotionally steady and calm,
+        how:`
+        Be stomeone who is emotionally steady and calm,
         who doesn’t pressure her for attention, answers,
         or reassurance, who is reliably there, and whose
         mood and sense of self don’t rise or fall based on
         how she responds — while still being kind, warm, and
-        fully present whenever she chooses to connect.`,
+        fully present whenever she chooses to connect.
+        `,
 
     },
     {
-        title: "Amethyst Routine",
-        how:
-        `Be stomeone who is emotionally steady and calm,
-        who doesn’t pressure her for attention, answers,
-        or reassurance, who is reliably there, and whose
-        mood and sense of self don’t rise or fall based on
-        how she responds — while still being kind, warm, and
-        fully present whenever she chooses to connect.`,
+        title: "Mori Facial Skin Routine",
+        how: `
+        For Morning:
+        Wash Face,
+        Use Facial Cleanser,
+        Apply Vitamin C Serum,
+        Use Moisturizer,
+        Apply Sunscreen,
+        
+        For Evening:
+        Wash Face,
+        Use Facial Cleanse,
+        Use Moisturizer,
+        Retinoids,
+        Apply Sunscreen,
+        Apply Jojoba Oil and Use Jade Roller,
+        Other Hygiene,
+        `,
 
+    },
+    {
+        title: "Mori Shower w/ FaceExer Routine",
+        how: `
+        Get wet,
+        Shampoo,
+        Conditioner,
+        Soap,
+        Gentle Rub,
+        Chick Lift Exercise,
+        Eyebrow Eye Close Exercise,
+        Rinse Water,
+        `,
     },
     
 ];
+/*5yy
+    {
+        title: "Mori Facial Skin Routine",
+        how: `
+        `,
+    },
+*/
 
 const rankingData = [
     { level: 0,  name: "unalive", image: "level0.png" },
@@ -157,28 +188,28 @@ const routineDataNoId: RoutineSectionNoId[] = [
         section: "Make Amethyst Feels Good (Maximize)",
         items: [
             { label: "Amethyst Routine", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Morning: Offer Effort (Respect Autonomy; Her capability to choose)", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Morning: Identity Support (even mid way)", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Morning: Reduce Decision", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Morning: Safe Unknown (Light Curiousity)", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Afternoon: Don\'t give responsibility (example to regulate my emotion)", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Afternoon: Love in the way she\'s capable of receiving", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Afternoon: Transparency", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Afternoon: During Hard Times: Show Love Consistency", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Evening: Emotional Security & Validation", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Evening: Unconditional Love", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Evening: Repair Problems Fast", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Evening: Express Gratitude", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Night: Show Progress", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Night: Novelty", type: "energy", name: "Amethyst", time: 60 },
-            { label: "Night: Safe Unknown (Deeper than Morning)", type: "energy", name: "Amethyst", time: 60 },
+            { label: "Morning: Offer Effort (Respect Autonomy; Her capability to choose)", type: "done" },
+            { label: "Morning: Identity Support (even mid way)", type: "done" },
+            { label: "Morning: Reduce Decision", type: "done" },
+            { label: "Morning: Safe Unknown (Light Curiousity)", type: "done" },
+            { label: "Afternoon: Don\'t give responsibility (example to regulate my emotion)", type: "done" },
+            { label: "Afternoon: Love in the way she\'s capable of receiving", type: "done" },
+            { label: "Afternoon: Transparency", type: "done" },
+            { label: "Afternoon: During Hard Times: Show Love Consistency", type: "done" },
+            { label: "Evening: Emotional Security & Validation", type: "done" },
+            { label: "Evening: Unconditional Love", type: "done" },
+            { label: "Evening: Repair Problems Fast", type: "done" },
+            { label: "Evening: Express Gratitude", type: "done" },
+            { label: "Night: Show Progress", type: "done" },
+            { label: "Night: Novelty", type: "done" },
+            { label: "Night: Safe Unknown (Deeper than Morning)", type: "done" },
         ],
     },
     {
         section: "Mouth&Nose Consumeable",
         items: [
-            { label: "Drink 1/8 Glass", type: "energy", name: "Hydration", time: 15 },
-            { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation: +5m", type: "energy", name: "Rest", time: 30 },
+            { label: "Drink 1/8 Glass", type: "energy", name: "Hydration", time: 16 },
+            { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation: +5m", type: "energy", name: "Rest", time: 40 },
             
             { label: "Brush Teeth Routine", type: "energy", name: "Tooth Hygiene", time: 12*60 },
             { label: "Probiotics", type: "done" },
@@ -190,7 +221,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         items: [
             { label: "Clean Environment", type: "energy", name: "Environment hygiene", time: 12*60 },
             { label: "Mori Facial Skin Routine", type: "energy", name: "Face hygiene", time: 12*60 },
-            { label: "Mori Shower w/ FaceExer Routine", type: "energy", name: "Shower hygiene", time: 12*60 },
+            { label: "Mori Shower w/ FaceExer Routine", type: "energy", name: "Shower hygiene", time: 24*60 },
             /*
             { label: "Wash Face", type: "done" },
             { label: "Use Facial Cleanser", type: "done" },
@@ -222,8 +253,10 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Mori Sleep Routine: +30m", type: "energy", name: "Sleep hygiene", time: 60},
             { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation Routine: +5m", type: "energy", name: "Rest", time: 30 },
             
-            { label: "Mori Exercise Routine", type: "energy", name: "Exercise", time: 12*60},
-            { label: "Mori Neck Exercise Routine", type: "energy", name: "Exercise", time: 12*60},
+            { label: "Mori Exercise Routine", type: "energy", name: "Exercise", time: 12*60 },
+            { label: "Mori Neck Exercise Routine", type: "energy", name: "Exercise", time: 12*60 },
+            { label: "Play 30m Chess", type: "energy", name: "Chess", time: 12*60 },
+            { label: "Play Music: +5m", type: "energy", name: "Music", time: 1*60 },
         ],
     },
     //==============
@@ -257,6 +290,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ]
     },
 ];
+const totalEnergyItems = 13;
 
 function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
     return data.map((section, sectionIndex) => ({
@@ -840,8 +874,14 @@ export default function DailyRoutine() {
         <button style={styles.tab(tab === "nottodo")} onClick={() => setTab("nottodo")}>Not To Do</button>
         <button style={styles.tab(tab === "plan")} onClick={() => setTab("plan")}>Routine How Info</button>
         </div> 
-        {
+        {   
             routineData.map((section: RoutineSection, index, array) => {
+                
+                if (varen.length < totalEnergyItems) {
+                    section.items.map(item => {
+                        addVaren(item.name, 0);
+                    });
+                }
 
                 const getSectionProgress = (section: RoutineSection) => {
                     const total = section.items.length;
