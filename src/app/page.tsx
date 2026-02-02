@@ -312,7 +312,9 @@ export default function DailyRoutine() {
     useEffect(() => {
         // localStorage only stores strings, so we use JSON.stringify()
         //alert(JSON.stringify(varen));
-        localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
+        }
     }, [varen]); // This runs whenever 'items' is updated
     // Effect to decrase the time by 1 every minute
     useEffect(() => {
@@ -363,7 +365,9 @@ export default function DailyRoutine() {
             }
             return updated;
         });
-        localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
+        }
     }, []);
 
     const [count, setCount] = useState<number | null>(null);
