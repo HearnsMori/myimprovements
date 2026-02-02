@@ -311,11 +311,8 @@ export default function DailyRoutine() {
             if (savedItems && savedItems !== "undefined") {
                 setVaren(JSON.parse(savedItems));
             }
-            
-            localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
-            //alert(localStorage.getItem(LOCAL_FOR_VAREN));
         }
-    }, [varen]); // This runs whenever 'items' is updated
+    }, []);
     // Effect to decrase the time by 1 every minute
     useEffect(() => {
         const now = Date.now();
@@ -366,7 +363,7 @@ export default function DailyRoutine() {
             return updated;
         });
         if (typeof window !== 'undefined') {
-            //alert(localStorage.getItem(LOCAL_FOR_VAREN));
+            alert(localStorage.getItem(LOCAL_FOR_VAREN));
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
         }
     }, []);
