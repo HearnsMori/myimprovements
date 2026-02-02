@@ -342,7 +342,6 @@ export default function DailyRoutine() {
     useEffect(() => {
         setIsMounted(true);
         const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-        alert(savedItems);
         if (savedItems && JSON.parse(savedItems).length > 10 && savedItems !== "undefined") {
             setVaren(JSON.parse(savedItems));
         } else {
