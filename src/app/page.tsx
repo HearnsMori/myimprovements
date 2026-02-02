@@ -324,7 +324,6 @@ export default function DailyRoutine() {
             localStorage.setItem(LOCAL_LAST_TIME, String(now));
             return;
         }
-        alert(stored);
 
         const lastUpdate = Number(stored) || now;
 
@@ -364,6 +363,7 @@ export default function DailyRoutine() {
             }
             return updated;
         });
+        localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
     }, []);
 
     const [count, setCount] = useState<number | null>(null);
