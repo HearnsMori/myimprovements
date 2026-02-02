@@ -213,7 +213,8 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Mori Meal/Snack Routine", type: "energy", name: "Meal/Snack", time: 3*65 },
             
             { label: "Brush Teeth Routine", type: "energy", name: "Tooth Hygiene", time: 12*60 },
-            { label: "Probiotics", type: "done" },
+            { label: "Probiotics", type: "energy", name: "Probiotics", time: 24*60 },
+            { label: "Centrum Multivitamins", type: "energy", name: "Multivitamins", time: 24*60 },
 
         ],
     },
@@ -229,6 +230,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         section: "Eyes&Ears Consumeable",
         items: [
             { label: "Mori E&E Learn Routine: +5m", type: "energy", name: "Knowledge", time: 3*60 },
+            { label: "Eye Rest Routine: +1m", type: "energy", name: "Eye", time: 20 },
         ],
     },
     {
@@ -822,13 +824,13 @@ export default function DailyRoutine() {
         )}
         <h1>Daily Routine v4</h1>
         <div>
-        <h2>Day Streak: {streak}</h2>
+        <h4>Day Streak: {streak}</h4>
         {Array.isArray(varen) && varen.length > 10 && varen.map((varenItem) => {
             if (!isMounted) return null; 
             if (!varenItem?.name) return null;
             // If not mounted, render a placeholder or null to match the server's initial output
             return (
-                <h2 style={{
+                <h3 style={{
                     color: varenItem.time === 0 ? "#FF0000" : "#FF8C00",
                     textTransform: "uppercase",
                     fontWeight: "900",
@@ -837,7 +839,7 @@ export default function DailyRoutine() {
                 }}
                 key={varenItem.id}>
                 {varenItem.name}: {varenItem.time}m
-                </h2>
+                </h3>
             );
         })}
         <h5>Wrong: {correct}</h5>
