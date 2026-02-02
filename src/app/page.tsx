@@ -302,47 +302,6 @@ export default function DailyRoutine() {
     const LOCAL_FOR_VAREN = "LOCAL_FOR_VAREN";
     const LOCAL_LAST_TIME = "LOCAL_LAST_TIME";
     const [varen, setVaren] = useState<Varen[]>([]);
-    const [isMounted, setIsMounted] = useState(false);
-
-    // Effect to sync state to localStorage whenever the items array changes
-    useEffect(() => {
-        // localStorage only stores strings, so we use JSON.stringify()
-        //alert(JSON.stringify(varen));
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
-        }
-    }, [varen]);
-    // Effect to decrase the time by 1 every minute
-    useEffect(() => {
-        setIsMounted(true);
-        const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-        if (savedItems && savedItems !== "undefined") {
-            setVaren(JSON.parse(savedItems));
-        }
-
-        const now = Date.now();
-        const stored = localStorage.getItem(LOCAL_LAST_TIME);
-
-        // First ever run initialize and exit
-        if (!stored || stored === "undefined") {
-            localStorage.setItem(LOCAL_LAST_TIME, String(now));
-            return;
-        }
-
-        const lastUpdate = Number(stored) || now;
-
-        const minutesPassed = Math.floor((now - lastUpdate) / 60000);
-        if (minutesPassed <= 0) return;
-        setVaren(prevItems => {
-            return prevItems.map(item => ({
-                ...item,
-                time: Math.max(0, item.time - minutesPassed),
-            }));
-        });
-
-        localStorage.setItem(LOCAL_LAST_TIME, String(now));
-    }, []);
-
     // Function to add a new JSON object to the array
     const addVaren = useCallback((name: string, initialTime: number) => {
         //alert(JSON.stringify(varen));
@@ -367,6 +326,57 @@ export default function DailyRoutine() {
             }
             return updated;
         });
+
+    }, []);
+    const [isMounted, setIsMounted] = useState(false);
+
+    // Effect to sync state to localStorage whenever the items array changes
+    useEffect(() => {
+        // localStorage only stores strings, so we use JSON.stringify()
+        //alert(JSON.stringify(varen));
+        if (varen.length > 10) {
+            localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
+        }
+    }, [varen]);
+    // Effect to decrase the time by 1 every minute
+    useEffect(() => {
+        setIsMounted(true);
+        const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
+        alert(savedItems);
+        if (savedItems && JSON.parse(savedItems).length > 10 && savedItems !== "undefined") {
+            setVaren(JSON.parse(savedItems));
+            alert(JSON.stringify(varen));
+        } else {
+            routineData.forEach(section => {
+                section.items.forEach(item => {
+                    if (item.type === "energy") {
+                        addVaren(item.name, 0);
+                    }
+                });
+            });
+        }
+
+        const now = Date.now();
+        const stored = localStorage.getItem(LOCAL_LAST_TIME);
+
+        // First ever run initialize and exit
+        if (!stored || stored === "undefined") {
+            localStorage.setItem(LOCAL_LAST_TIME, String(now));
+            return;
+        }
+
+        const lastUpdate = Number(stored) || now;
+
+        const minutesPassed = Math.floor((now - lastUpdate) / 60000);
+        if (minutesPassed <= 0) return;
+        setVaren(prevItems => {
+            return prevItems.map(item => ({
+                ...item,
+                time: Math.max(0, item.time - minutesPassed),
+            }));
+        });
+
+        localStorage.setItem(LOCAL_LAST_TIME, String(now));
     }, []);
 
     const [count, setCount] = useState<number | null>(null);
@@ -634,7 +644,6 @@ export default function DailyRoutine() {
         progressBar: { height: "100%", backgroundColor: "#16a34a", transition: "width 0.3s" },
         buttonGroup: { display: "flex", flexFlow: "column nowrap", gap: 15 },
     };
-
     return (
         <div style={styles.page}>
         {challengeTaskId && (
@@ -816,7 +825,7 @@ export default function DailyRoutine() {
         <h1>Daily Routine v4</h1>
         <div>
         <h2>Day Streak: {streak}</h2>
-        {Array.isArray(varen) && varen.length > 0 && varen.map((varenItem) => {
+        {Array.isArray(varen) && varen.length > 10 && varen.map((varenItem) => {
             if (!isMounted) return null; 
             if (!varenItem?.name) return null;
             // If not mounted, render a placeholder or null to match the server's initial output
@@ -831,7 +840,6 @@ export default function DailyRoutine() {
                 key={varenItem.id}>
                 {varenItem.name}: {varenItem.time}m
                 </h2>
-
             );
         })}
         <h5>Wrong: {correct}</h5>
@@ -870,19 +878,6 @@ export default function DailyRoutine() {
         </div> 
         {   
             routineData.map((section: RoutineSection, index, array) => {
-
-                if (varen.length < totalEnergyItems && typeof window !== "undefined" ) {
-                    const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-                    if (savedItems && savedItems !== "undefined") {
-                        setVaren(JSON.parse(savedItems));
-                    } else {
-                        section.items.map(item => {
-                            if(item.type === "energy") {
-                                addVaren(item.name, 0);
-                            }
-                        });
-                    }
-                }
 
                 const getSectionProgress = (section: RoutineSection) => {
                     const total = section.items.length;
