@@ -320,10 +320,11 @@ export default function DailyRoutine() {
         const stored = localStorage.getItem(LOCAL_LAST_TIME);
 
         // First ever run initialize and exit
-        if (!stored) {
+        if (!stored || stored === "undefined") {
             localStorage.setItem(LOCAL_LAST_TIME, String(now));
             return;
         }
+        alert(stored);
 
         const lastUpdate = Number(stored) || now;
 
