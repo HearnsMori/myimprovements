@@ -314,6 +314,7 @@ export default function DailyRoutine() {
         //alert(JSON.stringify(varen));
         if (typeof window !== 'undefined') {
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
+            alert(LOCAL_FOR_VAREN);
         }
     }, [varen]); // This runs whenever 'items' is updated
     // Effect to decrase the time by 1 every minute
@@ -366,6 +367,7 @@ export default function DailyRoutine() {
             return updated;
         });
         if (typeof window !== 'undefined') {
+            alert(LOCAL_FOR_VAREN);
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
         }
     }, []);
