@@ -210,6 +210,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         items: [
             { label: "Drink 1/8 Glass", type: "energy", name: "Hydration", time: 16 },
             { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation: +5m", type: "energy", name: "Rest", time: 40 },
+            { label: "Mori Meal/Snack Routine", type: "energy", name: "Meal/Snack", time: 3*65 },
             
             { label: "Brush Teeth Routine", type: "energy", name: "Tooth Hygiene", time: 12*60 },
             { label: "Probiotics", type: "done" },
@@ -222,23 +223,6 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Clean Environment", type: "energy", name: "Environment hygiene", time: 12*60 },
             { label: "Mori Facial Skin Routine", type: "energy", name: "Face hygiene", time: 12*60 },
             { label: "Mori Shower w/ FaceExer Routine", type: "energy", name: "Shower hygiene", time: 24*60 },
-            /*
-            { label: "Wash Face", type: "done" },
-            { label: "Use Facial Cleanser", type: "done" },
-            { label: "Apply Vitamin C Serum", type: "done" },
-            { label: "Use Moisturizer", type: "done" },
-            { label: "Apply Sunscreen", type: "done" },
-            
-            { label: "Clean Environment", type: "done" },
-            
-            { label: "Wash Face", type: "done" },
-            { label: "Use Facial Cleanser", type: "done" },
-            { label: "Use Moisturizer", type: "done" },
-            { label: "Retinoids", type: "done" },
-            { label: "Apply Sunscreen", type: "done" },
-            { label: "Apply Jojoba Oil and Use Jade Roller Very Lightly for 10m", type: "done" },
-            { label: "Other Hygiene (Nails, Eyebrows, etc)", type: "done" },
-            */
         ],
     },
     {
@@ -260,33 +244,31 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     //==============
-    //==============
     //Not to do list
-    //==============
     //==============
     {
         section: "#Mouth&Nose Consumeable",
         items: [
-            { label: "$Oily/Processed(such as Processed Sugar)/High Salt/Unhealthy Food", type: "done" },
+            { label: "Oily/Processed(such as Processed Sugar)/High Salt/Unhealthy Food", type: "energy", name: "Free time", time: -10 },
         ]
     },
     {
         section: "#Skin Consumeable",
         items: [
-            { label: "$Touching Skin by Self/Smoke/Sweats/Environment: +5m", type: "done" },
+            { label: "Touching Skin by Self/Smoke/Sweats/Environment: +5m", type: "energy", name: "Free time", time: -5 },
         ]
     },
     {
         section: "#Eyes&Ears Consumeable",
         items: [
-            { label: "$Many Useless Information", type: "done" },
+            { label: "Many Useless Information", type: "energy", name: "Free time", time: -10 },
         ]
     },
     {
         section: "#Nerve&Mind&Muscle Consumeable",
         items: [
-            { label: "$Physical Harm", type: "done" },
-            { label: "$Negetivity", type: "done" },
+            { label: "$Physical Harm", type: "energy", name: "Free time", time: -20},
+            { label: "$Negetivity", type: "energy", name: "Free time", time: -20 },
         ]
     },
 ];
@@ -879,7 +861,9 @@ export default function DailyRoutine() {
                 
                 if (varen.length < totalEnergyItems) {
                     section.items.map(item => {
-                        addVaren(item.name, 0);
+                        if(item.type === "energy") {
+                            addVaren(item.name, 0);
+                        }
                     });
                 }
 
@@ -1141,7 +1125,28 @@ export default function DailyRoutine() {
                                 </div>
 
                                 <div style={styles.buttonGroup}>
-                                {tab && item.label.charAt(0) !== '$' && (
+                                
+                                {tab && item.type == "energy" && (
+                                    <button
+                                    onClick={() => {
+                                        // If the object is found, update its time property
+                                        addVaren(item.name, item.time);
+                                        //alert(item.name+item.time);
+                                    }}
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#16a34a",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    +
+                                        </button>
+                                )}
+                                {tab && item.type !== "energy" && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
                                     <button
                                     onClick={() => {
                                         toggle(key);
@@ -1156,26 +1161,8 @@ export default function DailyRoutine() {
                                         cursor: "pointer",
                                     }}
                                     >
-                                    Done
+                                    {tab === "done" ? "Undo" : "Done"}
                                     </button>
-                                )}
-                                {item.label.charAt(0) === '$' && (
-                                    <button
-                                    onClick={() => {
-                                        setCorrect(i=>(i+1));
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#16a34a",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    +
-                                        </button>
                                 )}
 
                                 </div>
