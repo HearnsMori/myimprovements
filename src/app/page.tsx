@@ -304,16 +304,14 @@ export default function DailyRoutine() {
     const [varen, setVaren] = useState<Varen[]>([]);
     // Effect to sync state to localStorage whenever the items array changes
     useEffect(() => {
-        const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-        if (savedItems && savedItems !== "undefined") {
-            setVaren(JSON.parse(savedItems));
-        }
-        alert(savedItems);
-    }, []);
-    useEffect(() => {
         // localStorage only stores strings, so we use JSON.stringify()
         //alert(JSON.stringify(varen));
         if (typeof window !== 'undefined') {
+            const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
+            if (savedItems && savedItems !== "undefined") {
+                setVaren(JSON.parse(savedItems));
+            }
+            
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
             //alert(localStorage.getItem(LOCAL_FOR_VAREN));
         }
