@@ -361,7 +361,6 @@ export default function DailyRoutine() {
             const sorted = [...prev].sort((a, b) => a.time - b.time);
             return sorted;
         });
-        alert(JSON.stringify(varen));
     };
     useEffect(() => {
         setIsMounted(true);
