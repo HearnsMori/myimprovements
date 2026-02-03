@@ -1234,7 +1234,7 @@ export default function DailyRoutine() {
                                 margin: 11,
                             }}>
                             <h2
-                            stle={{
+                            style={{
                                 color: "#eee",
                             }}
                             onClick={(e) =>
