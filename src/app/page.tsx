@@ -7,7 +7,7 @@
 //
 "use client";
 import Plan from "./plan/page";
-import { useEffect, useState, useCallback} from "react";
+import { useEffect, useRef, useState, useCallback} from "react";
 
 //Pattern for Improvements (Pattern When To Execute) (How)
 //5m work for 20m for free time
@@ -215,15 +215,14 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Brush Teeth Routine", type: "energy", name: "Tooth Hygiene", time: 12*60 },
             { label: "Probiotics", type: "energy", name: "Probiotics", time: 24*60 },
             { label: "Centrum Multivitamins", type: "energy", name: "Multivitamins", time: 24*60 },
-
         ],
     },
     {
         section: "Skin Consumeable",
         items: [
-            { label: "Clean Environment", type: "energy", name: "Environment hygiene", time: 12*60 },
-            { label: "Mori Facial Skin Routine", type: "energy", name: "Face hygiene", time: 12*60 },
-            { label: "Mori Shower w/ FaceExer Routine", type: "energy", name: "Shower hygiene", time: 24*60 },
+            { label: "Clean Environment", type: "energy", name: "Environment hygiene", time: 10*60 },
+            { label: "Mori Facial Skin Routine", type: "energy", name: "Face hygiene", time: 10*60 },
+            { label: "Mori Shower w/ FaceExer Routine", type: "energy", name: "Shower hygiene", time: 20*60 },
         ],
     },
     {
@@ -274,7 +273,6 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ]
     },
 ];
-const totalEnergyItems = 13;
 
 function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
     return data.map((section, sectionIndex) => ({
@@ -342,11 +340,12 @@ export default function DailyRoutine() {
         if (varen.length > 10) {
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
         }
+        
     }, [varen]);
     // Effect to decrase the time by 1 every minute
     const addMissingVaren = async () => {
         const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-        if (savedItems && JSON.parse(savedItems).length > 10 && savedItems !== "undefined") {
+        if (savedItems && savedItems !== "undefined" && JSON.parse(savedItems).length > 10) {
             setVaren(JSON.parse(savedItems));
         } else {
             await routineData.forEach(section => {
@@ -362,32 +361,38 @@ export default function DailyRoutine() {
             return sorted;
         });
     };
+    const ran = useRef(false);
     useEffect(() => {
         setIsMounted(true);
-        addMissingVaren();            
-        //setVaren(newVaren);
+        addMissingVaren();
+        if (ran.current) return;
+        ran.current = true;
+        
+        //alert(JSON.stringify(varen));
+
         const now = Date.now();
         const stored = localStorage.getItem(LOCAL_LAST_TIME);
 
-        // First ever run initialize and exit
-        if (!stored || stored === "undefined") {
+        if (!stored) {
             localStorage.setItem(LOCAL_LAST_TIME, String(now));
             return;
         }
 
-        const lastUpdate = Number(stored) || now;
-
+        const lastUpdate = Number(stored);
         const minutesPassed = Math.floor((now - lastUpdate) / 60000);
-        if (minutesPassed <= 0) return;
-        setVaren(prevItems => {
-            return prevItems.map(item => ({
-                ...item,
-                time: Math.max(0, item.time - minutesPassed),
-            }));
-        });
+
+        if (minutesPassed > 0) {
+            setVaren(prev =>
+                     prev.map(item => ({
+                         ...item,
+                         time: Math.max(0, item.time - minutesPassed),
+                     }))
+                    );
+        }
 
         localStorage.setItem(LOCAL_LAST_TIME, String(now));
     }, []);
+
 
     const [count, setCount] = useState<number | null>(null);
     useEffect(() => {
@@ -440,20 +445,6 @@ export default function DailyRoutine() {
         }
     }, [count]);
 
-
-    useEffect(()=>{
-        const saved = Number(localStorage.getItem("correct"));
-        if (saved && correct === 0) {
-            setCorrect(saved);
-        } else if (saved && correct !== 0) {
-            localStorage.setItem("correct", String(correct));
-            setCorrect(correct);
-        } else {
-            localStorage.setItem("correct", String(correct));
-            setCorrect(correct);
-        }
-        //localStorage.clear();
-    }, [correct]);
 
     const [showPlan, setShowPlan] = useState<boolean>(true);
     //For visible section
@@ -526,6 +517,17 @@ export default function DailyRoutine() {
 
         let newStreak = 1;
 
+        const savedCorrect = Number(localStorage.getItem("correct"));
+        if (savedCorrect && correct === 0) {
+            setCorrect(savedCorrect);
+        } else if (savedCorrect && correct !== 0) {
+            localStorage.setItem("correct", String(correct));
+            setCorrect(correct);
+        } else {
+            localStorage.setItem("correct", String(correct));
+            setCorrect(correct);
+        }
+
         if (savedDate) {
             const diff =
                 (new Date(today).getTime() - new Date(savedDate).getTime()) /
@@ -534,8 +536,12 @@ export default function DailyRoutine() {
                 newStreak = savedStreak + 1;
                 localStorage.setItem("pastLevel", String(level));
                 localStorage.setItem("pastProgressPercent", String(progressPercent));
+                localStorage.removeItem("correct");
+                localStorage.removeItem(LOCAL_FOR_VAREN);
             } else if (diff > 1) {
                 newStreak = 1;
+                localStorage.removeItem("correct");
+                localStorage.removeItem(LOCAL_FOR_VAREN);
             } else {
                 newStreak = savedStreak;
             }
@@ -550,6 +556,7 @@ export default function DailyRoutine() {
             if (b) localStorage.setItem(SKIPPED_KEY_PAST, b);
 
             localStorage.removeItem("correct");
+            localStorage.removeItem(LOCAL_FOR_VAREN);
             setVaren([]);
             localStorage.removeItem(STORAGE_KEY);
             localStorage.removeItem(SKIPPED_KEY);
