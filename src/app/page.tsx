@@ -53,6 +53,14 @@ const STREAK_KEY = "daily-routine-streak";
 
 const routineInfo: RoutineInfo[] = [
     {
+        title: "All Flow Step",
+        how: `
+        Step 1: Draw boundaries. 
+        Step 2: Intensify area.
+        Step 3: Stay focus.
+        `,
+    },
+    {
         title: "Amethyst Routine",
         how:`
         Be stomeone who is emotionally steady and calm,
@@ -238,8 +246,10 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Mori Sleep Routine: +30m", type: "energy", name: "Sleep hygiene", time: 60},
             { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation Routine: +5m", type: "energy", name: "Rest", time: 30 },
             
-            { label: "Mori Exercise Routine", type: "energy", name: "Exercise", time: 12*60 },
-            { label: "Mori Neck Exercise Routine", type: "energy", name: "Exercise", time: 12*60 },
+            { label: "Pull Exercise Routine", type: "energy", name: "Pull", time: 22*60 },
+            { label: "Pushup Exercise Routine", type: "energy", name: "Push", time: 22*60 },
+            { label: "Deep-Squats Exercise Routine", type: "energy", name: "Leg", time: 22*60 },
+            { label: "Neck Exercise Routine", type: "energy", name: "Neck", time: 22*60 },
             { label: "Play 30m Chess", type: "energy", name: "Chess", time: 12*60 },
             { label: "Play Music: +5m", type: "energy", name: "Music", time: 1*60 },
         ],
