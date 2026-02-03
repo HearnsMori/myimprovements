@@ -4,7 +4,7 @@
 //Routine Info
 //
 //
-//
+//Record not showing in stats
 "use client";
 import Plan from "./plan/page";
 import { useEffect, useRef, useState, useCallback} from "react";
@@ -53,36 +53,63 @@ const STREAK_KEY = "daily-routine-streak";
 
 const routineInfo: RoutineInfo[] = [
     {
-        title: "All Flow Step",
+        title: "CS/Learn/Hobby",
         how: `
-        Step 1: Draw boundaries. 
-        Step 2: Intensify area.
-        Step 3: Stay focus.
+        Step 1: SMART Goal. 
+        Step 2: Draw boundaries. 
+        Step 3: Intensify area.
+        Step 4: Stay focus.
+        Step 5: Reflect boundaries and intesification.
         `,
     },
     {
-        title: "Amethyst Routine",
+        title: "Amethyst",
         how:`
-        Be stomeone who is emotionally steady and calm,
+        Be someone who is emotionally steady and calm,
         who doesn’t pressure her for attention, answers,
         or reassurance, who is reliably there, and whose
         mood and sense of self don’t rise or fall based on
         how she responds — while still being kind, warm, and
         fully present whenever she chooses to connect.
         `,
-
     },
     {
-        title: "Mori Facial Skin Routine",
+        title: "Morning Routine",
         how: `
-        For Morning:
+        Clean environment,
+
+        Drink water,
+        Drink probiotics,
+        Brush teeth,
+
+        Ready the towel and clothes,
+        Shower,
+        Shampoo (Once every other day),
+        Conditioner (Once every other day),
+        Soap,
+        Gentle rub,
+        Rinse with water,
+        Chick lift exercise 3 sets,
+        Eyebrow resist eye open-close exercise 3 sets,
+        Rinse water,
+        Gentle tap-tap with towel,
+        Wear clothes,
+
         Wash Face,
         Use Facial Cleanser,
         Apply Vitamin C Serum,
         Use Moisturizer,
         Apply Sunscreen,
-        
-        For Evening:
+
+        Multi-vitamins,
+        Nutrients
+        `,
+    },
+    {
+        title: "Night Routine",
+        how:`
+        Clean environment,
+
         Wash Face,
         Use Facial Cleanse,
         Use Moisturizer,
@@ -90,27 +117,56 @@ const routineInfo: RoutineInfo[] = [
         Apply Sunscreen,
         Apply Jojoba Oil and Use Jade Roller,
         Other Hygiene,
+        Sleep,
         `,
-
     },
     {
-        title: "Mori Shower w/ FaceExer Routine",
+        title: "Sleep",
         how: `
-        Get wet,
-        Shampoo,
-        Conditioner,
-        Soap,
-        Gentle Rub,
-        Chick Lift Exercise,
-        Eyebrow Eye Close Exercise,
-        Rinse Water,
+        10hrs sleep (research in extended sleep shows significant results for high performers),
         `,
     },
-    
+    {
+        title: "Hydration",
+        how: `
+        More frequent is better,
+        `,
+    },
+    {
+        title: "Nutrients",
+        how: `
+        Strength/Cardio exercise,
+        25% protein,
+        25% whole grain,
+        50% fruit and vegetable,
+        Anti sugar spike movement,
+        `,
+    },
+    {
+        title: "Exercise",
+        how: `
+        Neck curltuck 3 set,
+        Neck tuck 3 set,
+        Leg 3 set,
+        Push 3 set,
+        Pull 3 set,
+        `,
+    },
+    {
+        title: "Rest",
+        how: `
+        Diaphragm breathing,
+        Eye closed or look far away,
+        Walk,
+        Arm and neck movement,
+        Positive emotion,
+        Proper neck, tongue, and closed-lip posture,
+        `,
+    },
 ];
 /*5yy
     {
-        title: "Mori Facial Skin Routine",
+        title: "",
         how: `
         `,
     },
@@ -187,15 +243,17 @@ Safe Unknown
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
-        section: "Identity",
+        section: "Identity & Pattern",
         items: [
-            { label: "Mori Computer Science Routine: +5 mins", type: "energy", name: "Free time", time: 20},
+            { label: "CS Routine: +5 mins", type: "energy", name: "Free time", time: 20},
+            { label: "Morning Routine", type: "energy", name: "Morning", time: 25*60 },
+            { label: "Night Routine", type: "energy", name: "Night", time: 25*60 },
         ],
     },
     {
-        section: "Make Amethyst Feels Good (Maximize)",
+        section: "Amethyst",
         items: [
-            { label: "Amethyst Routine", type: "energy", name: "Amethyst", time: 60 },
+            { label: "Amethyst", type: "energy", name: "Amethyst", time: 180 },
             { label: "Morning: Offer Effort (Respect Autonomy; Her capability to choose)", type: "done" },
             { label: "Morning: Identity Support (even mid way)", type: "done" },
             { label: "Morning: Reduce Decision", type: "done" },
@@ -214,44 +272,20 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "Mouth&Nose Consumeable",
+        section: "5 Senses",
         items: [
-            { label: "Drink 1/8 Glass", type: "energy", name: "Hydration", time: 16 },
-            { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation: +5m", type: "energy", name: "Rest", time: 40 },
-            { label: "Mori Meal/Snack Routine", type: "energy", name: "Meal/Snack", time: 3*65 },
+            { label: "Drink Water: 1/8 Glass", type: "energy", name: "Hydration", time: 16 },
+            { label: "Nutrients", type: "energy", name: "Nutrients", time: 3*65 },
+            { label: "Non-CS Learn/Hobby: +5m", type: "energy", name: "Hobby", time: 25 },
+        ],
+    },
+    {
+        section: "Nerves & Muscles & Mind",
+        items: [
+            { label: "Total Sleep: +30m", type: "energy", name: "Sleep", time: 60},
+            { label: "Rest: +1m", type: "energy", name: "Rest", time: 20 },
             
-            { label: "Brush Teeth Routine", type: "energy", name: "Tooth Hygiene", time: 12*60 },
-            { label: "Probiotics", type: "energy", name: "Probiotics", time: 24*60 },
-            { label: "Centrum Multivitamins", type: "energy", name: "Multivitamins", time: 24*60 },
-        ],
-    },
-    {
-        section: "Skin Consumeable",
-        items: [
-            { label: "Clean Environment", type: "energy", name: "Environment hygiene", time: 10*60 },
-            { label: "Mori Facial Skin Routine", type: "energy", name: "Face hygiene", time: 10*60 },
-            { label: "Mori Shower w/ FaceExer Routine", type: "energy", name: "Shower hygiene", time: 20*60 },
-        ],
-    },
-    {
-        section: "Eyes&Ears Consumeable",
-        items: [
-            { label: "Mori E&E Learn Routine: +5m", type: "energy", name: "Knowledge", time: 3*60 },
-            { label: "Eye Rest Routine: +1m", type: "energy", name: "Eye", time: 20 },
-        ],
-    },
-    {
-        section: "Nerve&Mind&Muscle Consumeable",
-        items: [
-            { label: "Mori Sleep Routine: +30m", type: "energy", name: "Sleep hygiene", time: 60},
-            { label: "Mori Properly-Form Diaphragm Positivity Walking Meditation Routine: +5m", type: "energy", name: "Rest", time: 30 },
-            
-            { label: "Pull Exercise Routine", type: "energy", name: "Pull", time: 22*60 },
-            { label: "Pushup Exercise Routine", type: "energy", name: "Push", time: 22*60 },
-            { label: "Deep-Squats Exercise Routine", type: "energy", name: "Leg", time: 22*60 },
-            { label: "Neck Exercise Routine", type: "energy", name: "Neck", time: 22*60 },
-            { label: "Play 30m Chess", type: "energy", name: "Chess", time: 12*60 },
-            { label: "Play Music: +5m", type: "energy", name: "Music", time: 1*60 },
+            { label: "Exercise: 3 sets", type: "energy", name: "Exercise", time: 4*65 },
         ],
     },
     //==============
@@ -314,7 +348,6 @@ export default function DailyRoutine() {
     const [varen, setVaren] = useState<Varen[]>([]);
     // Function to add a new JSON object to the array
     const addVaren = useCallback((name: string, initialTime: number) => {
-        //alert(JSON.stringify(varen));
         setVaren(prev => {
             let found = false;
             const updated = prev.map(item => {
@@ -347,7 +380,7 @@ export default function DailyRoutine() {
     useEffect(() => {
         // localStorage only stores strings, so we use JSON.stringify()
         //alert(JSON.stringify(varen));
-        if (varen.length > 10) {
+        if (varen.length > 2) {
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
         }
         
@@ -852,7 +885,7 @@ export default function DailyRoutine() {
         <h1>Daily Routine v4</h1>
         <div>
         <h4>Day Streak: {streak}</h4>
-        {Array.isArray(varen) && varen.length > 10 && varen.map((varenItem) => {
+        {Array.isArray(varen) && varen.length > 5 && varen.map((varenItem) => {
             if (!isMounted) return null; 
             if (!varenItem?.name) return null;
 
@@ -1196,8 +1229,14 @@ export default function DailyRoutine() {
                 } else if (tab === "plan" && index === 0) {
                     return routineInfo.map((info, index2) => {
                         return (
-                            <div key={index2}>
+                            <div key={index2}
+                            style={{
+                                margin: 11,
+                            }}>
                             <h2
+                            stle={{
+                                color: "#eee",
+                            }}
                             onClick={(e) =>
                                 setRoutineInfoIndex(
                                     routineInfoIndex === index2 ? 0 : index2
@@ -1208,7 +1247,7 @@ export default function DailyRoutine() {
                             </h2>
 
                             {index2 === routineInfoIndex && (
-                                <p style={{ fontSize: 17 }}>
+                                <p style={{ fontSize: 17, marginBottom: 5, color: "#ddd" }}>
                                 {info.how}
                                 </p>
                             )}
