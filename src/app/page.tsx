@@ -918,7 +918,7 @@ export default function DailyRoutine() {
             if (freeplier == 0 && varenItem.time > 0) {
                 setFreeplier(i=>i+1);
             }
-            if (freeplier == 9) i=>i+1;
+            if (freeplier == 9) setFreeplier(i=>i+1);
             // If not mounted, render a placeholder or null to match the server's initial output
             return (
                 <h5 style={{
