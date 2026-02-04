@@ -56,22 +56,22 @@ const routineInfo: RoutineInfo[] = [
         title: "CS/Learn/Hobby",
         how: `
         Step 1: SMART Goal. 
-        Step 2: Draw boundaries. 
-        Step 3: Intensify area.
-        Step 4: Stay focus.
-        Step 5: Reflect boundaries and intesification.
-        `,
+            Step 2: Draw boundaries. 
+            Step 3: Intensify area.
+            Step 4: Stay focus.
+            Step 5: Reflect boundaries and intesification.
+            `,
     },
     {
         title: "Amethyst",
         how:`
         Be someone who is emotionally steady and calm,
         who doesn’t pressure her for attention, answers,
-        or reassurance, who is reliably there, and whose
+            or reassurance, who is reliably there, and whose
         mood and sense of self don’t rise or fall based on
         how she responds — while still being kind, warm, and
-        fully present whenever she chooses to connect.
-        `,
+            fully present whenever she chooses to connect.
+            `,
     },
     {
         title: "Morning Routine",
@@ -124,7 +124,7 @@ const routineInfo: RoutineInfo[] = [
         title: "Sleep",
         how: `
         10hrs sleep (research in extended sleep shows significant results for high performers),
-        `,
+            `,
     },
     {
         title: "Hydration",
@@ -165,11 +165,11 @@ const routineInfo: RoutineInfo[] = [
     },
 ];
 /*5yy
-    {
-        title: "",
-        how: `
-        `,
-    },
+  {
+title: "",
+how: `
+`,
+},
 */
 
 const rankingData = [
@@ -207,45 +207,45 @@ const rankingData = [
 ];
 
 /* for face
-1. Sun Protection, Retinoids, Cleanser, Moisturizer, Vitamin C Serum, Exfoliation, Jojoba Oil w/ Massage
-2. Clean Self and Environment, Avoid Smoke/Pollutant
-3. Balance Diet w/ Antioxidants, Fiber, & Vitamin A
-eat slowly and chew
-Pre-meal HIIT/strength
-post-meal
-diaphragm breathing +
-as much movement as possible without
-disrupting breathing nor shaking stomach
+   1. Sun Protection, Retinoids, Cleanser, Moisturizer, Vitamin C Serum, Exfoliation, Jojoba Oil w/ Massage
+   2. Clean Self and Environment, Avoid Smoke/Pollutant
+   3. Balance Diet w/ Antioxidants, Fiber, & Vitamin A
+   eat slowly and chew
+   Pre-meal HIIT/strength
+   post-meal
+   diaphragm breathing +
+   as much movement as possible without
+   disrupting breathing nor shaking stomach
 
-4. Hydration
-5. Quality Sleep
-6. Positive Emotion & Anti-stress
-7. Exercise
-*/
+   4. Hydration
+   5. Quality Sleep
+   6. Positive Emotion & Anti-stress
+   7. Exercise
+   */
 
 
 /*
-Effort Offered / Respect Autonomy (Her Ability to Choose)
-Emotional Security and Validation
-Identity Support even in just mid way
-During Hard Times Show Love Consistency
-Repair Problem Fast
-Transparency
-Love in a way she is capable of receiving (over than she can receive can sometimes feel guilt)
-Dont Make Her Feel Pressure for Regulating Her/My Self
-Unconditional Love
-Express Gratitude
-Show Progress6
-Reduce Decision
-Novelty
-Safe Unknown
-*/
+   Effort Offered / Respect Autonomy (Her Ability to Choose)
+   Emotional Security and Validation
+   Identity Support even in just mid way
+   During Hard Times Show Love Consistency
+   Repair Problem Fast
+   Transparency
+   Love in a way she is capable of receiving (over than she can receive can sometimes feel guilt)
+   Dont Make Her Feel Pressure for Regulating Her/My Self
+   Unconditional Love
+   Express Gratitude
+   Show Progress6
+   Reduce Decision
+   Novelty
+   Safe Unknown
+   */
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Identity & Pattern",
         items: [
-            { label: "CS Routine: +5 mins", type: "energy", name: "Free time", time: 20},
+            { label: "CS Routine: +5 mins", type: "energy", name: "Free time", time: 10},
             { label: "Morning Routine", type: "energy", name: "Morning", time: 25*60 },
             { label: "Night Routine", type: "energy", name: "Night", time: 25*60 },
         ],
@@ -284,7 +284,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         items: [
             { label: "Total Sleep: +30m", type: "energy", name: "Sleep", time: 60},
             { label: "Rest: +1m", type: "energy", name: "Rest", time: 20 },
-            
+
             { label: "Exercise: 3 sets", type: "energy", name: "Exercise", time: 4*65 },
         ],
     },
@@ -331,11 +331,12 @@ function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
 const routineData: RoutineSection[] = addUniqueIdsToRoutine(routineDataNoId);
 
 type CounterData = {
-  value: number;
-  lastUpdated: number; // timestamp in ms
+    value: number;
+    lastUpdated: number; // timestamp in ms
 };
 
 export default function DailyRoutine() {
+    const [freeplier, setFreeplier] = useState<number>(0);
     const [state, setState] = useState<Record<string, boolean>>({});
     const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
     const [pastState, setPastState] = useState<Record<string, boolean>>({});
@@ -383,7 +384,7 @@ export default function DailyRoutine() {
         if (varen.length > 5) {
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
         }
-        
+
     }, [varen]);
     // Effect to decrase the time by 1 every minute
     const addMissingVaren = async () => {
@@ -410,7 +411,7 @@ export default function DailyRoutine() {
         addMissingVaren();
         if (ran.current) return;
         ran.current = true;
-        
+
         //alert(JSON.stringify(varen));
 
         const now = Date.now();
@@ -894,10 +895,10 @@ export default function DailyRoutine() {
         {Array.isArray(varen) && varen.length > 5 && varen.map((varenItem) => {
             if (!isMounted) return null; 
             if (!varenItem?.name) return null;
-
+            if (varenItem.name !== "Free time") return null;
             // If not mounted, render a placeholder or null to match the server's initial output
             return (
-                <h3 style={{
+                <h2 style={{
                     color: varenItem.time === 0 ? "#FF0000" : "#FF8C00",
                     textTransform: "uppercase",
                     fontWeight: "900",
@@ -906,7 +907,30 @@ export default function DailyRoutine() {
                 }}
                 key={varenItem.id}>
                 {varenItem.name}: {varenItem.time}m
-                </h3>
+                </h2>
+            );
+        })}
+        Multiplier: {freeplier}
+        {Array.isArray(varen) && varen.length > 5 && varen.map((varenItem) => {
+            if (!isMounted) return null; 
+            if (!varenItem?.name) return null;
+            if (varenItem.name === "Free time") return null;
+            if (freeplier == 0 && varenItem.time > 0) {
+                setFreeplier(i=>i+1);
+            }
+            if (freeplier == 9) i=>i+1;
+            // If not mounted, render a placeholder or null to match the server's initial output
+            return (
+                <h5 style={{
+                    color: varenItem.time === 0 ? "#FF0000" : "#FF8C00",
+                    textTransform: "uppercase",
+                    fontWeight: "900",
+                    letterSpacing: "1px",
+                    textShadow: "0 0 10px rgba(255, 62, 0, 0.3)" // Subtle "power" glow
+                }}
+                key={varenItem.id}>
+                {varenItem.name}: {varenItem.time}m
+                </h5>
             );
         })}
         <h5>Wrong: {correct}</h5>
@@ -1057,7 +1081,11 @@ export default function DailyRoutine() {
                                     <button
                                     onClick={() => {
                                         // If the object is found, update its time property
-                                        addVaren(item.name, item.time);
+                                        if(item.name === "Free time") {
+                                            addVaren(item.name, item.time+freeplier);
+                                        } else {
+                                            addVaren(item.name, item.time);
+                                        }
                                         //alert(item.name+item.time);
                                     }}
                                     style={{
