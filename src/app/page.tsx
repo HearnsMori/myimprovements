@@ -380,7 +380,7 @@ export default function DailyRoutine() {
     useEffect(() => {
         // localStorage only stores strings, so we use JSON.stringify()
         //alert(JSON.stringify(varen));
-        if (varen.length > 2) {
+        if (varen.length > 5) {
             localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
         }
         
@@ -388,7 +388,7 @@ export default function DailyRoutine() {
     // Effect to decrase the time by 1 every minute
     const addMissingVaren = async () => {
         const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-        if (savedItems && savedItems !== "undefined" && JSON.parse(savedItems).length > 10) {
+        if (savedItems && savedItems !== "undefined" && JSON.parse(savedItems).length > 5) {
             setVaren(JSON.parse(savedItems));
         } else {
             await routineData.forEach(section => {
