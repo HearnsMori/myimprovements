@@ -883,9 +883,9 @@ export default function DailyRoutine() {
             </div>
         )}
         <h1 onClick={(e)=>{
-            alert("hi");
-            setVaren([]);
-            localStorage.removeItem("LOCAL_FOR_VAREN");
+            //alert("hi");
+            //setVaren([]);
+            //localStorage.removeItem("LOCAL_FOR_VAREN");
         }}>
         Daily Routine v4
         </h1>
