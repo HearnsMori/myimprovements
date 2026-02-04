@@ -882,7 +882,13 @@ export default function DailyRoutine() {
             </div>
             </div>
         )}
-        <h1>Daily Routine v4</h1>
+        <h1 onClick={(e)=>{
+            alert("hi");
+            setVaren([]);
+            localStorage.removeItem("LOCAL_FOR_VAREN");
+        }}>
+        Daily Routine v4
+        </h1>
         <div>
         <h4>Day Streak: {streak}</h4>
         {Array.isArray(varen) && varen.length > 5 && varen.map((varenItem) => {
