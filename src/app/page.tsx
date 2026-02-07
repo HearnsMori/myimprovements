@@ -74,53 +74,6 @@ const routineInfo: RoutineInfo[] = [
             `,
     },
     {
-        title: "Morning Routine",
-        how: `
-        Clean environment,
-
-        Drink water,
-        Drink probiotics,
-        Brush teeth,
-
-        Ready the towel and clothes,
-        Shower,
-        Shampoo (Once every other day),
-        Conditioner (Once every other day),
-        Soap,
-        Gentle rub,
-        Rinse with water,
-        Chick lift exercise 3 sets,
-        Eyebrow resist eye open-close exercise 3 sets,
-        Rinse water,
-        Gentle tap-tap with towel,
-        Wear clothes,
-
-        Wash Face,
-        Use Facial Cleanser,
-        Apply Vitamin C Serum,
-        Use Moisturizer,
-        Apply Sunscreen,
-
-        Multi-vitamins,
-        Nutrients
-        `,
-    },
-    {
-        title: "Night Routine",
-        how:`
-        Clean environment,
-
-        Wash Face,
-        Use Facial Cleanse,
-        Use Moisturizer,
-        Retinoids,
-        Apply Sunscreen,
-        Apply Jojoba Oil and Use Jade Roller,
-        Other Hygiene,
-        Sleep,
-        `,
-    },
-    {
         title: "Sleep",
         how: `
         10hrs sleep (research in extended sleep shows significant results for high performers),
@@ -245,9 +198,39 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Identity & Pattern",
         items: [
-            { label: "CS Routine: +5 mins", type: "energy", name: "Free time", time: 10},
-            { label: "Morning Routine", type: "energy", name: "Morning", time: 25*60 },
-            { label: "Night Routine", type: "energy", name: "Night", time: 25*60 },
+            { label: "CS Routine: +1 mins", type: "energy", name: "Free time", time: 2},
+        ],
+    },
+    {
+        section: "Morning Routine",
+        items: [
+            { label: "Clean environment", type: "done" },
+
+            { label: "Drink water", type: "done" },
+            { label: "Drink probiotics", type: "done" },
+            { label: "Brush teeth", type: "done" },
+
+            { label: "Ready the towel and clothes", type: "done" },
+            { label: "Shower", type: "done" },
+            { label: "Shampoo (Once every other day)", type: "done" },
+            { label: "Conditioner (Once every other day)", type: "done" },
+            { label: "Soap", type: "done" },
+            { label: "Gentle rub", type: "done" },
+            { label: "Rinse with water", type: "done" },
+            { label: "Chick lift exercise 3 sets", type: "done" },
+            { label: "Eyebrow resist eye open-close exercise 3 sets", type: "done" },
+            { label: "Rinse water", type: "done" },
+            { label: "Gentle tap-tap with towel", type: "done" },
+            { label: "Wear clothes", type: "done" },
+
+            { label: "Wash Face", type: "done" },
+            { label: "Use Facial Cleanser", type: "done" },
+            { label: "Apply Vitamin C Serum", type: "done" },
+            { label: "Use Moisturizer", type: "done" },
+            { label: "Apply Sunscreen", type: "done" },
+
+            { label: "Multi-vitamins", type: "done" },
+            { label: "Nutrients", type: "done" },
         ],
     },
     {
@@ -272,20 +255,28 @@ const routineDataNoId: RoutineSectionNoId[] = [
         ],
     },
     {
-        section: "5 Senses",
+        section: "Senses, Nerves, Muscles, & Mind",
         items: [
-            { label: "Drink Water: 1/8 Glass", type: "energy", name: "Hydration", time: 16 },
+            { label: "Total Sleep: +30m", type: "energy", name: "Sleep", time: 60},
             { label: "Nutrients", type: "energy", name: "Nutrients", time: 3*65 },
+            { label: "Exercise: 3 sets", type: "energy", name: "Exercise", time: 4*65 },
             { label: "Non-CS Learn/Hobby: +5m", type: "energy", name: "Hobby", time: 25 },
+            { label: "Rest: +1m", type: "energy", name: "Rest", time: 20 },
+            { label: "Drink Water: 1/8 Glass", type: "energy", name: "Hydration", time: 16 },
         ],
     },
     {
-        section: "Nerves & Muscles & Mind",
+        section: "Night Routine",
         items: [
-            { label: "Total Sleep: +30m", type: "energy", name: "Sleep", time: 60},
-            { label: "Rest: +1m", type: "energy", name: "Rest", time: 20 },
-
-            { label: "Exercise: 3 sets", type: "energy", name: "Exercise", time: 4*65 },
+            { label: "Clean environment", type: "done" },
+            { label: "Wash Face", type: "done" },
+            { label: "Use Facial Cleanse", type: "done" },
+            { label: "Use Moisturizer", type: "done" },
+            { label: "Retinoids", type: "done" },
+            { label: "Apply Sunscreen", type: "done" },
+            { label: "Apply Jojoba Oil and Use Jade Roller", type: "done" },
+            { label: "Other Hygiene", type: "done" },
+            { label: "Sleep", type: "done" }
         ],
     },
     //==============
@@ -1082,7 +1073,7 @@ export default function DailyRoutine() {
                                     onClick={() => {
                                         // If the object is found, update its time property
                                         if(item.name === "Free time") {
-                                            addVaren(item.name, item.time+freeplier);
+                                            addVaren(item.name, item.time+(freeplier/2));
                                         } else {
                                             addVaren(item.name, item.time);
                                         }
