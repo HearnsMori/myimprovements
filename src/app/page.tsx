@@ -1371,8 +1371,10 @@ export default function DailyRoutine() {
 
             } else {
                 const userInput = window.prompt("Controllable outcome & high losing chance goal:");
-                if (userInput) setMori(userInput);
-                localStorage.setItem("mori", userInput);
+                if (userInput) {
+                    setMori(userInput);
+                    localStorage.setItem("mori", userInput);
+                }
                 // START: Save current timestamp to localStorage
                 const startTime = Date.now();
                 localStorage.setItem('timer_start_time', startTime.toString());
