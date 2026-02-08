@@ -1139,7 +1139,7 @@ export default function DailyRoutine() {
                                     {skippedState[key] ? "Undo Skip" : "Skip"}
                                     </button>
                                 )}
-                                {tab !== "done"  && item.type === 'energy' && (
+                                {tab !== "done"  && item.type === 'energy' && item.label.charAt(0) !== '@' && (
                                     <button
                                     onClick={() => {
                                         addVaren(item.name, item.time*-1);
