@@ -238,7 +238,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Amethyst",
         items: [
-            { label: "Amethyst", type: "energy", name: "Amethyst", time: 180 },
+            { label: "Amethyst: +5m", type: "energy", name: "Amethyst", time: 40 },
             { label: "Morning: Offer Effort (Respect Autonomy; Her capability to choose)", type: "done" },
             { label: "Morning: Identity Support (even mid way)", type: "done" },
             { label: "Morning: Reduce Decision", type: "done" },
