@@ -329,6 +329,8 @@ type CounterData = {
 };
 
 export default function DailyRoutine() {
+    const [mori, setMori] = useState<string>("");
+
     const [freeplier, setFreeplier] = useState<number>(0);
     const [state, setState] = useState<Record<string, boolean>>({});
     const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
@@ -402,6 +404,8 @@ export default function DailyRoutine() {
     useEffect(() => {
         setIsMounted(true);
         addMissingVaren();
+        const storedMori = localStorage.getItem("mori");
+        if (storedMori) setMori(storedMori);
         if (ran.current) return;
         ran.current = true;
 
@@ -884,10 +888,22 @@ export default function DailyRoutine() {
         }}>
         Mori Routine
         </h1>
-        <div>
         <h4>Day Streak: {streak}</h4>
+        <h4
+        style={{
+            color: "#FF73CC",
+        }}>
+        Current Focus:
+        </h4>
+        <h2
+        style={{
+            color: "#FF73CC",
+        }}>
+        {mori}
+        </h2>
+        <div>
         {Array.isArray(varen) && varen.length > 5 && varen.map((varenItem) => {
-            if (!isMounted) return null; 
+    if (!isMounted) return null; 
             if (!varenItem?.name) return null;
             if (varenItem.name !== "Free time") return null;
             // If not mounted, render a placeholder or null to match the server's initial output
@@ -927,7 +943,6 @@ export default function DailyRoutine() {
                 </h5>
             );
         })}
-        <h5>Wrong: {correct}</h5>
         </div>
         <br/>
         Level: {`${level}`}
@@ -1332,6 +1347,8 @@ export default function DailyRoutine() {
 
         const toggleTimer = () => {
             if (isRunning) {
+                setMori("None");
+                localStorage.setItem("mori", "None");
                 // STOP: Clear interval and storage
                 if (intervalRef.current) clearInterval(intervalRef.current);
                 localStorage.removeItem('timer_start_time');
@@ -1353,6 +1370,9 @@ export default function DailyRoutine() {
                 }
 
             } else {
+                const userInput = window.prompt("Controllable outcome & high losing chance goal:");
+                setMori(userInput);
+                localStorage.setItem("mori", userInput);
                 // START: Save current timestamp to localStorage
                 const startTime = Date.now();
                 localStorage.setItem('timer_start_time', startTime.toString());
