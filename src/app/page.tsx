@@ -198,6 +198,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
     {
         section: "Identity & Pattern",
         items: [
+            { label: "@Controllable Outcome & High Losing Chance Goal", type: "energy", name: "Focus", time: 2},
             { label: "CS Routine: +1 mins", type: "energy", name: "Free time", time: 2},
         ],
     },
@@ -209,6 +210,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Drink water", type: "done" },
             { label: "Drink probiotics", type: "done" },
             { label: "Brush teeth", type: "done" },
+            { label: "15m Outside Expose Light (7am to 9am)", type: "done" },
 
             { label: "Ready the towel and clothes", type: "done" },
             { label: "Shower", type: "done" },
@@ -229,8 +231,8 @@ const routineDataNoId: RoutineSectionNoId[] = [
             { label: "Use Moisturizer", type: "done" },
             { label: "Apply Sunscreen", type: "done" },
 
-            { label: "Multi-vitamins", type: "done" },
             { label: "Nutrients", type: "done" },
+            { label: "Multi-vitamins", type: "done" },
         ],
     },
     {
@@ -877,9 +879,10 @@ export default function DailyRoutine() {
         <h1 onClick={(e)=>{
             //alert("hi");
             //setVaren([]);
+            //localStorage.clear();
             //localStorage.removeItem("LOCAL_FOR_VAREN");
         }}>
-        Daily Routine v4
+        Mori Routine
         </h1>
         <div>
         <h4>Day Streak: {streak}</h4>
@@ -909,7 +912,7 @@ export default function DailyRoutine() {
             if (freeplier == 0 && varenItem.time > 0) {
                 setFreeplier(i=>i+1);
             }
-            if (freeplier == 9) setFreeplier(i=>i+1);
+            if (freeplier == 8) setFreeplier(i=>i+2);
             // If not mounted, render a placeholder or null to match the server's initial output
             return (
                 <h5 style={{
@@ -1068,7 +1071,7 @@ export default function DailyRoutine() {
 
                                 <div style={styles.buttonGroup}>
 
-                                {tab && item.type == "energy" && (
+                                {tab && item.type == "energy" && item.label.charAt(0) !== '@' && (
                                     <button
                                     onClick={() => {
                                         // If the object is found, update its time property
@@ -1092,7 +1095,7 @@ export default function DailyRoutine() {
                                     +
                                         </button>
                                 )}
-                                {tab && item.type !== "energy" && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && (
+                                {tab && item.type !== "energy" && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && item.label.charAt(0) !== '@'  && (
                                     <button
                                     onClick={() => {
                                         toggle(key);
@@ -1153,6 +1156,22 @@ export default function DailyRoutine() {
                                     >
                                     -
                                         </button>
+                                )}
+                                
+                                {tab && item.type === "energy" && item.label.charAt(0) === '@' && (
+                                    <div
+                                    style={{
+                                        padding: "8px 14px",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        backgroundColor: "#16a34a",
+                                        color: "#fff",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                    }}
+                                    >
+                                    <TimerButton name={item.name} time={item.time}/>
+                                    </div>
                                 )}
 
 
@@ -1285,4 +1304,96 @@ export default function DailyRoutine() {
             })}
             </div>
     );
+    function TimerButton({name, time}: buttonProps) {
+
+        const [elapsedSeconds, setElapsedSeconds] = useState(0);
+        const [isRunning, setIsRunning] = useState(false);
+        const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+        // 1. On Mount: Check if a timer was already running
+        useEffect(() => {
+            const startTime = localStorage.getItem('timer_start_time');
+            if (startTime) {
+                setIsRunning(true);
+                startInterval(parseInt(startTime));
+            }
+            return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+        }, []);
+
+        const startInterval = (startTime: number) => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+
+            intervalRef.current = setInterval(() => {
+                const now = Date.now();
+                const diff = Math.floor((now - startTime) / 1000);
+                setElapsedSeconds(diff);
+            }, 1000);
+        };
+
+        const toggleTimer = () => {
+            if (isRunning) {
+                // STOP: Clear interval and storage
+                if (intervalRef.current) clearInterval(intervalRef.current);
+                localStorage.removeItem('timer_start_time');
+                setIsRunning(false);
+
+                const userInput = window.prompt("Goal finished? (y/n)");
+
+                // Check if user clicked cancel or entered nothing
+                if (userInput === null) {
+                } else {
+                    const formattedInput = userInput.toLowerCase();
+                    if (formattedInput === 'y') {
+                        if(name === "Free time") {
+                            addVaren(name, Math.round((time+(freeplier/2)) * elapsedSeconds/60));
+                        } else {
+                            addVaren(name, Math.round(time * elapsedSeconds/60));
+                        }
+                    }
+                }
+
+            } else {
+                // START: Save current timestamp to localStorage
+                const startTime = Date.now();
+                localStorage.setItem('timer_start_time', startTime.toString());
+                setIsRunning(true);
+                startInterval(startTime);
+            }
+        };
+
+        const formatTime = (totalSeconds: number) => {
+            const hrs = Math.floor(totalSeconds / 3600);
+            const mins = Math.floor((totalSeconds % 3600) / 60);
+            const secs = totalSeconds % 60;
+            return `${hrs.toString().padStart(2, '0')}:${mins
+                .toString()
+                .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        };
+
+        return (
+            <div className="p-8 flex flex-col items-center gap-4">
+            <div className="text-6xl font-mono tabular-nums">
+            {formatTime(elapsedSeconds)}
+            </div>
+            <button
+            onClick={toggleTimer}
+            style={{
+                width: "97%",
+                backgroundColor: "white",
+                borderWidth: 0,
+                borderRadius: 5,
+            }}
+            >
+            {isRunning ? 'Stop & Clear' : 'Start Flow Timer'}
+            </button>
+            </div>
+        );
+    }
+
 }
+
+interface buttonProps {
+    name: string;
+    time: number;
+}
+
