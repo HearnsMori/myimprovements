@@ -196,10 +196,9 @@ const rankingData = [
 
 const routineDataNoId: RoutineSectionNoId[] = [
     {
-        section: "Identity & Pattern",
+        section: "Current Goal",
         items: [
             { label: "@Controllable Outcome & High Losing Chance Goal", type: "energy", name: "Focus", time: 2},
-            { label: "CS Routine: +1 mins", type: "energy", name: "Free time", time: 2},
         ],
     },
     {
@@ -260,6 +259,7 @@ const routineDataNoId: RoutineSectionNoId[] = [
         section: "Senses, Nerves, Muscles, & Mind",
         items: [
             { label: "Total Sleep: +30m", type: "energy", name: "Sleep", time: 60},
+            { label: "CS Routine: +1 mins", type: "energy", name: "Free time", time: 2},
             { label: "Nutrients", type: "energy", name: "Nutrients", time: 3*65 },
             { label: "Exercise: 3 sets", type: "energy", name: "Exercise", time: 4*65 },
             { label: "Non-CS Learn/Hobby: +5m", type: "energy", name: "Hobby", time: 25 },
