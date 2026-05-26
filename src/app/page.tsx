@@ -8,59 +8,52 @@ import {
   RotateCcw,
   Brain,
   Gift,
-  Lock,
-  Clock3,
-  Zap,
-  ShieldAlert,
-  TimerReset,
+  Sparkles,
 } from "lucide-react";
 
 /*
-  ===========================================================
-  DEEP WORK ECONOMY SYSTEM
-  ===========================================================
+  ============================================================
+  MINIMALIST DEEP WORK ECONOMY
+  ============================================================
 
-  CORE IDEA
-  ----------
-  - 1 hour 30 minutes uninterrupted deep work
-  - earns 1 hour 30 minutes reward/free time
-  - free time DECAYS throughout the day
-  - if deep work is active:
-      reward decay pauses
-  - if distraction happens:
-      deep work breaks
-  - uses localStorage
-  - persistent across refresh
-  - no Tailwind
-  - inline CSS only
-  - framer motion animations
-  - one-page application
+  MOBILE FIRST
+  CLEAN
+  SIMPLE
+  RESPONSIVE
+  CALM
+  EASY TO READ
 
-  ===========================================================
+  1h 30m deep work
+  = 1h 30m reward
+
+  reward decays over time
+  decay pauses during deep work
+
+  localStorage persisted
+  daily reset
+  offline progression
+
+  ============================================================
 */
 
-const DEEP_WORK_SECONDS = 60 * 60 + 30 * 60; // 1h 30m
+const WORK_SECONDS = 60 * 60 + 30 * 60;
 const REWARD_SECONDS = 60 * 60 + 30 * 60;
 
-const STORAGE_KEY = "deep_work_economy_v1";
+const STORAGE_KEY = "deep_work_mobile_v2";
 
-type AppState = {
-  deepWorkRemaining: number;
+type State = {
+  workRemaining: number;
   rewardRemaining: number;
-
-  isDeepWorking: boolean;
-
-  lastTimestamp: number;
-
+  working: boolean;
+  completed: number;
+  lastUpdate: number;
   currentDay: string;
-
-  completedSessions: number;
 };
 
-function formatTime(total: number) {
-  const h = Math.floor(total / 3600);
-  const m = Math.floor((total % 3600) / 60);
-  const s = total % 60;
+function formatTime(seconds: number) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
 
   return `${String(h).padStart(2, "0")}:${String(m).padStart(
     2,
@@ -68,32 +61,28 @@ function formatTime(total: number) {
   )}:${String(s).padStart(2, "0")}`;
 }
 
-function getTodayKey() {
+function todayKey() {
   return new Date().toDateString();
 }
 
 export default function Page() {
   const [mounted, setMounted] = useState(false);
 
-  const [state, setState] = useState<AppState>({
-    deepWorkRemaining: DEEP_WORK_SECONDS,
-    rewardRemaining: 0,
-
-    isDeepWorking: false,
-
-    lastTimestamp: Date.now(),
-
-    currentDay: getTodayKey(),
-
-    completedSessions: 0,
-  });
-
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [state, setState] = useState<State>({
+    workRemaining: WORK_SECONDS,
+    rewardRemaining: 0,
+    working: false,
+    completed: 0,
+    lastUpdate: Date.now(),
+    currentDay: todayKey(),
+  });
+
   /*
-    ===========================================================
+    ============================================================
     LOAD STORAGE
-    ===========================================================
+    ============================================================
   */
 
   useEffect(() => {
@@ -104,78 +93,60 @@ export default function Page() {
     if (!raw) return;
 
     try {
-      const parsed: AppState = JSON.parse(raw);
+      const parsed: State = JSON.parse(raw);
 
       const now = Date.now();
 
-      let updated = { ...parsed };
+      let next = { ...parsed };
 
       /*
-        =======================================================
         DAILY RESET
-        =======================================================
       */
 
-      if (parsed.currentDay !== getTodayKey()) {
-        updated.deepWorkRemaining = DEEP_WORK_SECONDS;
-        updated.currentDay = getTodayKey();
+      if (next.currentDay !== todayKey()) {
+        next.currentDay = todayKey();
+        next.workRemaining = WORK_SECONDS;
       }
 
       /*
-        =======================================================
         OFFLINE PROGRESSION
-        =======================================================
-
-        If deep work was OFF:
-          reward decays while away
-
-        If deep work was ON:
-          deep work continues while away
-          reward DOES NOT decay
       */
 
-      const elapsed = Math.floor((now - parsed.lastTimestamp) / 1000);
+      const elapsed = Math.floor(
+        (now - parsed.lastUpdate) / 1000
+      );
 
       if (elapsed > 0) {
-        if (parsed.isDeepWorking) {
-          updated.deepWorkRemaining = Math.max(
+        if (parsed.working) {
+          next.workRemaining = Math.max(
             0,
-            parsed.deepWorkRemaining - elapsed
+            parsed.workRemaining - elapsed
           );
 
-          /*
-            COMPLETE SESSION
-          */
-
-          if (updated.deepWorkRemaining <= 0) {
-            updated.deepWorkRemaining = DEEP_WORK_SECONDS;
-
-            updated.rewardRemaining += REWARD_SECONDS;
-
-            updated.completedSessions += 1;
-
-            updated.isDeepWorking = false;
+          if (next.workRemaining <= 0) {
+            next.workRemaining = WORK_SECONDS;
+            next.rewardRemaining += REWARD_SECONDS;
+            next.completed += 1;
+            next.working = false;
           }
         } else {
-          updated.rewardRemaining = Math.max(
+          next.rewardRemaining = Math.max(
             0,
             parsed.rewardRemaining - elapsed
           );
         }
       }
 
-      updated.lastTimestamp = now;
+      next.lastUpdate = now;
 
-      setState(updated);
-    } catch (err) {
-      console.error(err);
-    }
+      setState(next);
+    } catch {}
   }, []);
 
   /*
-    ===========================================================
-    SAVE STORAGE
-    ===========================================================
+    ============================================================
+    SAVE
+    ============================================================
   */
 
   useEffect(() => {
@@ -185,15 +156,15 @@ export default function Page() {
       STORAGE_KEY,
       JSON.stringify({
         ...state,
-        lastTimestamp: Date.now(),
+        lastUpdate: Date.now(),
       })
     );
   }, [state, mounted]);
 
   /*
-    ===========================================================
-    MAIN TICK LOOP
-    ===========================================================
+    ============================================================
+    LOOP
+    ============================================================
   */
 
   useEffect(() => {
@@ -203,59 +174,31 @@ export default function Page() {
       setState((prev) => {
         const next = { ...prev };
 
-        /*
-          =====================================================
-          DAILY RESET
-          =====================================================
-        */
-
-        if (next.currentDay !== getTodayKey()) {
-          next.currentDay = getTodayKey();
-          next.deepWorkRemaining = DEEP_WORK_SECONDS;
+        if (next.currentDay !== todayKey()) {
+          next.currentDay = todayKey();
+          next.workRemaining = WORK_SECONDS;
         }
 
-        /*
-          =====================================================
-          DEEP WORK ACTIVE
-          =====================================================
-        */
-
-        if (next.isDeepWorking) {
-          next.deepWorkRemaining = Math.max(
+        if (next.working) {
+          next.workRemaining = Math.max(
             0,
-            next.deepWorkRemaining - 1
+            next.workRemaining - 1
           );
 
-          /*
-            COMPLETE SESSION
-          */
-
-          if (next.deepWorkRemaining <= 0) {
-            next.deepWorkRemaining = DEEP_WORK_SECONDS;
-
+          if (next.workRemaining <= 0) {
+            next.workRemaining = WORK_SECONDS;
             next.rewardRemaining += REWARD_SECONDS;
-
-            next.completedSessions += 1;
-
-            next.isDeepWorking = false;
+            next.completed += 1;
+            next.working = false;
           }
-        }
-
-        /*
-          =====================================================
-          NOT WORKING
-          REWARD DECAYS
-          =====================================================
-        */
-
-        else {
+        } else {
           next.rewardRemaining = Math.max(
             0,
             next.rewardRemaining - 1
           );
         }
 
-        next.lastTimestamp = Date.now();
+        next.lastUpdate = Date.now();
 
         return next;
       });
@@ -269,654 +212,567 @@ export default function Page() {
   }, [mounted]);
 
   /*
-    ===========================================================
+    ============================================================
     PROGRESS
-    ===========================================================
+    ============================================================
   */
 
-  const deepProgress = useMemo(() => {
+  const workProgress = useMemo(() => {
     return (
-      ((DEEP_WORK_SECONDS - state.deepWorkRemaining) /
-        DEEP_WORK_SECONDS) *
+      ((WORK_SECONDS - state.workRemaining) /
+        WORK_SECONDS) *
       100
     );
-  }, [state.deepWorkRemaining]);
+  }, [state.workRemaining]);
 
   const rewardProgress = useMemo(() => {
-    return (state.rewardRemaining / REWARD_SECONDS) * 100;
+    return (
+      (state.rewardRemaining / REWARD_SECONDS) *
+      100
+    );
   }, [state.rewardRemaining]);
 
   /*
-    ===========================================================
+    ============================================================
     ACTIONS
-    ===========================================================
+    ============================================================
   */
 
-  const startDeepWork = () => {
+  const start = () => {
     setState((prev) => ({
       ...prev,
-      isDeepWorking: true,
+      working: true,
     }));
   };
 
-  const stopDeepWork = () => {
+  const stop = () => {
     setState((prev) => ({
       ...prev,
-      isDeepWorking: false,
+      working: false,
     }));
   };
 
-  const resetEverything = () => {
-    const next: AppState = {
-      deepWorkRemaining: DEEP_WORK_SECONDS,
+  const reset = () => {
+    const fresh: State = {
+      workRemaining: WORK_SECONDS,
       rewardRemaining: 0,
-      isDeepWorking: false,
-      lastTimestamp: Date.now(),
-      currentDay: getTodayKey(),
-      completedSessions: 0,
+      working: false,
+      completed: 0,
+      lastUpdate: Date.now(),
+      currentDay: todayKey(),
     };
 
-    setState(next);
+    setState(fresh);
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(fresh)
+    );
   };
 
   /*
-    ===========================================================
+    ============================================================
     UI
-    ===========================================================
+    ============================================================
   */
 
   return (
     <div
       style={{
         minHeight: "100vh",
+        width: "100%",
         background:
-          "radial-gradient(circle at top, #151515 0%, #050505 60%)",
+          state.working
+            ? "linear-gradient(180deg,#0f172a 0%, #020617 100%)"
+            : "linear-gradient(180deg,#111827 0%, #030712 100%)",
         color: "white",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        padding: 24,
+        padding: 16,
+        boxSizing: "border-box",
         fontFamily:
-          "-apple-system, BlinkMacSystemFont, sans-serif",
+          "-apple-system,BlinkMacSystemFont,sans-serif",
+        overflow: "hidden",
       }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.5,
+        }}
         style={{
           width: "100%",
-          maxWidth: 900,
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(255,255,255,0.08)",
-          borderRadius: 30,
-          padding: 28,
-          backdropFilter: "blur(16px)",
-          boxShadow: "0 0 80px rgba(0,0,0,0.5)",
+          maxWidth: 420,
+          display: "flex",
+          flexDirection: "column",
+          gap: 18,
         }}
       >
-        {/* HEADER */}
+        {/* TOP */}
 
         <div
           style={{
             display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
-            gap: 16,
-            marginBottom: 30,
           }}
         >
+          <div>
+            <div
+              style={{
+                fontSize: 28,
+                fontWeight: 800,
+                letterSpacing: -1.5,
+              }}
+            >
+              Focus
+            </div>
+
+            <div
+              style={{
+                opacity: 0.55,
+                fontSize: 14,
+                marginTop: 2,
+              }}
+            >
+              Deep work economy
+            </div>
+          </div>
+
           <motion.div
             animate={{
-              rotate: state.isDeepWorking ? 360 : 0,
+              rotate: state.working ? 360 : 0,
             }}
             transition={{
-              duration: 6,
+              duration: 10,
               repeat: Infinity,
               ease: "linear",
             }}
             style={{
-              width: 70,
-              height: 70,
-              borderRadius: 20,
+              width: 54,
+              height: 54,
+              borderRadius: 18,
               background:
-                "linear-gradient(135deg,#4f46e5,#7c3aed)",
+                "rgba(255,255,255,0.08)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              backdropFilter: "blur(10px)",
             }}
           >
-            <Brain size={36} />
+            <Brain size={26} />
           </motion.div>
+        </div>
 
-          <div>
+        {/* MAIN TIMER */}
+
+        <motion.div
+          layout
+          style={{
+            background:
+              "rgba(255,255,255,0.05)",
+            border:
+              "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 30,
+            padding: 24,
+            backdropFilter: "blur(12px)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: 18,
+              alignItems: "center",
+            }}
+          >
             <div
               style={{
-                fontSize: 34,
-                fontWeight: 800,
-                letterSpacing: -1,
-              }}
-            >
-              Deep Work Economy
-            </div>
-
-            <div
-              style={{
+                fontSize: 15,
                 opacity: 0.7,
-                marginTop: 6,
-                lineHeight: 1.5,
+                fontWeight: 600,
               }}
             >
-              1 hour 30 minutes uninterrupted focus earns
-              1 hour 30 minutes freedom.
+              Deep Work
             </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={String(state.working)}
+                initial={{
+                  opacity: 0,
+                  y: 4,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -4,
+                }}
+                style={{
+                  fontSize: 13,
+                  padding: "6px 10px",
+                  borderRadius: 999,
+                  background:
+                    state.working
+                      ? "rgba(59,130,246,0.18)"
+                      : "rgba(255,255,255,0.08)",
+                  color:
+                    state.working
+                      ? "#93c5fd"
+                      : "rgba(255,255,255,0.7)",
+                }}
+              >
+                {state.working
+                  ? "Locked In"
+                  : "Idle"}
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </div>
-
-        {/* STATUS */}
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(280px,1fr))",
-            gap: 20,
-          }}
-        >
-          {/* DEEP WORK */}
 
           <motion.div
-            layout
+            key={state.workRemaining}
+            initial={{
+              scale: 0.98,
+            }}
+            animate={{
+              scale: 1,
+            }}
             style={{
-              background: "rgba(255,255,255,0.03)",
-              borderRadius: 24,
-              padding: 24,
-              border: "1px solid rgba(255,255,255,0.08)",
-              position: "relative",
+              fontSize: "clamp(48px,14vw,78px)",
+              fontWeight: 900,
+              letterSpacing: -4,
+              lineHeight: 1,
+              textAlign: "center",
+            }}
+          >
+            {formatTime(state.workRemaining)}
+          </motion.div>
+
+          {/* BAR */}
+
+          <div
+            style={{
+              marginTop: 22,
+              width: "100%",
+              height: 12,
+              borderRadius: 999,
+              background:
+                "rgba(255,255,255,0.06)",
               overflow: "hidden",
             }}
           >
             <motion.div
               animate={{
-                opacity: state.isDeepWorking ? 0.18 : 0.06,
+                width: `${workProgress}%`,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 50,
               }}
               style={{
-                position: "absolute",
-                inset: 0,
+                height: "100%",
+                borderRadius: 999,
                 background:
-                  "linear-gradient(135deg,#4f46e5,#7c3aed)",
+                  "linear-gradient(90deg,#60a5fa,#2563eb)",
               }}
             />
+          </div>
 
-            <div
-              style={{
-                position: "relative",
-                zIndex: 2,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  marginBottom: 14,
-                }}
-              >
-                <Zap size={20} />
-                <div
-                  style={{
-                    fontSize: 20,
-                    fontWeight: 700,
-                  }}
-                >
-                  Deep Work
-                </div>
-              </div>
-
-              <div
-                style={{
-                  fontSize: 54,
-                  fontWeight: 900,
-                  letterSpacing: -3,
-                  marginBottom: 16,
-                }}
-              >
-                {formatTime(state.deepWorkRemaining)}
-              </div>
-
-              {/* PROGRESS */}
-
-              <div
-                style={{
-                  width: "100%",
-                  height: 16,
-                  borderRadius: 999,
-                  overflow: "hidden",
-                  background: "rgba(255,255,255,0.08)",
-                  marginBottom: 20,
-                }}
-              >
-                <motion.div
-                  animate={{
-                    width: `${deepProgress}%`,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 60,
-                  }}
-                  style={{
-                    height: "100%",
-                    borderRadius: 999,
-                    background:
-                      "linear-gradient(90deg,#4f46e5,#7c3aed)",
-                  }}
-                />
-              </div>
-
-              <AnimatePresence mode="wait">
-                {state.isDeepWorking ? (
-                  <motion.div
-                    key="working"
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: -10,
-                    }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 10,
-                      color: "#93c5fd",
-                      fontWeight: 700,
-                    }}
-                  >
-                    <Lock size={18} />
-                    No intentional-action gap.
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="idle"
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: -10,
-                    }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 10,
-                      color: "#fca5a5",
-                      fontWeight: 700,
-                    }}
-                  >
-                    <ShieldAlert size={18} />
-                    Distraction leaks future freedom.
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
-          {/* REWARD */}
-
-          <motion.div
-            layout
-            style={{
-              background: "rgba(255,255,255,0.03)",
-              borderRadius: 24,
-              padding: 24,
-              border: "1px solid rgba(255,255,255,0.08)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <motion.div
-              animate={{
-                opacity: state.isDeepWorking ? 0.06 : 0.15,
-              }}
-              style={{
-                position: "absolute",
-                inset: 0,
-                background:
-                  "linear-gradient(135deg,#22c55e,#16a34a)",
-              }}
-            />
-
-            <div
-              style={{
-                position: "relative",
-                zIndex: 2,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  marginBottom: 14,
-                }}
-              >
-                <Gift size={20} />
-                <div
-                  style={{
-                    fontSize: 20,
-                    fontWeight: 700,
-                  }}
-                >
-                  Earned Freedom
-                </div>
-              </div>
-
-              <div
-                style={{
-                  fontSize: 54,
-                  fontWeight: 900,
-                  letterSpacing: -3,
-                  marginBottom: 16,
-                }}
-              >
-                {formatTime(state.rewardRemaining)}
-              </div>
-
-              <div
-                style={{
-                  width: "100%",
-                  height: 16,
-                  borderRadius: 999,
-                  overflow: "hidden",
-                  background: "rgba(255,255,255,0.08)",
-                  marginBottom: 20,
-                }}
-              >
-                <motion.div
-                  animate={{
-                    width: `${Math.min(
-                      rewardProgress,
-                      100
-                    )}%`,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 60,
-                  }}
-                  style={{
-                    height: "100%",
-                    borderRadius: 999,
-                    background:
-                      "linear-gradient(90deg,#22c55e,#16a34a)",
-                  }}
-                />
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  gap: 10,
-                  alignItems: "center",
-                  opacity: 0.85,
-                }}
-              >
-                <Clock3 size={18} />
-
-                {state.isDeepWorking ? (
-                  <div>
-                    Reward decay paused during focus.
-                  </div>
-                ) : (
-                  <div>
-                    Free time continuously decays.
-                  </div>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* CONTROLS */}
-
-        <div
-          style={{
-            marginTop: 28,
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 16,
-          }}
-        >
-          {!state.isDeepWorking ? (
-            <motion.button
-              whileHover={{
-                scale: 1.03,
-              }}
-              whileTap={{
-                scale: 0.97,
-              }}
-              onClick={startDeepWork}
-              style={{
-                border: "none",
-                background:
-                  "linear-gradient(135deg,#4f46e5,#7c3aed)",
-                color: "white",
-                padding: "18px 26px",
-                borderRadius: 18,
-                fontWeight: 800,
-                fontSize: 16,
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                cursor: "pointer",
-                boxShadow:
-                  "0 10px 30px rgba(99,102,241,0.35)",
-              }}
-            >
-              <Play size={20} />
-              Start Deep Work
-            </motion.button>
-          ) : (
-            <motion.button
-              whileHover={{
-                scale: 1.03,
-              }}
-              whileTap={{
-                scale: 0.97,
-              }}
-              onClick={stopDeepWork}
-              style={{
-                border: "none",
-                background:
-                  "linear-gradient(135deg,#ef4444,#dc2626)",
-                color: "white",
-                padding: "18px 26px",
-                borderRadius: 18,
-                fontWeight: 800,
-                fontSize: 16,
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                cursor: "pointer",
-                boxShadow:
-                  "0 10px 30px rgba(239,68,68,0.35)",
-              }}
-            >
-              <Pause size={20} />
-              Stop Session
-            </motion.button>
-          )}
+          {/* BUTTON */}
 
           <motion.button
-            whileHover={{
-              scale: 1.03,
-            }}
             whileTap={{
               scale: 0.97,
             }}
-            onClick={resetEverything}
+            whileHover={{
+              scale: 1.01,
+            }}
+            onClick={
+              state.working ? stop : start
+            }
             style={{
-              border: "1px solid rgba(255,255,255,0.1)",
-              background: "rgba(255,255,255,0.05)",
+              marginTop: 22,
+              width: "100%",
+              height: 60,
+              border: "none",
+              borderRadius: 20,
+              cursor: "pointer",
               color: "white",
-              padding: "18px 26px",
-              borderRadius: 18,
-              fontWeight: 700,
+              fontWeight: 800,
               fontSize: 16,
+              background: state.working
+                ? "linear-gradient(90deg,#ef4444,#dc2626)"
+                : "linear-gradient(90deg,#3b82f6,#2563eb)",
               display: "flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: 10,
-              cursor: "pointer",
+              boxShadow:
+                state.working
+                  ? "0 12px 30px rgba(239,68,68,0.25)"
+                  : "0 12px 30px rgba(59,130,246,0.25)",
             }}
           >
-            <RotateCcw size={20} />
-            Reset Economy
+            {state.working ? (
+              <>
+                <Pause size={20} />
+                Stop Focus
+              </>
+            ) : (
+              <>
+                <Play size={20} />
+                Start Focus
+              </>
+            )}
           </motion.button>
-        </div>
+        </motion.div>
 
-        {/* METRICS */}
+        {/* REWARD */}
+
+        <motion.div
+          layout
+          style={{
+            background:
+              "rgba(255,255,255,0.04)",
+            border:
+              "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 28,
+            padding: 22,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 16,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <Gift size={18} />
+
+              <div
+                style={{
+                  fontWeight: 700,
+                  fontSize: 15,
+                }}
+              >
+                Earned Freedom
+              </div>
+            </div>
+
+            <div
+              style={{
+                opacity: 0.6,
+                fontSize: 13,
+              }}
+            >
+              {state.completed} sessions
+            </div>
+          </div>
+
+          <div
+            style={{
+              fontSize: 42,
+              fontWeight: 900,
+              letterSpacing: -2,
+            }}
+          >
+            {formatTime(state.rewardRemaining)}
+          </div>
+
+          <div
+            style={{
+              marginTop: 14,
+              width: "100%",
+              height: 10,
+              borderRadius: 999,
+              background:
+                "rgba(255,255,255,0.06)",
+              overflow: "hidden",
+            }}
+          >
+            <motion.div
+              animate={{
+                width: `${Math.min(
+                  rewardProgress,
+                  100
+                )}%`,
+              }}
+              transition={{
+                type: "spring",
+              }}
+              style={{
+                height: "100%",
+                borderRadius: 999,
+                background:
+                  "linear-gradient(90deg,#4ade80,#22c55e)",
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              marginTop: 14,
+              fontSize: 13,
+              lineHeight: 1.7,
+              opacity: 0.6,
+            }}
+          >
+            {state.working
+              ? "Reward decay paused while focusing."
+              : "Freedom continuously decays over time."}
+          </div>
+        </motion.div>
+
+        {/* MINI CARDS */}
 
         <div
           style={{
-            marginTop: 34,
             display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(220px,1fr))",
-            gap: 16,
+            gridTemplateColumns: "1fr 1fr",
+            gap: 12,
           }}
         >
-          <MetricCard
-            icon={<Brain size={22} />}
-            title="Completed Sessions"
-            value={String(state.completedSessions)}
+          <SmallCard
+            title="Mode"
+            value={
+              state.working
+                ? "Focused"
+                : "Distracted"
+            }
+            icon={<Sparkles size={18} />}
           />
 
-          <MetricCard
-            icon={<TimerReset size={22} />}
-            title="Reward State"
-            value={
-              state.rewardRemaining > 0
-                ? "Freedom Available"
-                : "Empty"
-            }
-          />
+          <motion.button
+            whileTap={{
+              scale: 0.97,
+            }}
+            onClick={reset}
+            style={{
+              border: "none",
+              background:
+                "rgba(255,255,255,0.05)",
+              borderRadius: 22,
+              padding: 18,
+              color: "white",
+              textAlign: "left",
+              cursor: "pointer",
+              border:
+                "1px solid rgba(255,255,255,0.08)",
+            }}
+          >
+            <div
+              style={{
+                marginBottom: 10,
+                opacity: 0.7,
+              }}
+            >
+              <RotateCcw size={18} />
+            </div>
 
-          <MetricCard
-            icon={<Lock size={22} />}
-            title="Current Mode"
-            value={
-              state.isDeepWorking
-                ? "Locked In"
-                : "Leaking Time"
-            }
-          />
+            <div
+              style={{
+                fontSize: 13,
+                opacity: 0.6,
+                marginBottom: 4,
+              }}
+            >
+              Reset
+            </div>
+
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: 16,
+              }}
+            >
+              Economy
+            </div>
+          </motion.button>
         </div>
 
-        {/* PHILOSOPHY */}
+        {/* FOOTER */}
 
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          transition={{
-            delay: 0.5,
-          }}
+        <div
           style={{
-            marginTop: 36,
-            padding: 22,
-            borderRadius: 22,
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            lineHeight: 1.8,
-            color: "rgba(255,255,255,0.78)",
+            textAlign: "center",
+            fontSize: 12,
+            opacity: 0.4,
+            lineHeight: 1.7,
+            paddingBottom: 12,
           }}
         >
-          <div
-            style={{
-              fontWeight: 800,
-              fontSize: 20,
-              marginBottom: 12,
-              color: "white",
-            }}
-          >
-            System Logic
-          </div>
-
-          <div>
-            This system converts focus into temporary freedom.
-            Deep work is treated like economic production.
-            Free time is treated like a decaying asset.
-            Uninterrupted concentration creates reward.
-            Passive drifting destroys stored freedom over time.
-          </div>
-
-          <div
-            style={{
-              marginTop: 16,
-            }}
-          >
-            While focused, entropy pauses.
-            While distracted, your earned freedom leaks away
-            second by second.
-          </div>
-        </motion.div>
+          uninterrupted focus creates freedom
+        </div>
       </motion.div>
     </div>
   );
 }
 
-function MetricCard({
-  icon,
+function SmallCard({
   title,
   value,
+  icon,
 }: {
-  icon: React.ReactNode;
   title: string;
   value: string;
+  icon: React.ReactNode;
 }) {
   return (
     <motion.div
       whileHover={{
-        y: -4,
+        y: -2,
       }}
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background:
+          "rgba(255,255,255,0.05)",
+        border:
+          "1px solid rgba(255,255,255,0.08)",
         borderRadius: 22,
-        padding: 20,
+        padding: 18,
       }}
     >
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
+          marginBottom: 10,
           opacity: 0.7,
-          marginBottom: 14,
         }}
       >
         {icon}
-        <div>{title}</div>
       </div>
 
       <div
         style={{
-          fontSize: 28,
-          fontWeight: 900,
-          letterSpacing: -1,
+          fontSize: 13,
+          opacity: 0.6,
+          marginBottom: 4,
+        }}
+      >
+        {title}
+      </div>
+
+      <div
+        style={{
+          fontSize: 16,
+          fontWeight: 700,
         }}
       >
         {value}
