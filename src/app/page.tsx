@@ -1,1421 +1,926 @@
-//ToDo:
-//Fix Level System
-//Add More and Research More To Consumeable
-//Routine Info
-//
-//
-//Record not showing in stats
 "use client";
-import Plan from "./plan/page";
-import { useEffect, useRef, useState, useCallback} from "react";
 
-//Pattern for Improvements (Pattern When To Execute) (How)
-//5m work for 20m for free time
-//for every 3hrs, HIT before healthy plate meal/snacks then post-meal Exercise
-//Drink less than 1/4 water every 15m for hydration
-//Amethyst routine
-//Facial routine for morning and night
-//Environment cleaning routine
-//Shower routine
-//Brush teeth
-//Trimming routine
-//Daily Probiotics
-
-type RoutineItemNoId = | { label: string; type: "done"; id?: string } | {label: string; type: "energy"; id?: string; name: string; time: number };
-type RoutineItem = | { label: string; type: "done"; id: string } | { label: string; type: "energy"; id: string; name: string; time: number };
-type RoutineSectionNoId = {
-    section: string;
-    items: RoutineItemNoId[];
-};
-
-type RoutineSection = {
-    section: string;
-    items: RoutineItem[];
-};
-
-type RoutineInfo = {
-    title: string;
-    how: string;
-};
-
-interface Varen {
-    name: string;
-    id: string;
-    time: number; // Time in minutes or seconds, based on your requirement
-};
-
-const STORAGE_KEY = "daily-routine-progress";
-const SKIPPED_KEY = "daily-routine-skipped";
-const STORAGE_KEY_PAST = "daily-routine-progress-past";
-const SKIPPED_KEY_PAST = "daily-routine-skipped-past";
-const DATE_KEY = "daily-routine-date";
-const STREAK_KEY = "daily-routine-streak";
-
-const routineInfo: RoutineInfo[] = [
-    {
-        title: "CS/Learn/Hobby",
-        how: `
-        Step 1: SMART Goal. 
-            Step 2: Draw boundaries. 
-            Step 3: Intensify area.
-            Step 4: Stay focus.
-            Step 5: Reflect boundaries and intesification.
-            `,
-    },
-    {
-        title: "Amethyst",
-        how:`
-        Be someone who is emotionally steady and calm,
-        who doesn’t pressure her for attention, answers,
-            or reassurance, who is reliably there, and whose
-        mood and sense of self don’t rise or fall based on
-        how she responds — while still being kind, warm, and
-            fully present whenever she chooses to connect.
-            `,
-    },
-    {
-        title: "Sleep",
-        how: `
-        10hrs sleep (research in extended sleep shows significant results for high performers),
-            `,
-    },
-    {
-        title: "Hydration",
-        how: `
-        More frequent is better,
-        `,
-    },
-    {
-        title: "Nutrients",
-        how: `
-        Strength/Cardio exercise,
-        25% protein,
-        25% whole grain,
-        50% fruit and vegetable,
-        Anti sugar spike movement,
-        `,
-    },
-    {
-        title: "Exercise",
-        how: `
-        Neck curltuck 3 set,
-        Neck tuck 3 set,
-        Leg 3 set,
-        Push 3 set,
-        Pull 3 set,
-        `,
-    },
-    {
-        title: "Rest",
-        how: `
-        Diaphragm breathing,
-        Eye closed or look far away,
-        Walk,
-        Arm and neck movement,
-        Positive emotion,
-        Proper neck, tongue, and closed-lip posture,
-        `,
-    },
-];
-/*5yy
-  {
-title: "",
-how: `
-`,
-},
-*/
-
-const rankingData = [
-    { level: 0,  name: "unalive", image: "level0.png" },
-
-    { level: 1,  name: "worm", image: "level3.png" },
-    { level: 2,  name: "fish", image: "level4.png" },
-    { level: 3,  name: "dog", image: "level5.png" },
-    { level: 4,  name: "monkey", image: "level6.png" },
-
-    { level: 5,  name: "borderline", image: "level9.png" },
-    { level: 6, name: "extremely below average", image: "level10.png" },
-    { level: 7, name: "below average", image: "level11.png" },
-    { level: 8, name: "barely average", image: "level12.png" },
-
-    { level: 9, name: "close average", image: "level13.png" },
-    { level: 10, name: "average", image: "level14.png" },
-    { level: 11, name: "average (good)", image: "level15.png" },
-    { level: 12, name: "average (high)", image: "level17.png" },
-
-    { level: 13, name: "above average", image: "level19.png" },
-    { level: 14, name: "above average (good)", image: "level22.png" },
-    { level: 15, name: "above average (high)", image: "level24.png" },
-    { level: 16, name: "highly above average", image: "level25.png" },
-
-    { level: 17, name: "almost gifted", image: "level26.png" },
-    { level: 18, name: "gifted", image: "level28.png" },
-    { level: 19, name: "genius", image: "level31.png" },
-    { level: 20, name: "elite", image: "level32.png" },
-
-    { level: 21, name: "one of hundred millions", image: "level34.png" },
-    { level: 22, name: "one of billions", image: "level34.png" },
-    { level: 23, name: "one of ten billions", image: "level34.png" },
-    { level: 24, name: "perfection", image: "level37.png" }
-];
-
-/* for face
-   1. Sun Protection, Retinoids, Cleanser, Moisturizer, Vitamin C Serum, Exfoliation, Jojoba Oil w/ Massage
-   2. Clean Self and Environment, Avoid Smoke/Pollutant
-   3. Balance Diet w/ Antioxidants, Fiber, & Vitamin A
-   eat slowly and chew
-   Pre-meal HIIT/strength
-   post-meal
-   diaphragm breathing +
-   as much movement as possible without
-   disrupting breathing nor shaking stomach
-
-   4. Hydration
-   5. Quality Sleep
-   6. Positive Emotion & Anti-stress
-   7. Exercise
-   */
-
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  Brain,
+  Gift,
+  Lock,
+  Clock3,
+  Zap,
+  ShieldAlert,
+  TimerReset,
+} from "lucide-react";
 
 /*
-   Effort Offered / Respect Autonomy (Her Ability to Choose)
-   Emotional Security and Validation
-   Identity Support even in just mid way
-   During Hard Times Show Love Consistency
-   Repair Problem Fast
-   Transparency
-   Love in a way she is capable of receiving (over than she can receive can sometimes feel guilt)
-   Dont Make Her Feel Pressure for Regulating Her/My Self
-   Unconditional Love
-   Express Gratitude
-   Show Progress6
-   Reduce Decision
-   Novelty
-   Safe Unknown
-   */
+  ===========================================================
+  DEEP WORK ECONOMY SYSTEM
+  ===========================================================
 
-const routineDataNoId: RoutineSectionNoId[] = [
-    {
-        section: "Current Goal",
-        items: [
-            { label: "@Controllable Outcome & High Losing Chance Goal", type: "energy", name: "Focus", time: 2},
-        ],
-    },
-    {
-        section: "Morning Routine",
-        items: [
-            { label: "Clean environment", type: "done" },
+  CORE IDEA
+  ----------
+  - 1 hour 30 minutes uninterrupted deep work
+  - earns 1 hour 30 minutes reward/free time
+  - free time DECAYS throughout the day
+  - if deep work is active:
+      reward decay pauses
+  - if distraction happens:
+      deep work breaks
+  - uses localStorage
+  - persistent across refresh
+  - no Tailwind
+  - inline CSS only
+  - framer motion animations
+  - one-page application
 
-            { label: "Drink water", type: "done" },
-            { label: "Drink probiotics", type: "done" },
-            { label: "Brush teeth", type: "done" },
-            { label: "15m Outside Expose Light (7am to 9am)", type: "done" },
+  ===========================================================
+*/
 
-            { label: "Ready the towel and clothes", type: "done" },
-            { label: "Shower", type: "done" },
-            { label: "Shampoo (Once every other day)", type: "done" },
-            { label: "Conditioner (Once every other day)", type: "done" },
-            { label: "Soap", type: "done" },
-            { label: "Gentle rub", type: "done" },
-            { label: "Rinse with water", type: "done" },
-            { label: "Chick lift exercise 3 sets", type: "done" },
-            { label: "Eyebrow resist eye open-close exercise 3 sets", type: "done" },
-            { label: "Rinse water", type: "done" },
-            { label: "Gentle tap-tap with towel", type: "done" },
-            { label: "Wear clothes", type: "done" },
+const DEEP_WORK_SECONDS = 60 * 60 + 30 * 60; // 1h 30m
+const REWARD_SECONDS = 60 * 60 + 30 * 60;
 
-            { label: "Wash Face", type: "done" },
-            { label: "Use Facial Cleanser", type: "done" },
-            { label: "Apply Vitamin C Serum", type: "done" },
-            { label: "Use Moisturizer", type: "done" },
-            { label: "Apply Sunscreen", type: "done" },
+const STORAGE_KEY = "deep_work_economy_v1";
 
-            { label: "Nutrients", type: "done" },
-            { label: "Multi-vitamins", type: "done" },
-        ],
-    },
-    {
-        section: "Amethyst",
-        items: [
-            { label: "Amethyst: +5m", type: "energy", name: "Amethyst", time: 40 },
-            { label: "Morning: Offer Effort (Respect Autonomy; Her capability to choose)", type: "done" },
-            { label: "Morning: Identity Support (even mid way)", type: "done" },
-            { label: "Morning: Reduce Decision", type: "done" },
-            { label: "Morning: Safe Unknown (Light Curiousity)", type: "done" },
-            { label: "Afternoon: Don\'t give responsibility (example to regulate my emotion)", type: "done" },
-            { label: "Afternoon: Love in the way she\'s capable of receiving", type: "done" },
-            { label: "Afternoon: Transparency", type: "done" },
-            { label: "Afternoon: During Hard Times: Show Love Consistency", type: "done" },
-            { label: "Evening: Emotional Security & Validation", type: "done" },
-            { label: "Evening: Unconditional Love", type: "done" },
-            { label: "Evening: Repair Problems Fast", type: "done" },
-            { label: "Evening: Express Gratitude", type: "done" },
-            { label: "Night: Show Progress", type: "done" },
-            { label: "Night: Novelty", type: "done" },
-            { label: "Night: Safe Unknown (Deeper than Morning)", type: "done" },
-        ],
-    },
-    {
-        section: "Senses, Nerves, Muscles, & Mind",
-        items: [
-            { label: "Total Sleep: +30m", type: "energy", name: "Sleep", time: 60},
-            { label: "CS Routine: +1 mins", type: "energy", name: "Free time", time: 2},
-            { label: "Nutrients", type: "energy", name: "Nutrients", time: 3*65 },
-            { label: "Exercise: 3 sets", type: "energy", name: "Exercise", time: 4*65 },
-            { label: "Non-CS Learn/Hobby: +5m", type: "energy", name: "Hobby", time: 25 },
-            { label: "Rest: +1m", type: "energy", name: "Rest", time: 20 },
-            { label: "Drink Water: 1/8 Glass", type: "energy", name: "Hydration", time: 16 },
-        ],
-    },
-    {
-        section: "Night Routine",
-        items: [
-            { label: "Clean environment", type: "done" },
-            { label: "Wash Face", type: "done" },
-            { label: "Use Facial Cleanse", type: "done" },
-            { label: "Use Moisturizer", type: "done" },
-            { label: "Retinoids", type: "done" },
-            { label: "Apply Sunscreen", type: "done" },
-            { label: "Apply Jojoba Oil and Use Jade Roller", type: "done" },
-            { label: "Other Hygiene", type: "done" },
-            { label: "Sleep", type: "done" }
-        ],
-    },
-    //==============
-    //Not to do list
-    //==============
-    {
-        section: "#Mouth&Nose Consumeable",
-        items: [
-            { label: "Oily/Processed(such as Processed Sugar)/High Salt/Unhealthy Food", type: "energy", name: "Free time", time: -10 },
-        ]
-    },
-    {
-        section: "#Skin Consumeable",
-        items: [
-            { label: "Touching Skin by Self/Smoke/Sweats/Environment: +5m", type: "energy", name: "Free time", time: -5 },
-        ]
-    },
-    {
-        section: "#Eyes&Ears Consumeable",
-        items: [
-            { label: "Many Useless Information", type: "energy", name: "Free time", time: -10 },
-        ]
-    },
-    {
-        section: "#Nerve&Mind&Muscle Consumeable",
-        items: [
-            { label: "$Physical Harm", type: "energy", name: "Free time", time: -20},
-            { label: "$Negetivity", type: "energy", name: "Free time", time: -20 },
-        ]
-    },
-];
+type AppState = {
+  deepWorkRemaining: number;
+  rewardRemaining: number;
 
-function addUniqueIdsToRoutine(data: RoutineSectionNoId[]): any {
-    return data.map((section, sectionIndex) => ({
-        ...section,
-        items: section.items.map((item, itemIndex) => ({
-            ...item,
-            id: `${sectionIndex}-${itemIndex}-${item.label.replace(/\s+/g, '-')}` // unique id
-        }))
-    }));
-}
+  isDeepWorking: boolean;
 
-const routineData: RoutineSection[] = addUniqueIdsToRoutine(routineDataNoId);
+  lastTimestamp: number;
 
-type CounterData = {
-    value: number;
-    lastUpdated: number; // timestamp in ms
+  currentDay: string;
+
+  completedSessions: number;
 };
 
-export default function DailyRoutine() {
-    const [mori, setMori] = useState<string>("");
+function formatTime(total: number) {
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
 
-    const [freeplier, setFreeplier] = useState<number>(0);
-    const [state, setState] = useState<Record<string, boolean>>({});
-    const [skippedState, setSkippedState] = useState<Record<string, boolean>>({});
-    const [pastState, setPastState] = useState<Record<string, boolean>>({});
-    const [pastSkippedState, setPastSkippedState] = useState<Record<string, boolean>>({});
-    const [tab, setTab] = useState<"todo" | "done" | "skipped" | "nottodo" | "plan">("todo");
-    const [streak, setStreak] = useState<number>(0);
-    const [correct, setCorrect] = useState<number>(0);
-    const LOCAL_FOR_VAREN = "LOCAL_FOR_VAREN";
-    const LOCAL_LAST_TIME = "LOCAL_LAST_TIME";
-    const [varen, setVaren] = useState<Varen[]>([]);
-    // Function to add a new JSON object to the array
-    const addVaren = useCallback((name: string, initialTime: number) => {
-        setVaren(prev => {
-            let found = false;
-            const updated = prev.map(item => {
-                if (item.name === name) {
-                    found = true;
-                    return { ...item, time: item.time + initialTime };
-                }
-                return item;
-            });
-            if (!found) {
-                return [
-                    ...updated,
-                    {
-                        name,
-                        id: crypto.randomUUID(), // better than Math.random
-                        time: initialTime
-                    }
-                ];
-            }
-            return updated;
-        });
-        setVaren(prev => {
-            const sorted = [...prev].sort((a, b) => a.time - b.time);
-            return sorted;
-        });
-    }, []);
-    const [isMounted, setIsMounted] = useState(false);
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(
+    2,
+    "0"
+  )}:${String(s).padStart(2, "0")}`;
+}
 
-    // Effect to sync state to localStorage whenever the items array changes
-    useEffect(() => {
-        // localStorage only stores strings, so we use JSON.stringify()
-        //alert(JSON.stringify(varen));
-        if (varen.length > 5) {
-            localStorage.setItem(LOCAL_FOR_VAREN, JSON.stringify(varen));
-        }
+function getTodayKey() {
+  return new Date().toDateString();
+}
 
-    }, [varen]);
-    // Effect to decrase the time by 1 every minute
-    const addMissingVaren = async () => {
-        const savedItems = localStorage.getItem(LOCAL_FOR_VAREN);
-        if (savedItems && savedItems !== "undefined" && JSON.parse(savedItems).length > 5) {
-            setVaren(JSON.parse(savedItems));
+export default function Page() {
+  const [mounted, setMounted] = useState(false);
+
+  const [state, setState] = useState<AppState>({
+    deepWorkRemaining: DEEP_WORK_SECONDS,
+    rewardRemaining: 0,
+
+    isDeepWorking: false,
+
+    lastTimestamp: Date.now(),
+
+    currentDay: getTodayKey(),
+
+    completedSessions: 0,
+  });
+
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  /*
+    ===========================================================
+    LOAD STORAGE
+    ===========================================================
+  */
+
+  useEffect(() => {
+    setMounted(true);
+
+    const raw = localStorage.getItem(STORAGE_KEY);
+
+    if (!raw) return;
+
+    try {
+      const parsed: AppState = JSON.parse(raw);
+
+      const now = Date.now();
+
+      let updated = { ...parsed };
+
+      /*
+        =======================================================
+        DAILY RESET
+        =======================================================
+      */
+
+      if (parsed.currentDay !== getTodayKey()) {
+        updated.deepWorkRemaining = DEEP_WORK_SECONDS;
+        updated.currentDay = getTodayKey();
+      }
+
+      /*
+        =======================================================
+        OFFLINE PROGRESSION
+        =======================================================
+
+        If deep work was OFF:
+          reward decays while away
+
+        If deep work was ON:
+          deep work continues while away
+          reward DOES NOT decay
+      */
+
+      const elapsed = Math.floor((now - parsed.lastTimestamp) / 1000);
+
+      if (elapsed > 0) {
+        if (parsed.isDeepWorking) {
+          updated.deepWorkRemaining = Math.max(
+            0,
+            parsed.deepWorkRemaining - elapsed
+          );
+
+          /*
+            COMPLETE SESSION
+          */
+
+          if (updated.deepWorkRemaining <= 0) {
+            updated.deepWorkRemaining = DEEP_WORK_SECONDS;
+
+            updated.rewardRemaining += REWARD_SECONDS;
+
+            updated.completedSessions += 1;
+
+            updated.isDeepWorking = false;
+          }
         } else {
-            await routineData.forEach(section => {
-                section.items.forEach(async (item) => {
-                    if (item.type === "energy") {
-                        addVaren(item.name, 0);
-                    }
-                });
-            });
+          updated.rewardRemaining = Math.max(
+            0,
+            parsed.rewardRemaining - elapsed
+          );
         }
-        setVaren(prev => {
-            const sorted = [...prev].sort((a, b) => a.time - b.time);
-            return sorted;
-        });
-    };
-    const ran = useRef(false);
-    useEffect(() => {
-        setIsMounted(true);
-        addMissingVaren();
-        const storedMori = localStorage.getItem("mori");
-        if (storedMori) setMori(storedMori);
-        if (ran.current) return;
-        ran.current = true;
+      }
 
-        //alert(JSON.stringify(varen));
+      updated.lastTimestamp = now;
 
-        const now = Date.now();
-        const stored = localStorage.getItem(LOCAL_LAST_TIME);
-
-        if (!stored) {
-            localStorage.setItem(LOCAL_LAST_TIME, String(now));
-            return;
-        }
-
-        const lastUpdate = Number(stored);
-        const minutesPassed = Math.floor((now - lastUpdate) / 60000);
-
-        if (minutesPassed > 0) {
-            setVaren(prev =>
-                     prev.map(item => ({
-                         ...item,
-                         time: Math.max(0, item.time - minutesPassed),
-                     }))
-                    );
-        }
-
-        localStorage.setItem(LOCAL_LAST_TIME, String(now));
-    }, []);
-
-
-    const [count, setCount] = useState<number | null>(null);
-    useEffect(() => {
-        const savedCount = Number(localStorage.getItem("free"));
-        if(count === null) {
-            if(savedCount) {
-                setCount(savedCount);
-            } else {
-                setCount(0);
-            }
-        } else {
-            localStorage.setItem("free", String(count));
-        }
-        const now = Date.now();
-        const saved = localStorage.getItem("Count");
-        if (!count) return;
-        if (saved) {
-            const data: CounterData = JSON.parse(saved);
-
-            // how many full minutes passed
-            const minutesPassed = Math.floor(
-                (now - data.lastUpdated) / (60 * 1000)
-            );
-
-            const newValue = count - minutesPassed;
-            if (newValue < 0) {
-                setCount(0); 
-            } else {
-                setCount(newValue);
-            }
-            // save updated state
-            localStorage.setItem(
-                "Count",
-                JSON.stringify({
-                    value: newValue,
-                    lastUpdated: now,
-                })
-            );
-        } else {
-            // initial value
-            const initialValue = count;
-
-            localStorage.setItem(
-                "Count",
-                JSON.stringify({
-                    value: initialValue,
-                    lastUpdated: now,
-                })
-            );
-        }
-    }, [count]);
-
-
-    const [showPlan, setShowPlan] = useState<boolean>(true);
-    //For visible section
-    const [openSection, setOpenSection] = useState<string>("Sleep");
-
-    //For level up effect
-    const [currentLevel, setCurrentLevel] = useState<number>(0);
-    const [showLevelUp, setShowLevelUp] = useState<boolean>(false);
-    const [leveledUpRank, setLeveledUpRank] = useState<typeof rankingData[number] | null>(null);
-    const [leveledUpRankPast, setLeveledUpRankPast] = useState<typeof rankingData[number] | null>(null);
-    const [pastLevel, setPastLevel] = useState<number>(0);
-    const [pastProgressPercent, setPastProgressPercent] = useState<number>(0);
-    const [pastRank, setPastRank] = useState<typeof rankingData[number] | null>(null);
-
-    //Math
-    const [challengeTaskId, setChallengeTaskId] = useState<string | null>(null);
-    const [challengeA, setChallengeA] = useState<number>(0);
-    const [challengeB, setChallengeB] = useState<number>(0);
-    const [challengeC, setChallengeC] = useState<number>(0);
-    const [challengeD, setChallengeD] = useState<number>(0);
-    const [challengeAnswer, setChallengeAnswer] = useState<string>("");
-    const [challengeStep, setChallengeStep] = useState<number>(0);
-    const [challengeError, setChallengeError] = useState<string | null>(null);
-
-    const [randomPercent, setRandomPercent] = useState<number>(0);
-
-    const [routineInfoIndex, setRoutineInfoIndex] = useState<number>(0);
-
-    const randomDigit = (min: number, max: number) => Math.floor(min/*Minimum*/ + Math.random() * (max-min));
-
-    // Calculate progress
-    const totalTasks = routineData.reduce((sum: number, section: RoutineSection) => sum + section.items.length, 0);
-    const dsTasks = Math.max(
-        0,
-        Object.values(state).filter(Boolean).length + (Object.values(skippedState).filter(Boolean).length / 2) - correct
-    );
-    const MAX_LEVEL = 24;
-    const MAX_PER_SEC = 500000;
-    const maxLevel = 100/MAX_LEVEL;
-    const exponent = 0.48;
-    const progressPercent = 100 * Math.pow(dsTasks / totalTasks, exponent);
-
-    // Level
-    const level = Math.min(
-        MAX_LEVEL,
-        Math.max(0, Math.floor(progressPercent / maxLevel))
-    );
-
-    const levelNotRound = Math.min(
-        MAX_LEVEL,
-        Math.max(0, progressPercent / maxLevel)
-    );
-
-    function percentTo8PM(input: number): number {
-        const date: Date = new Date();
-        const hours =
-            date.getHours() +
-            date.getMinutes() / 60 +
-            date.getSeconds() / 3600;
-        const out = input * ((Math.max(Math.min(hours, 20), 4)-4)/16);
-        //alert(input);
-        //alert(out);
-        return Math.round(out);
+      setState(updated);
+    } catch (err) {
+      console.error(err);
     }
+  }, []);
 
-    useEffect(() => {
-        const today = new Date().toDateString();
-        const savedDate = localStorage.getItem(DATE_KEY);
-        const savedStreak = Number(localStorage.getItem(STREAK_KEY) || 0);
+  /*
+    ===========================================================
+    SAVE STORAGE
+    ===========================================================
+  */
 
-        let newStreak = 1;
+  useEffect(() => {
+    if (!mounted) return;
 
-        const savedCorrect = Number(localStorage.getItem("correct"));
-        if (savedCorrect && correct === 0) {
-            setCorrect(savedCorrect);
-        } else if (savedCorrect && correct !== 0) {
-            localStorage.setItem("correct", String(correct));
-            setCorrect(correct);
-        } else {
-            localStorage.setItem("correct", String(correct));
-            setCorrect(correct);
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        ...state,
+        lastTimestamp: Date.now(),
+      })
+    );
+  }, [state, mounted]);
+
+  /*
+    ===========================================================
+    MAIN TICK LOOP
+    ===========================================================
+  */
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    intervalRef.current = setInterval(() => {
+      setState((prev) => {
+        const next = { ...prev };
+
+        /*
+          =====================================================
+          DAILY RESET
+          =====================================================
+        */
+
+        if (next.currentDay !== getTodayKey()) {
+          next.currentDay = getTodayKey();
+          next.deepWorkRemaining = DEEP_WORK_SECONDS;
         }
 
-        if (savedDate) {
-            const diff =
-                (new Date(today).getTime() - new Date(savedDate).getTime()) /
-                (1000 * 60 * 60 * 24);
-            if (diff === 1) {
-                newStreak = savedStreak + 1;
-                localStorage.setItem("pastLevel", String(level));
-                localStorage.setItem("pastProgressPercent", String(progressPercent));
-                localStorage.removeItem("correct");
-                localStorage.removeItem(LOCAL_FOR_VAREN);
-            } else if (diff > 1) {
-                newStreak = 1;
-                localStorage.removeItem("correct");
-                localStorage.removeItem(LOCAL_FOR_VAREN);
-            } else {
-                newStreak = savedStreak;
-            }
+        /*
+          =====================================================
+          DEEP WORK ACTIVE
+          =====================================================
+        */
+
+        if (next.isDeepWorking) {
+          next.deepWorkRemaining = Math.max(
+            0,
+            next.deepWorkRemaining - 1
+          );
+
+          /*
+            COMPLETE SESSION
+          */
+
+          if (next.deepWorkRemaining <= 0) {
+            next.deepWorkRemaining = DEEP_WORK_SECONDS;
+
+            next.rewardRemaining += REWARD_SECONDS;
+
+            next.completedSessions += 1;
+
+            next.isDeepWorking = false;
+          }
         }
-        setStreak(newStreak);
 
-        if (savedDate !== today) {
-            const a = localStorage.getItem(STORAGE_KEY);
-            const b = localStorage.getItem(SKIPPED_KEY);
+        /*
+          =====================================================
+          NOT WORKING
+          REWARD DECAYS
+          =====================================================
+        */
 
-            if (a) localStorage.setItem(STORAGE_KEY_PAST, a);
-            if (b) localStorage.setItem(SKIPPED_KEY_PAST, b);
-
-            localStorage.removeItem("correct");
-            localStorage.removeItem(LOCAL_FOR_VAREN);
-            setVaren([]);
-            localStorage.removeItem(STORAGE_KEY);
-            localStorage.removeItem(SKIPPED_KEY);
-            localStorage.setItem(DATE_KEY, today);
-            localStorage.setItem(STREAK_KEY, String(newStreak));
-            setState({});
-            setSkippedState({});
-        } else {
-            //Uncomment the two below when reset
-            //localStorage.removeItem(STORAGE_KEY);
-            //localStorage.removeItem(SKIPPED_KEY);
-            setRandomPercent(Math.random()*100);
-            const a = localStorage.getItem("pastLevel");
-            const b = localStorage.getItem("pastProgressPercent");
-            const saved = localStorage.getItem(STORAGE_KEY);
-            const skipped = localStorage.getItem(SKIPPED_KEY);
-            const pastSaved = localStorage.getItem(STORAGE_KEY_PAST);
-            const pastSkipped = localStorage.getItem(SKIPPED_KEY_PAST);
-            if (a) setPastLevel(Math.max(Number(a), 18));
-            if (b) setPastProgressPercent(Number(b));
-            if (saved) setState(JSON.parse(saved) as Record<string, boolean>);
-            if (skipped) setSkippedState(JSON.parse(skipped) as Record<string, boolean>);
-            if (pastSaved) setPastState(JSON.parse(pastSaved) as Record<string, boolean>);
-            if (pastSkipped) setPastSkippedState(JSON.parse(pastSkipped) as Record<string, boolean>);
-
+        else {
+          next.rewardRemaining = Math.max(
+            0,
+            next.rewardRemaining - 1
+          );
         }
-    }, []);
-    useEffect(() => {
-        const rank = rankingData.find(r => r.level === percentTo8PM(pastLevel)) || null;
-        setPastRank(rank);
-    }, [pastLevel]);
 
-    // Save state and streak
-    useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        localStorage.setItem(SKIPPED_KEY, JSON.stringify(skippedState));
-        localStorage.setItem(STREAK_KEY, String(streak));
-    }, [state, skippedState, streak]);
+        next.lastTimestamp = Date.now();
 
-    // Toggle task completion
-    const toggle = (key: string) => {
-        // Remove from skipped if marking as done/undo
-        setSkippedState((prev) => ({ ...prev, [key]: false }));
-        setState((prev) => ({ ...prev, [key]: !prev[key] }));
+        return next;
+      });
+    }, 1000);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
+  }, [mounted]);
 
-    // Skip a task
-    const skip = (key: string) => {
-        // Remove from done if skipping
-        setState((prev) => ({ ...prev, [key]: false }));
-        setSkippedState((prev) => ({ ...prev, [key]: !prev[key] }));
-    };
+  /*
+    ===========================================================
+    PROGRESS
+    ===========================================================
+  */
 
-    const levelToHourlySalary = (clevel: number) => {
-        if (clevel === 1) return 0.000000025*60*60*24;
-        if (clevel === 2) return 0.00000025*60*60*24;
-        if (clevel === 3) return 0.0000025*60*60*24;
-        if (clevel === 4) return 0.000025*60*60*24;
-        if (clevel === 5) return 0.00025*60*60*24;
-        if (clevel === 6) return 0.00125*60*60*24;
-        if (clevel === 7) return 0.0025*60*60*24;
-        if (clevel === 8) return 0.005*60*60*24;
-        if (clevel === 9) return 0.01*60*60*24;
-        if (clevel === 10) return 0.5*60*60*24;
-        if (clevel === 11) return 1*60*60*24;
-        if (clevel === 12) return 2.5*60*60*24;
-        if (clevel === 13) return 5*60*60*24;
-        if (clevel === 14) return 25*60*60*24;
-        if (clevel === 15) return 50*60*60*24;
-        if (clevel === 16) return 100*60*60*24;
-        if (clevel === 17) return 200*60*60*24;
-        if (clevel === 18) return 1500*60*60*24;
-        if (clevel === 19) return 3500*60*60*24;
-        if (clevel === 20) return 7500*60*60*24;
-        if (clevel === 21) return 60000*60*60*24;
-        if (clevel === 22) return 120000*60*60*24;
-        if (clevel === 23) return 250000*60*60*24;
-        if (clevel === 24) return 500000*60*60*24;
-    }
-
-    // hourly salary
-    const hourlySalary = levelToHourlySalary(level);
-
-    useEffect(() => {
-        if (level > currentLevel) {
-            const rank = rankingData.find(r => r.level === level) || null;
-            const rank2 = rankingData.find(r => r.level === level-1) || null;
-            setCurrentLevel(level);
-            setLeveledUpRank(rank);
-            setLeveledUpRankPast(rank2);
-            setShowLevelUp(true);
-        }
-    }, [level]);
-
-    const styles = {
-        page: { minHeight: "100vh", backgroundColor: "#000", color: "#fff", padding: 16, fontFamily: "system-ui, sans-serif" },
-        tabs: { display: "flex", gap: 8, marginBottom: 16, marginTop: '8px'},
-        tab: (active: boolean) => ({ flex: 1, padding: 10, borderRadius: 10, backgroundColor: active ? "#16a34a" : "#27272a", border: "none", color: "#fff", fontWeight: 600 }),
-            card: { backgroundColor: "#18181b", borderRadius: 12, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
-        subtitle: { color: "#a1a1aa", fontSize: 13 },
-        progressContainer: { backgroundColor: "#27272a", borderRadius: 10, overflow: "hidden", margin: "10px 0", height: 20 },
-        progressBar: { height: "100%", backgroundColor: "#16a34a", transition: "width 0.3s" },
-        buttonGroup: { display: "flex", flexFlow: "column nowrap", gap: 15 },
-    };
+  const deepProgress = useMemo(() => {
     return (
-        <div style={styles.page}>
-        {challengeTaskId && (
-            <div
-            style={{
-                position: "fixed",
-                inset: 0,
-                backgroundColor: "rgba 0,0,0,0.85)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 9999,
-            }}
-            >
-            <div
-            style={{
-                backgroundColor: "#18181b",
-                borderRadius: 16,
-                padding: 24,
-                maxWidth: 320,
-                width: "100%",
-                textAlign: "center",
-
-            }}
-            >
-            <h3 style={{ marginBottom: 8 }}>
-            Solve to Unlock Task
-            </h3>
-
-            <p style={{ color: "#a1a1aa", marginBottom: 12 }}>
-            Question {challengeStep} of 1
-            </p>
-
-            <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 12 }}>
-            {challengeA} × {challengeB} {/*+ {challengeC} - {challengeD}*/}
-            </div>
-
-            <input
-            type="number"
-            value={challengeAnswer}
-            onChange={(e) => setChallengeAnswer(e.target.value)}
-            style={{
-                width: "100%",
-                padding: 10,
-                borderRadius: 8,
-                border: "none",
-                marginBottom: 10,
-                fontSize: 16,
-            }}
-            />
-
-            {challengeError && (
-                <div style={{ color: "#ef4444", marginBottom: 10 }}>
-                {challengeError}
-                </div>
-            )}
-
-            <button
-            onClick={() => {
-                const correct = (challengeA * challengeB) /*+ challengeC - challengeD*/;
-                if (Number(challengeAnswer) !== correct) {
-                    setChallengeError("Wrong answer. Challenge reset.");
-                    setChallengeStep(1);
-                    setChallengeA(randomDigit(10,99));
-                    setChallengeB(randomDigit(10,99));
-                    setChallengeC(randomDigit(0,198));
-                    setChallengeD(randomDigit(0,99));
-                    setChallengeAnswer("");
-                    return;
-                }
-
-                if (challengeStep === 1) {
-                    // UNLOCK TASK
-                    skip(challengeTaskId);
-                    setChallengeTaskId(null);
-                    return;
-                }
-
-                // Next question
-                setChallengeStep((s) => s + 1);
-                setChallengeError(null);
-                setChallengeA(randomDigit(10,99));
-                setChallengeB(randomDigit(10,99));
-                setChallengeC(randomDigit(0,198));
-                setChallengeD(randomDigit(0,99));
-                setChallengeAnswer("");
-            }}
-            style={{
-                padding: "10px 16px",
-                borderRadius: 10,
-                border: "none",
-                backgroundColor: "#16a34a",
-                color: "#fff",
-                fontWeight: 700,
-                width: "100%",
-            }}
-            >
-            Submit
-            </button>
-
-            <button
-            onClick={() => setChallengeTaskId(null)}
-            style={{
-                marginTop: 8,
-                background: "none",
-                border: "none",
-                color: "#a1a1aa",
-                cursor: "pointer",
-            }}
-            >
-            Cancel
-            </button>
-            </div>
-            </div>
-        )}
-        {showLevelUp && leveledUpRank && (
-            <div
-            style={{
-                position: "fixed",
-                inset: 0,
-                backgroundColor: "rgba(0,0,0,0.85)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 9999,
-            }}
-            >
-            <div
-            style={{
-                backgroundColor: "#18181b",
-                borderRadius: 16,
-                padding: 24,
-                textAlign: "center",
-                maxWidth: 320,
-                width: "100%",
-            }}
-            >
-            <h2 style={{ color: "#16a34a", marginBottom: 8 }}>
-            Congratulations
-            </h2>
-
-            <p style={{ fontSize: 18, fontWeight: 600 }}>
-            You reached Level {leveledUpRank?.level}
-            </p>
-
-            <p style={{ color: "#a1a1aa", marginBottom: 16 }}>
-            {leveledUpRankPast?.name}=&gt;{leveledUpRank?.name}
-            </p>
-
-            <img
-            src={`/levels${leveledUpRank.level}.jpeg`}
-            alt={leveledUpRank?.name}
-            style={{
-                width: "100%",
-                height: "auto",
-                objectFit: "contain",
-                marginBottom: 16,
-            }}
-            />
-
-            <button
-            onClick={() => setShowLevelUp(false)}
-            style={{
-                padding: "10px 16px",
-                borderRadius: 10,
-                border: "none",
-                backgroundColor: "#16a34a",
-                color: "#fff",
-                fontWeight: 700,
-                cursor: "pointer",
-                width: "100%",
-            }}
-            >
-            Continue
-            </button>
-            </div>
-            </div>
-        )}
-        <h1 onClick={(e)=>{
-            //alert("hi");
-            //setVaren([]);
-            //localStorage.clear();
-            //localStorage.removeItem("LOCAL_FOR_VAREN");
-        }}>
-        Mori Routine
-        </h1>
-        <h4>Day Streak: {streak}</h4>
-        <h4
-        style={{
-            color: "#FF73CC",
-        }}>
-        Current Focus:
-        </h4>
-        <h2
-        style={{
-            color: "#FF73CC",
-        }}>
-        {mori}
-        </h2>
-        <div>
-        {Array.isArray(varen) && varen.length > 5 && varen.map((varenItem) => {
-    if (!isMounted) return null; 
-            if (!varenItem?.name) return null;
-            if (varenItem.name !== "Free time") return null;
-            // If not mounted, render a placeholder or null to match the server's initial output
-            return (
-                <h2 style={{
-                    color: varenItem.time === 0 ? "#FF0000" : "#FF8C00",
-                    textTransform: "uppercase",
-                    fontWeight: "900",
-                    letterSpacing: "1px",
-                    textShadow: "0 0 10px rgba(255, 62, 0, 0.3)" // Subtle "power" glow
-                }}
-                key={varenItem.id}>
-                {varenItem.name}: {varenItem.time}m
-                </h2>
-            );
-        })}
-        Multiplier: {freeplier}
-        {Array.isArray(varen) && varen.length > 5 && varen.map((varenItem) => {
-            if (!isMounted) return null; 
-            if (!varenItem?.name) return null;
-            if (varenItem.name === "Free time") return null;
-            if (freeplier == 0 && varenItem.time > 0) {
-                setFreeplier(i=>i+1);
-            }
-            if (freeplier == 8) setFreeplier(i=>i+2);
-            // If not mounted, render a placeholder or null to match the server's initial output
-            return (
-                <h5 style={{
-                    color: varenItem.time === 0 ? "#FF0000" : "#FF8C00",
-                    textTransform: "uppercase",
-                    fontWeight: "900",
-                    letterSpacing: "1px",
-                    textShadow: "0 0 10px rgba(255, 62, 0, 0.3)" // Subtle "power" glow
-                }}
-                key={varenItem.id}>
-                {varenItem.name}: {varenItem.time}m
-                </h5>
-            );
-        })}
-        </div>
-        <br/>
-        Level: {`${level}`}
-        <br/>
-        Status Rarity: {leveledUpRank?.name}
-        <br/>
-        {/*Income per hour: {hourlySalary} Php*/}
-        {/* Progress Bar */}
-        <div style={styles.progressContainer}>
-        <div style={{ ...styles.progressBar, width: `${(progressPercent % maxLevel)/maxLevel * 100}%` }} />
-        </div>
-
-        Enemy Level: {`${percentTo8PM(pastLevel)}`}
-        <br/>
-        Enemy Status Rarity: {pastRank?.name}
-        <br/>
-        {/*Income per hour: {hourlySalary} Php*/}
-        {/* Progress Bar */}
-        <div style={styles.progressContainer}>
-        <div style={{ ...styles.progressBar, width: `${randomPercent}%` }} />
-        </div>
-
-        {Math.round((progressPercent % maxLevel)/maxLevel * 100)}% Completed
-
-        <div style={styles.tabs}>
-        <button style={styles.tab(tab === "todo")} onClick={() => setTab("todo")}>To Do</button>
-        <button style={styles.tab(tab === "done")} onClick={() => setTab("done")}>Done</button>
-        <button style={styles.tab(tab === "skipped")} onClick={() => setTab("skipped")}>Skipped</button>
-        </div>
-        <div style={styles.tabs}>
-        <button style={styles.tab(tab === "nottodo")} onClick={() => setTab("nottodo")}>Not To Do</button>
-        <button style={styles.tab(tab === "plan")} onClick={() => setTab("plan")}>Routine How Info</button>
-        </div> 
-        {   
-            routineData.map((section: RoutineSection, index, array) => {
-
-                const getSectionProgress = (section: RoutineSection) => {
-                    const total = section.items.length;
-                    const done = section.items.filter(i => state[i.id]).length;
-                    const skip = section.items.filter(i => skippedState[i.id]).length;
-                    return {
-                        total,
-                        done,
-                        percent: total === 0 ? 0 : Math.round(((done+skip/2) / total) * 100),
-                        completed: done === total && total > 0,
-                    };
-                };
-
-
-                function CircleProgress({ percent }: { percent: number }) {
-                    return (
-                        <div
-                        style={{
-                            width: 44,
-                            height: 44,
-                            borderRadius: "50%",
-                            background: `conic-gradient(#16a34a ${percent * 3.6}deg, #27272a 0deg)`,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: 12,
-                            fontWeight: 700,
-                            color: "#fff",
-                        }}
-                        >
-                        {percent}%
-                        </div>
-                    );
-                }
-
-                // Filter items based on tab
-                const filteredItems = section.items.filter((item) => {
-                    if (tab === "todo") return !state[item.id] && !skippedState[item.id];
-                    if (tab === "nottodo") return !state[item.id] && !skippedState[item.id];
-                    if (tab === "done") return state[item.id];
-                    if (tab === "skipped") return skippedState[item.id];
-                    return false;
-                });
-
-                // If "todo", only take first 3
-                const visibleItems = (tab === "todo" || tab === "nottodo") ? filteredItems : filteredItems;
-                const progress = getSectionProgress(section);
-                if (tab === "todo" || tab === "done" || tab === "skipped") {
-                    if(tab === "todo" && section.section.charAt(0) === '#') return;
-                    return (
-                        <div key={section.section}
-                        style={{
-                            marginBottom: "7vw",
-                        }}>
-                        <div>
-                        <div
-                        onClick={()=>{
-                            if (openSection === section.section) {
-                                setOpenSection("");
-                            } else {
-                                setOpenSection(section.section);
-                            }
-                        }}
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            marginBottom: 8,
-                            position: "relative",
-                        }}
-                        >
-                        <div style={{ maxWidth: "73vw", fontSize: 16, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
-                        {section.section}
-                        </div>
-
-                        {/*<CircleProgress percent={progress.percent} />*/}
-
-                        {progress.completed && (
-                            <div
-                            style={{
-                                position: "absolute",
-                                left: 0,
-                                right: 0,
-                                top: "50%",
-                                height: 2,
-                                backgroundColor: "#16a34a",
-                                opacity: 0.6,
-                            }}
-                            />
-                        )}
-                        </div>
-                        </div>
-
-
-                        {visibleItems.map((item, index) => {
-                            if(section.section !== openSection) {
-                                return;
-                            }
-                            const key = item.id;
-
-                            return (
-                                <div key={key} style={styles.card}>
-                                <div>
-                                <div>{item.label}</div>
-                                </div>
-
-                                <div style={styles.buttonGroup}>
-
-                                {tab && item.type == "energy" && item.label.charAt(0) !== '@' && (
-                                    <button
-                                    onClick={() => {
-                                        // If the object is found, update its time property
-                                        if(item.name === "Free time") {
-                                            addVaren(item.name, item.time+(freeplier/2));
-                                        } else {
-                                            addVaren(item.name, item.time);
-                                        }
-                                        //alert(item.name+item.time);
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#16a34a",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    +
-                                        </button>
-                                )}
-                                {tab && item.type !== "energy" && item.label.charAt(0) !== '$' && section.section.charAt(0) !== '!' && item.label.charAt(0) !== '@'  && (
-                                    <button
-                                    onClick={() => {
-                                        toggle(key);
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#16a34a",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    {tab === "done" ? "Undo" : "Done"}
-                                    </button>
-                                )}
-
-                                {tab !== "done"  && item.type !== "energy" &&  item.label.charAt(0) !== '$' && (
-                                    <button
-                                    onClick={() => {
-                                        setChallengeTaskId(key);
-                                        setChallengeA(randomDigit(10,99));
-                                        setChallengeB(randomDigit(10,99));
-                                        setChallengeC(randomDigit(0,198));
-                                        setChallengeD(randomDigit(0,99));
-                                        setChallengeAnswer("");
-                                        setChallengeStep(1);
-                                        setChallengeError(null);
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#f59e0b",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    {skippedState[key] ? "Undo Skip" : "Skip"}
-                                    </button>
-                                )}
-                                {tab !== "done"  && item.type === 'energy' && item.label.charAt(0) !== '@' && (
-                                    <button
-                                    onClick={() => {
-                                        addVaren(item.name, item.time*-1);
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#f59e0b",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    -
-                                        </button>
-                                )}
-                                
-                                {tab && item.type === "energy" && item.label.charAt(0) === '@' && (
-                                    <div
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#16a34a",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    <TimerButton name={item.name} time={item.time}/>
-                                    </div>
-                                )}
-
-
-                                </div>
-                                </div>
-                            );
-                        })}
-                        </div>
-                    );
-                } else if (tab === "nottodo") {
-                    if(section.section.charAt(0) !== '#') return;
-                    return (
-                        <div key={section.section}
-                        style={{
-                            marginBottom: "7vw",
-                        }}>
-                        <div>
-                        <div
-                        onClick={()=>{
-                            if (openSection === section.section) {
-                                setOpenSection("");
-                            } else {
-                                setOpenSection(section.section);
-                            }
-                        }}
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            marginBottom: 8,
-                            position: "relative",
-                        }}
-                        >
-                        <div style={{ maxWidth: "73vw", fontSize: 16, fontWeight: 700, color: section.section === openSection ? "white" : "gray" }}>
-                        {section.section}
-                        </div>
-
-                        <CircleProgress percent={progress.percent} />
-
-                        {progress.completed && (
-                            <div
-                            style={{
-                                position: "absolute",
-                                left: 0,
-                                right: 0,
-                                top: "50%",
-                                height: 2,
-                                backgroundColor: "#16a34a",
-                                opacity: 0.6,
-                            }}
-                            />
-                        )}
-                        </div>
-                        </div>
-
-
-                        {visibleItems.map((item, index) => {
-                            if(section.section !== openSection) {
-                                //alert("hi");
-                                return;
-                            }
-                            const key = item.id;
-
-                            return (
-                                <div key={key} style={styles.card}>
-                                <div>
-                                <div>{item.label}</div>
-                                </div>
-
-                                <div style={styles.buttonGroup}>
-
-                                {tab && item.type == "energy" && (
-                                    <button
-                                    onClick={() => {
-                                        // If the object is found, update its time property
-                                        addVaren(item.name, item.time);
-                                        //alert(item.name+item.time);
-                                    }}
-                                    style={{
-                                        padding: "8px 14px",
-                                        borderRadius: 8,
-                                        border: "none",
-                                        backgroundColor: "#16a34a",
-                                        color: "#fff",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                    }}
-                                    >
-                                    +
-                                        </button>
-                                )}
-
-                                </div>
-                                </div>
-                            );
-                        })}
-                        </div>
-                    );
-                } else if (tab === "plan" && index === 0) {
-                    return routineInfo.map((info, index2) => {
-                        return (
-                            <div key={index2}
-                            style={{
-                                margin: 11,
-                            }}>
-                            <h2
-                            style={{
-                                color: "#eee",
-                            }}
-                            onClick={(e) =>
-                                setRoutineInfoIndex(
-                                    routineInfoIndex === index2 ? 0 : index2
-                                )
-                            }
-                            >
-                            {info.title}
-                            </h2>
-
-                            {index2 === routineInfoIndex && (
-                                <p style={{ fontSize: 17, marginBottom: 5, color: "#ddd" }}>
-                                {info.how}
-                                </p>
-                            )}
-                            </div>
-                        );
-                    })
-                } else {
-                    return;
-                }
-            })}
-            </div>
+      ((DEEP_WORK_SECONDS - state.deepWorkRemaining) /
+        DEEP_WORK_SECONDS) *
+      100
     );
-    function TimerButton({name, time}: buttonProps) {
+  }, [state.deepWorkRemaining]);
 
-        const [elapsedSeconds, setElapsedSeconds] = useState(0);
-        const [isRunning, setIsRunning] = useState(false);
-        const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const rewardProgress = useMemo(() => {
+    return (state.rewardRemaining / REWARD_SECONDS) * 100;
+  }, [state.rewardRemaining]);
 
-        // 1. On Mount: Check if a timer was already running
-        useEffect(() => {
-            const startTime = localStorage.getItem('timer_start_time');
-            if (startTime) {
-                setIsRunning(true);
-                startInterval(parseInt(startTime));
-            }
-            return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-        }, []);
+  /*
+    ===========================================================
+    ACTIONS
+    ===========================================================
+  */
 
-        const startInterval = (startTime: number) => {
-            if (intervalRef.current) clearInterval(intervalRef.current);
+  const startDeepWork = () => {
+    setState((prev) => ({
+      ...prev,
+      isDeepWorking: true,
+    }));
+  };
 
-            intervalRef.current = setInterval(() => {
-                const now = Date.now();
-                const diff = Math.floor((now - startTime) / 1000);
-                setElapsedSeconds(diff);
-            }, 1000);
-        };
+  const stopDeepWork = () => {
+    setState((prev) => ({
+      ...prev,
+      isDeepWorking: false,
+    }));
+  };
 
-        const toggleTimer = () => {
-            if (isRunning) {
-                setMori("None");
-                localStorage.setItem("mori", "None");
-                // STOP: Clear interval and storage
-                if (intervalRef.current) clearInterval(intervalRef.current);
-                localStorage.removeItem('timer_start_time');
-                setIsRunning(false);
+  const resetEverything = () => {
+    const next: AppState = {
+      deepWorkRemaining: DEEP_WORK_SECONDS,
+      rewardRemaining: 0,
+      isDeepWorking: false,
+      lastTimestamp: Date.now(),
+      currentDay: getTodayKey(),
+      completedSessions: 0,
+    };
 
-                const userInput = window.prompt("Goal finished? (y/n)");
+    setState(next);
 
-                // Check if user clicked cancel or entered nothing
-                if (userInput === null) {
-                } else {
-                    const formattedInput = userInput.toLowerCase();
-                    if (formattedInput === 'y') {
-                        if(name === "Free time") {
-                            addVaren(name, Math.round((time+(freeplier/2)) * elapsedSeconds/60));
-                        } else {
-                            addVaren(name, Math.round(time * elapsedSeconds/60));
-                        }
-                    }
-                }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  };
 
-            } else {
-                const userInput = window.prompt("Controllable outcome & high losing chance goal:");
-                if (userInput) {
-                    setMori(userInput);
-                    localStorage.setItem("mori", userInput);
-                }
-                // START: Save current timestamp to localStorage
-                const startTime = Date.now();
-                localStorage.setItem('timer_start_time', startTime.toString());
-                setIsRunning(true);
-                startInterval(startTime);
-            }
-        };
+  /*
+    ===========================================================
+    UI
+    ===========================================================
+  */
 
-        const formatTime = (totalSeconds: number) => {
-            const hrs = Math.floor(totalSeconds / 3600);
-            const mins = Math.floor((totalSeconds % 3600) / 60);
-            const secs = totalSeconds % 60;
-            return `${hrs.toString().padStart(2, '0')}:${mins
-                .toString()
-                .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        };
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background:
+          "radial-gradient(circle at top, #151515 0%, #050505 60%)",
+        color: "white",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 24,
+        fontFamily:
+          "-apple-system, BlinkMacSystemFont, sans-serif",
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        style={{
+          width: "100%",
+          maxWidth: 900,
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: 30,
+          padding: 28,
+          backdropFilter: "blur(16px)",
+          boxShadow: "0 0 80px rgba(0,0,0,0.5)",
+        }}
+      >
+        {/* HEADER */}
 
-        return (
-            <div className="p-8 flex flex-col items-center gap-4">
-            <div className="text-6xl font-mono tabular-nums">
-            {formatTime(elapsedSeconds)}
-            </div>
-            <button
-            onClick={toggleTimer}
-            style={{
-                width: "97%",
-                backgroundColor: "white",
-                borderWidth: 0,
-                borderRadius: 5,
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            marginBottom: 30,
+          }}
+        >
+          <motion.div
+            animate={{
+              rotate: state.isDeepWorking ? 360 : 0,
             }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            style={{
+              width: 70,
+              height: 70,
+              borderRadius: 20,
+              background:
+                "linear-gradient(135deg,#4f46e5,#7c3aed)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Brain size={36} />
+          </motion.div>
+
+          <div>
+            <div
+              style={{
+                fontSize: 34,
+                fontWeight: 800,
+                letterSpacing: -1,
+              }}
             >
-            {isRunning ? 'Stop & Clear' : 'Start Flow Timer'}
-            </button>
+              Deep Work Economy
             </div>
-        );
-    }
 
+            <div
+              style={{
+                opacity: 0.7,
+                marginTop: 6,
+                lineHeight: 1.5,
+              }}
+            >
+              1 hour 30 minutes uninterrupted focus earns
+              1 hour 30 minutes freedom.
+            </div>
+          </div>
+        </div>
+
+        {/* STATUS */}
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(280px,1fr))",
+            gap: 20,
+          }}
+        >
+          {/* DEEP WORK */}
+
+          <motion.div
+            layout
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              borderRadius: 24,
+              padding: 24,
+              border: "1px solid rgba(255,255,255,0.08)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <motion.div
+              animate={{
+                opacity: state.isDeepWorking ? 0.18 : 0.06,
+              }}
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(135deg,#4f46e5,#7c3aed)",
+              }}
+            />
+
+            <div
+              style={{
+                position: "relative",
+                zIndex: 2,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 14,
+                }}
+              >
+                <Zap size={20} />
+                <div
+                  style={{
+                    fontSize: 20,
+                    fontWeight: 700,
+                  }}
+                >
+                  Deep Work
+                </div>
+              </div>
+
+              <div
+                style={{
+                  fontSize: 54,
+                  fontWeight: 900,
+                  letterSpacing: -3,
+                  marginBottom: 16,
+                }}
+              >
+                {formatTime(state.deepWorkRemaining)}
+              </div>
+
+              {/* PROGRESS */}
+
+              <div
+                style={{
+                  width: "100%",
+                  height: 16,
+                  borderRadius: 999,
+                  overflow: "hidden",
+                  background: "rgba(255,255,255,0.08)",
+                  marginBottom: 20,
+                }}
+              >
+                <motion.div
+                  animate={{
+                    width: `${deepProgress}%`,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 60,
+                  }}
+                  style={{
+                    height: "100%",
+                    borderRadius: 999,
+                    background:
+                      "linear-gradient(90deg,#4f46e5,#7c3aed)",
+                  }}
+                />
+              </div>
+
+              <AnimatePresence mode="wait">
+                {state.isDeepWorking ? (
+                  <motion.div
+                    key="working"
+                    initial={{
+                      opacity: 0,
+                      y: 10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: -10,
+                    }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                      color: "#93c5fd",
+                      fontWeight: 700,
+                    }}
+                  >
+                    <Lock size={18} />
+                    No intentional-action gap.
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="idle"
+                    initial={{
+                      opacity: 0,
+                      y: 10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: -10,
+                    }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                      color: "#fca5a5",
+                      fontWeight: 700,
+                    }}
+                  >
+                    <ShieldAlert size={18} />
+                    Distraction leaks future freedom.
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+
+          {/* REWARD */}
+
+          <motion.div
+            layout
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              borderRadius: 24,
+              padding: 24,
+              border: "1px solid rgba(255,255,255,0.08)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <motion.div
+              animate={{
+                opacity: state.isDeepWorking ? 0.06 : 0.15,
+              }}
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(135deg,#22c55e,#16a34a)",
+              }}
+            />
+
+            <div
+              style={{
+                position: "relative",
+                zIndex: 2,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 14,
+                }}
+              >
+                <Gift size={20} />
+                <div
+                  style={{
+                    fontSize: 20,
+                    fontWeight: 700,
+                  }}
+                >
+                  Earned Freedom
+                </div>
+              </div>
+
+              <div
+                style={{
+                  fontSize: 54,
+                  fontWeight: 900,
+                  letterSpacing: -3,
+                  marginBottom: 16,
+                }}
+              >
+                {formatTime(state.rewardRemaining)}
+              </div>
+
+              <div
+                style={{
+                  width: "100%",
+                  height: 16,
+                  borderRadius: 999,
+                  overflow: "hidden",
+                  background: "rgba(255,255,255,0.08)",
+                  marginBottom: 20,
+                }}
+              >
+                <motion.div
+                  animate={{
+                    width: `${Math.min(
+                      rewardProgress,
+                      100
+                    )}%`,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 60,
+                  }}
+                  style={{
+                    height: "100%",
+                    borderRadius: 999,
+                    background:
+                      "linear-gradient(90deg,#22c55e,#16a34a)",
+                  }}
+                />
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  alignItems: "center",
+                  opacity: 0.85,
+                }}
+              >
+                <Clock3 size={18} />
+
+                {state.isDeepWorking ? (
+                  <div>
+                    Reward decay paused during focus.
+                  </div>
+                ) : (
+                  <div>
+                    Free time continuously decays.
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* CONTROLS */}
+
+        <div
+          style={{
+            marginTop: 28,
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 16,
+          }}
+        >
+          {!state.isDeepWorking ? (
+            <motion.button
+              whileHover={{
+                scale: 1.03,
+              }}
+              whileTap={{
+                scale: 0.97,
+              }}
+              onClick={startDeepWork}
+              style={{
+                border: "none",
+                background:
+                  "linear-gradient(135deg,#4f46e5,#7c3aed)",
+                color: "white",
+                padding: "18px 26px",
+                borderRadius: 18,
+                fontWeight: 800,
+                fontSize: 16,
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                cursor: "pointer",
+                boxShadow:
+                  "0 10px 30px rgba(99,102,241,0.35)",
+              }}
+            >
+              <Play size={20} />
+              Start Deep Work
+            </motion.button>
+          ) : (
+            <motion.button
+              whileHover={{
+                scale: 1.03,
+              }}
+              whileTap={{
+                scale: 0.97,
+              }}
+              onClick={stopDeepWork}
+              style={{
+                border: "none",
+                background:
+                  "linear-gradient(135deg,#ef4444,#dc2626)",
+                color: "white",
+                padding: "18px 26px",
+                borderRadius: 18,
+                fontWeight: 800,
+                fontSize: 16,
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                cursor: "pointer",
+                boxShadow:
+                  "0 10px 30px rgba(239,68,68,0.35)",
+              }}
+            >
+              <Pause size={20} />
+              Stop Session
+            </motion.button>
+          )}
+
+          <motion.button
+            whileHover={{
+              scale: 1.03,
+            }}
+            whileTap={{
+              scale: 0.97,
+            }}
+            onClick={resetEverything}
+            style={{
+              border: "1px solid rgba(255,255,255,0.1)",
+              background: "rgba(255,255,255,0.05)",
+              color: "white",
+              padding: "18px 26px",
+              borderRadius: 18,
+              fontWeight: 700,
+              fontSize: 16,
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              cursor: "pointer",
+            }}
+          >
+            <RotateCcw size={20} />
+            Reset Economy
+          </motion.button>
+        </div>
+
+        {/* METRICS */}
+
+        <div
+          style={{
+            marginTop: 34,
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(220px,1fr))",
+            gap: 16,
+          }}
+        >
+          <MetricCard
+            icon={<Brain size={22} />}
+            title="Completed Sessions"
+            value={String(state.completedSessions)}
+          />
+
+          <MetricCard
+            icon={<TimerReset size={22} />}
+            title="Reward State"
+            value={
+              state.rewardRemaining > 0
+                ? "Freedom Available"
+                : "Empty"
+            }
+          />
+
+          <MetricCard
+            icon={<Lock size={22} />}
+            title="Current Mode"
+            value={
+              state.isDeepWorking
+                ? "Locked In"
+                : "Leaking Time"
+            }
+          />
+        </div>
+
+        {/* PHILOSOPHY */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            delay: 0.5,
+          }}
+          style={{
+            marginTop: 36,
+            padding: 22,
+            borderRadius: 22,
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            lineHeight: 1.8,
+            color: "rgba(255,255,255,0.78)",
+          }}
+        >
+          <div
+            style={{
+              fontWeight: 800,
+              fontSize: 20,
+              marginBottom: 12,
+              color: "white",
+            }}
+          >
+            System Logic
+          </div>
+
+          <div>
+            This system converts focus into temporary freedom.
+            Deep work is treated like economic production.
+            Free time is treated like a decaying asset.
+            Uninterrupted concentration creates reward.
+            Passive drifting destroys stored freedom over time.
+          </div>
+
+          <div
+            style={{
+              marginTop: 16,
+            }}
+          >
+            While focused, entropy pauses.
+            While distracted, your earned freedom leaks away
+            second by second.
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
 }
 
-interface buttonProps {
-    name: string;
-    time: number;
-}
+function MetricCard({
+  icon,
+  title,
+  value,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  value: string;
+}) {
+  return (
+    <motion.div
+      whileHover={{
+        y: -4,
+      }}
+      style={{
+        background: "rgba(255,255,255,0.03)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: 22,
+        padding: 20,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          opacity: 0.7,
+          marginBottom: 14,
+        }}
+      >
+        {icon}
+        <div>{title}</div>
+      </div>
 
+      <div
+        style={{
+          fontSize: 28,
+          fontWeight: 900,
+          letterSpacing: -1,
+        }}
+      >
+        {value}
+      </div>
+    </motion.div>
+  );
+}
