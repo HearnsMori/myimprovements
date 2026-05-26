@@ -13,25 +13,17 @@ import {
 
 /*
   ============================================================
-  MINIMALIST DEEP WORK ECONOMY
+  MOBILE FIRST DEEP WORK ECONOMY
   ============================================================
 
-  MOBILE FIRST
-  CLEAN
-  SIMPLE
-  RESPONSIVE
-  CALM
-  EASY TO READ
-
-  1h 30m deep work
-  = 1h 30m reward
-
-  reward decays over time
-  decay pauses during deep work
-
-  localStorage persisted
-  daily reset
-  offline progression
+  - responsive
+  - minimalist
+  - smooth mobile UX
+  - offline progression
+  - reward decay
+  - daily reset
+  - AMOLED friendly
+  - safe-area support
 
   ============================================================
 */
@@ -39,7 +31,7 @@ import {
 const WORK_SECONDS = 60 * 60 + 30 * 60;
 const REWARD_SECONDS = 60 * 60 + 30 * 60;
 
-const STORAGE_KEY = "deep_work_mobile_v2";
+const STORAGE_KEY = "deep_work_mobile_v3";
 
 type State = {
   workRemaining: number;
@@ -78,6 +70,10 @@ export default function Page() {
     lastUpdate: Date.now(),
     currentDay: todayKey(),
   });
+
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.innerWidth < 640;
 
   /*
     ============================================================
@@ -124,6 +120,8 @@ export default function Page() {
           );
 
           if (next.workRemaining <= 0) {
+            navigator.vibrate?.(120);
+
             next.workRemaining = WORK_SECONDS;
             next.rewardRemaining += REWARD_SECONDS;
             next.completed += 1;
@@ -186,6 +184,8 @@ export default function Page() {
           );
 
           if (next.workRemaining <= 0) {
+            navigator.vibrate?.([100, 60, 100]);
+
             next.workRemaining = WORK_SECONDS;
             next.rewardRemaining += REWARD_SECONDS;
             next.completed += 1;
@@ -239,6 +239,8 @@ export default function Page() {
   */
 
   const start = () => {
+    navigator.vibrate?.(30);
+
     setState((prev) => ({
       ...prev,
       working: true,
@@ -246,6 +248,8 @@ export default function Page() {
   };
 
   const stop = () => {
+    navigator.vibrate?.(30);
+
     setState((prev) => ({
       ...prev,
       working: false,
@@ -253,6 +257,8 @@ export default function Page() {
   };
 
   const reset = () => {
+    navigator.vibrate?.(60);
+
     const fresh: State = {
       workRemaining: WORK_SECONDS,
       rewardRemaining: 0,
@@ -289,11 +295,16 @@ export default function Page() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        padding: 16,
+        padding:
+          "max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left))",
         boxSizing: "border-box",
         fontFamily:
           "-apple-system,BlinkMacSystemFont,sans-serif",
-        overflow: "hidden",
+        overflowX: "hidden",
+        overflowY: "auto",
+        WebkitOverflowScrolling: "touch",
+        userSelect: "none",
+        WebkitTapHighlightColor: "transparent",
       }}
     >
       <motion.div
@@ -310,10 +321,10 @@ export default function Page() {
         }}
         style={{
           width: "100%",
-          maxWidth: 420,
+          maxWidth: isMobile ? 430 : 520,
           display: "flex",
           flexDirection: "column",
-          gap: 18,
+          gap: 12,
         }}
       >
         {/* TOP */}
@@ -328,7 +339,7 @@ export default function Page() {
           <div>
             <div
               style={{
-                fontSize: 28,
+                fontSize: "clamp(24px,7vw,30px)",
                 fontWeight: 800,
                 letterSpacing: -1.5,
               }}
@@ -339,7 +350,7 @@ export default function Page() {
             <div
               style={{
                 opacity: 0.55,
-                fontSize: 14,
+                fontSize: 13,
                 marginTop: 2,
               }}
             >
@@ -357,18 +368,21 @@ export default function Page() {
               ease: "linear",
             }}
             style={{
-              width: 54,
-              height: 54,
-              borderRadius: 18,
+              width: 46,
+              height: 46,
+              borderRadius: 14,
               background:
-                "rgba(255,255,255,0.08)",
+                "rgba(255,255,255,0.045)",
+              border:
+                "1px solid rgba(255,255,255,0.06)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               backdropFilter: "blur(10px)",
+              flexShrink: 0,
             }}
           >
-            <Brain size={26} />
+            <Brain size={22} />
           </motion.div>
         </div>
 
@@ -378,11 +392,11 @@ export default function Page() {
           layout
           style={{
             background:
-              "rgba(255,255,255,0.05)",
+              "rgba(255,255,255,0.045)",
             border:
-              "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 30,
-            padding: 24,
+              "1px solid rgba(255,255,255,0.06)",
+            borderRadius: 24,
+            padding: 18,
             backdropFilter: "blur(12px)",
           }}
         >
@@ -392,11 +406,12 @@ export default function Page() {
               justifyContent: "space-between",
               marginBottom: 18,
               alignItems: "center",
+              gap: 10,
             }}
           >
             <div
               style={{
-                fontSize: 15,
+                fontSize: 14,
                 opacity: 0.7,
                 fontWeight: 600,
               }}
@@ -420,7 +435,7 @@ export default function Page() {
                   y: -4,
                 }}
                 style={{
-                  fontSize: 13,
+                  fontSize: 12,
                   padding: "6px 10px",
                   borderRadius: 999,
                   background:
@@ -431,6 +446,7 @@ export default function Page() {
                     state.working
                       ? "#93c5fd"
                       : "rgba(255,255,255,0.7)",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {state.working
@@ -439,6 +455,8 @@ export default function Page() {
               </motion.div>
             </AnimatePresence>
           </div>
+
+          {/* TIMER */}
 
           <motion.div
             key={state.workRemaining}
@@ -449,11 +467,12 @@ export default function Page() {
               scale: 1,
             }}
             style={{
-              fontSize: "clamp(48px,14vw,78px)",
+              fontSize: "clamp(42px,13vw,72px)",
               fontWeight: 900,
-              letterSpacing: -4,
+              letterSpacing: -3,
               lineHeight: 1,
               textAlign: "center",
+              wordBreak: "break-word",
             }}
           >
             {formatTime(state.workRemaining)}
@@ -463,9 +482,9 @@ export default function Page() {
 
           <div
             style={{
-              marginTop: 22,
+              marginTop: 20,
               width: "100%",
-              height: 12,
+              height: 9,
               borderRadius: 999,
               background:
                 "rgba(255,255,255,0.06)",
@@ -502,36 +521,38 @@ export default function Page() {
               state.working ? stop : start
             }
             style={{
-              marginTop: 22,
+              marginTop: 18,
               width: "100%",
-              height: 60,
+              height: 54,
+              minHeight: 54,
               border: "none",
-              borderRadius: 20,
+              borderRadius: 16,
               cursor: "pointer",
               color: "white",
               fontWeight: 800,
-              fontSize: 16,
+              fontSize: 15,
               background: state.working
                 ? "linear-gradient(90deg,#ef4444,#dc2626)"
                 : "linear-gradient(90deg,#3b82f6,#2563eb)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 10,
+              gap: 8,
               boxShadow:
                 state.working
                   ? "0 12px 30px rgba(239,68,68,0.25)"
                   : "0 12px 30px rgba(59,130,246,0.25)",
+              touchAction: "manipulation",
             }}
           >
             {state.working ? (
               <>
-                <Pause size={20} />
+                <Pause size={18} />
                 Stop Focus
               </>
             ) : (
               <>
-                <Play size={20} />
+                <Play size={18} />
                 Start Focus
               </>
             )}
@@ -544,11 +565,11 @@ export default function Page() {
           layout
           style={{
             background:
-              "rgba(255,255,255,0.04)",
+              "rgba(255,255,255,0.045)",
             border:
-              "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 28,
-            padding: 22,
+              "1px solid rgba(255,255,255,0.06)",
+            borderRadius: 22,
+            padding: 18,
           }}
         >
           <div
@@ -556,7 +577,8 @@ export default function Page() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: 16,
+              marginBottom: 14,
+              gap: 10,
             }}
           >
             <div
@@ -566,12 +588,12 @@ export default function Page() {
                 gap: 8,
               }}
             >
-              <Gift size={18} />
+              <Gift size={17} />
 
               <div
                 style={{
                   fontWeight: 700,
-                  fontSize: 15,
+                  fontSize: 14,
                 }}
               >
                 Earned Freedom
@@ -581,7 +603,8 @@ export default function Page() {
             <div
               style={{
                 opacity: 0.6,
-                fontSize: 13,
+                fontSize: 12,
+                whiteSpace: "nowrap",
               }}
             >
               {state.completed} sessions
@@ -590,7 +613,7 @@ export default function Page() {
 
           <div
             style={{
-              fontSize: 42,
+              fontSize: "clamp(32px,10vw,44px)",
               fontWeight: 900,
               letterSpacing: -2,
             }}
@@ -600,9 +623,21 @@ export default function Page() {
 
           <div
             style={{
+              marginTop: 8,
+              fontSize: 12,
+              opacity: 0.5,
+            }}
+          >
+            available guilt-free time
+          </div>
+
+          {/* BAR */}
+
+          <div
+            style={{
               marginTop: 14,
               width: "100%",
-              height: 10,
+              height: 8,
               borderRadius: 999,
               background:
                 "rgba(255,255,255,0.06)",
@@ -631,8 +666,8 @@ export default function Page() {
           <div
             style={{
               marginTop: 14,
-              fontSize: 13,
-              lineHeight: 1.7,
+              fontSize: 12,
+              lineHeight: 1.6,
               opacity: 0.6,
             }}
           >
@@ -647,8 +682,9 @@ export default function Page() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 12,
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(140px,1fr))",
+            gap: 10,
           }}
         >
           <SmallCard
@@ -658,7 +694,7 @@ export default function Page() {
                 ? "Focused"
                 : "Distracted"
             }
-            icon={<Sparkles size={18} />}
+            icon={<Sparkles size={17} />}
           />
 
           <motion.button
@@ -669,14 +705,16 @@ export default function Page() {
             style={{
               border: "none",
               background:
-                "rgba(255,255,255,0.05)",
-              borderRadius: 22,
-              padding: 18,
+                "rgba(255,255,255,0.045)",
+              borderRadius: 18,
+              padding: 14,
               color: "white",
               textAlign: "left",
               cursor: "pointer",
               border:
-                "1px solid rgba(255,255,255,0.08)",
+                "1px solid rgba(255,255,255,0.06)",
+              minHeight: 110,
+              touchAction: "manipulation",
             }}
           >
             <div
@@ -685,12 +723,12 @@ export default function Page() {
                 opacity: 0.7,
               }}
             >
-              <RotateCcw size={18} />
+              <RotateCcw size={17} />
             </div>
 
             <div
               style={{
-                fontSize: 13,
+                fontSize: 12,
                 opacity: 0.6,
                 marginBottom: 4,
               }}
@@ -701,7 +739,7 @@ export default function Page() {
             <div
               style={{
                 fontWeight: 700,
-                fontSize: 16,
+                fontSize: 15,
               }}
             >
               Economy
@@ -714,10 +752,11 @@ export default function Page() {
         <div
           style={{
             textAlign: "center",
-            fontSize: 12,
-            opacity: 0.4,
+            fontSize: 11,
+            opacity: 0.35,
             lineHeight: 1.7,
-            paddingBottom: 12,
+            paddingBottom: 10,
+            paddingTop: 4,
           }}
         >
           uninterrupted focus creates freedom
@@ -743,11 +782,12 @@ function SmallCard({
       }}
       style={{
         background:
-          "rgba(255,255,255,0.05)",
+          "rgba(255,255,255,0.045)",
         border:
-          "1px solid rgba(255,255,255,0.08)",
-        borderRadius: 22,
-        padding: 18,
+          "1px solid rgba(255,255,255,0.06)",
+        borderRadius: 18,
+        padding: 14,
+        minHeight: 110,
       }}
     >
       <div
@@ -761,7 +801,7 @@ function SmallCard({
 
       <div
         style={{
-          fontSize: 13,
+          fontSize: 12,
           opacity: 0.6,
           marginBottom: 4,
         }}
@@ -771,7 +811,7 @@ function SmallCard({
 
       <div
         style={{
-          fontSize: 16,
+          fontSize: 15,
           fontWeight: 700,
         }}
       >
