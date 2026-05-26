@@ -703,7 +703,6 @@ export default function Page() {
             }}
             onClick={reset}
             style={{
-              border: "none",
               background:
                 "rgba(255,255,255,0.045)",
               borderRadius: 18,
